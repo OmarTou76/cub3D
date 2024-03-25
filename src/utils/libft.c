@@ -52,3 +52,13 @@ char	*ft_strnstr(const char *big, const char *little, size_t len)
 	}
 	return (0);
 }
+
+char	*ft_strchr(char *s, int c)
+{
+	while (*s != (unsigned char)c && *s)
+		s++;
+	if (*s != (unsigned char)c)
+		return (0);
+	return (s);
+}
+
