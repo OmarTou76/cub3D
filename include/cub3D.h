@@ -45,5 +45,6 @@ t_node				*save_data(char const *filename);
 
 // PARSING
 int					is_valid_ext(char const *filename);
+int					is_valid_map(t_node *node);
 
 #endif
