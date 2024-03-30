@@ -10,81 +10,88 @@ int	is_valid_ext(char const *filename)
 	return (1);
 }
 
-int	has_all_textures(t_node **node)
+int	is_map_start(char *line)
 {
-	int		textures[4] = {0};
-	int		i;
-	t_node	*tmp;
+	int	i;
 
 	i = 0;
-	tmp = *node;
-	while (tmp && i < 4)
-	{
-		if (!ft_strncmp(tmp->line, "NO ", 3))
-			textures[0]++;
-		else if (!ft_strncmp(tmp->line, "SO ", 3))
-			textures[1]++;
-		else if (!ft_strncmp(tmp->line, "WE ", 3))
-			textures[2]++;
-		else if (!ft_strncmp(tmp->line, "EA ", 3))
-			textures[3]++;
-		tmp = tmp->next;
+	while (line[i] && (line[i] == '1' || line[i] == ' '))
 		i++;
-	}
-	i = 0;
-	while (i < 4 && textures[i] == 1)
-		i++;
-	if (i != 4 || ft_strlen(tmp->line) != 0)
+	if (line[i])
 		return (0);
-	*node = tmp;
+	return (1);
+}
+// CHECKER LE FAIT DE METTRE UN FIELD QUI NE COMMENCE PAS PAR CE DEMANDE
+void	init_fields(t_fields *f)
+{
+	f->C = 0;
+	f->F = 0;
+	f->NO = 0;
+	f->WE = 0;
+	f->EA = 0;
+	f->SO = 0;
+	f->is_ok = 0;
+}
+
+int	check_fields(char *line, t_fields *fields)
+{
+	int	i;
+
+	i = 0;
+	while (line[i] && ft_isspace(line[i]))
+		i++;
+	if (!line[i] || is_map_start(line))
+		return (1);
+	else if (ft_strncmp(line + i, "NO ", 3) == 0)
+		fields->NO++;
+	else if (ft_strncmp(line + i, "EA ", 3) == 0)
+		fields->EA++;
+	else if (ft_strncmp(line + i, "SO ", 3) == 0)
+		fields->SO++;
+	else if (ft_strncmp(line + i, "WE ", 3) == 0)
+		fields->WE++;
+	else if (ft_strncmp(line + i, "C ", 2) == 0)
+		fields->C++;
+	else if (ft_strncmp(line + i, "F ", 2) == 0)
+		fields->F++;
+	else
+		return (0);
+	if (fields->NO == 1 && fields->EA == 1 && fields->SO == 1 && fields->WE == 1
+		&& fields->C == 1 && fields->F == 1)
+		fields->is_ok = 1;
+	else
+		fields->is_ok = 0;
 	return (1);
 }
 
-int	has_colors(t_node **node)
-{
-	int		textures[2] = {0};
-	int		i;
-	t_node	*tmp;
-
-	i = 0;
-	tmp = *node;
-	while (tmp && i < 2)
-	{
-		if (!ft_strncmp(tmp->line, "F ", 2))
-			textures[0]++;
-		else if (!ft_strncmp(tmp->line, "C ", 2))
-			textures[1]++;
-		tmp = tmp->next;
-		i++;
-	}
-	i = 0;
-	while (i < 2 && textures[i] == 1)
-		i++;
-	if (i != 2 || ft_strlen(tmp->line) != 0)
-		return (0);
-	*node = tmp;
-	return (1);
-}
-
-int	is_valid_map(t_node *node)
+int	is_valid_data(t_node *node)
 {
 	t_node *tmp;
-	int i;
+	t_fields fields;
 
-	i = 0;
 	tmp = node;
+	init_fields(&fields);
 	while (tmp)
 	{
-		printf("%d:[%s]\n", i, tmp->line);
-		if ((!ft_strncmp(tmp->line, "NO ", 3) || !ft_strncmp(tmp->line, "SO ",
-					3) || !ft_strncmp(tmp->line, "WE ", 3)
-				|| !ft_strncmp(tmp->line, "EA ", 3)) && !has_all_textures(&tmp))
-			return ((1));
-		if ((!ft_strncmp(tmp->line, "F ", 2) || !ft_strncmp(tmp->line, "C ", 2))
-			&& !has_colors(&tmp))
-			return (1);
+		if (!check_fields(tmp->line, &fields))
+		{
+			printf("Error\nInvalid fields input\n");
+			exit(1);
+		}
+		if (ft_strlen(tmp->line) && is_map_start(tmp->line))
+		{
+			if (!fields.is_ok)
+			{
+				printf("Error\nMissing fields params\n");
+				exit(1);
+			}
+			else if (!is_valid_map(&tmp))
+			{
+				printf("Error\nWrong map\n");
+				exit(1);
+			}
+		}
 		tmp = tmp->next;
-		i++;
 	}
 	return (1);
 }

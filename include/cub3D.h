@@ -6,6 +6,17 @@
 # include <stdlib.h>
 # include <unistd.h>
 
+typedef struct s_fields
+{
+	int				NO;
+	int				SO;
+	int				WE;
+	int				EA;
+	int				F;
+	int				C;
+	int				is_ok;
+}					t_fields;
+
 typedef struct s_colors
 {
 	unsigned int	floor[3];
@@ -32,6 +43,13 @@ typedef struct s_node
 	struct s_node	*next;
 }					t_node;
 
+typedef struct s_vec
+{
+	int				x;
+	int				y;
+	int				z;
+}					t_vec;
+
 // LIBFT
 int					ft_strncmp(const char *s1, const char *s2, size_t n);
 int					ft_strlen(const char *str);
@@ -39,12 +57,15 @@ char				*ft_strnstr(const char *big, const char *little,
 						size_t len);
 char				*get_next_line(int fd);
 char				*ft_strchr(char *s, int c);
+int					ft_isspace(int c);
 
 // LIST UTILS
 t_node				*save_data(char const *filename);
 
 // PARSING
 int					is_valid_ext(char const *filename);
-int					is_valid_map(t_node *node);
+int					is_valid_data(t_node *node);
+
+int					is_valid_map(t_node **node);
 
 #endif

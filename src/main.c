@@ -11,7 +11,7 @@ int	main(int argc, char const *argv[])
 		return (1);
 	}
 	node = save_data(argv[1]);
-	if (!is_valid_map(node))
+	if (!is_valid_data(node))
 		return (1);
 	// store_data(&game, node);
 	/* while (node)
