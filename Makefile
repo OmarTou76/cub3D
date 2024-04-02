@@ -19,9 +19,9 @@ ${NAME}: ${OBJS}
 %.o: %.c
 	${CC} ${CFLAGS} -c $< -o $@
 clean: 
-	rm ${OBJS}
+	rm -rf ${OBJS}
 
 fclean: clean
-	rm ${NAME}
+	rm -rf ${NAME}
 
 re: fclean all

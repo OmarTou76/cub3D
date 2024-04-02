@@ -41,16 +41,11 @@ int	is_valid_data(t_node *node)
 		}
 		if (ft_strlen(tmp->line) && is_map_start(tmp->line))
 		{
-			if (!fields.is_ok)
-			{
-				printf("Error\nMissing fields params\n");
-				return (0);
-			}
-			else if (!is_valid_map(&tmp))
-				return (0);
+			if (fields.is_ok && is_valid_map(&tmp))
+				return (1);
+			return (0);
 		}
-		if (tmp)
-			tmp = tmp->next;
+		tmp = tmp->next;
 	}
 	return (1);
 }

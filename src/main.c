@@ -40,7 +40,7 @@ int	main(int argc, char const *argv[])
 	node = save_data(argv[1]);
 	if (!is_valid_data(node))
 		return (free_nodes(node), 1);
-	print_nodes(node);
+	//print_nodes(node);
 	store_data(&game, node);
 	print_data(game);
 	free_nodes(node);

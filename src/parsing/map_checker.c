@@ -17,10 +17,10 @@
 11111111 1111111 111111111111
  */
 
-int	get_map_height(t_node *node)
+int get_map_height(t_node *node)
 {
-	int		i;
-	t_node	*tmp;
+	int i;
+	t_node *tmp;
 
 	i = 0;
 	tmp = node;
@@ -32,28 +32,31 @@ int	get_map_height(t_node *node)
 	return (i);
 }
 
-void	copy_to_map(t_node **node, char ***map)
+char **copy_to_map(t_node **node)
 {
-	int		map_height;
-	t_node	*tmp;
-	int		i;
+	t_node *tmp;
+	int i;
+	int map_height;
+	char **map;
 
 	map_height = get_map_height(*node);
-	(*map) = malloc((map_height + 1) * sizeof(char *));
+	map = malloc((map_height + 1) * sizeof(char *));
 	tmp = *node;
 	i = 0;
+	
 	while (tmp && ft_strlen(tmp->line))
 	{
-		(*map)[i] = tmp->line;
+		map[i] = tmp->line;
 		i++;
 		tmp = tmp->next;
 	}
 	map[i] = NULL;
+	return (map);
 }
 
-void	get_start_pos(t_vec *init, char *first_line)
+void get_start_pos(t_vec *init, char *first_line)
 {
-	int	i;
+	int i;
 
 	i = 0;
 	while (first_line[i] && first_line[i] == ' ')
@@ -65,10 +68,10 @@ void	get_start_pos(t_vec *init, char *first_line)
 	init->y = 0;
 }
 
-int	check_lines(char **m)
+int check_lines(char **m)
 {
-	int	x;
-	int	y;
+	int x;
+	int y;
 
 	y = 0;
 	while (m[y])
@@ -91,10 +94,10 @@ int	check_lines(char **m)
 	return (1);
 }
 
-int	check_columns(char **m)
+int check_columns(char **m)
 {
-	int	x;
-	int	y;
+	int x;
+	int y;
 
 	x = 0;
 	while (m[0][x])
@@ -106,8 +109,7 @@ int	check_columns(char **m)
 			return (0);
 		while (m[y])
 		{
-			if ((!m[y + 1] || !m[y + 1][x] || m[y + 1][x] == ' ')
-				&& m[y][x] == '0')
+			if ((!m[y + 1] || !m[y + 1][x] || m[y + 1][x] == ' ') && m[y][x] == '0')
 				return (0);
 			y++;
 		}
@@ -116,7 +118,7 @@ int	check_columns(char **m)
 	return (1);
 }
 
-int	check_map_borders(char **m)
+int check_map_borders(char **m)
 {
 	if (!check_columns(m) || !check_lines(m))
 	{
@@ -126,12 +128,12 @@ int	check_map_borders(char **m)
 	return (1);
 }
 
-int	check_start_pos(char **map)
+int check_start_pos(char **map)
 {
-	int		y;
-	int		x;
-	int		count;
-	char	c;
+	int y;
+	int x;
+	int count;
+	char c;
 
 	y = 0;
 	count = 0;
@@ -155,12 +157,11 @@ int	check_start_pos(char **map)
 	return (1);
 }
 
-int	is_valid_map(t_node **node)
+int is_valid_map(t_node **node)
 {
 	char **map;
 
-	map = NULL;
-	copy_to_map(node, &map);
+	map = copy_to_map(node);
 	if (!check_map_borders(map) || !check_start_pos(map))
 		return (free(map), 0);
 	free(map);

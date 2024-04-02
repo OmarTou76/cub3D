@@ -44,9 +44,10 @@ void	get_colors(t_game **game, char *line)
 
 	if (trim_compare(line, "C ", 2) == 0 || trim_compare(line, "F ", 2) == 0)
 	{
-		i = 2;
+		i = 0;
 		while (line[i] && line[i] == ' ')
 			i++;
+		i += 2;
 		spl = ft_split(line + i, ',');
 		if (trim_compare(line, "C ", 2) == 0)
 			save_colors((*game)->colors->ceiling, spl);
@@ -61,6 +62,7 @@ void	get_colors(t_game **game, char *line)
 		free(spl);
 	}
 }
+
 
 void	store_data(t_game **game, t_node *node)
 {
