@@ -13,6 +13,14 @@ void	print_data(t_game *game)
 	printf("\tSO: %s\n", game->paths->SO);
 	printf("\tWE: %s\n", game->paths->WE);
 	printf("\n");
+	printf("\nMAP:\n\n");
+	int i = 0;
+	while (game->map[i])
+	{
+		printf("\t%s\n", game->map[i]);
+		i++;
+	}
+	printf("\n");
 }
 
 void	print_nodes(t_node *tmp)

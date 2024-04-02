@@ -32,7 +32,7 @@ int get_map_height(t_node *node)
 	return (i);
 }
 
-char **copy_to_map(t_node **node)
+char **node_to_map(t_node **node)
 {
 	t_node *tmp;
 	int i;
@@ -161,7 +161,7 @@ int is_valid_map(t_node **node)
 {
 	char **map;
 
-	map = copy_to_map(node);
+	map = node_to_map(node);
 	if (!check_map_borders(map) || !check_start_pos(map))
 		return (free(map), 0);
 	free(map);

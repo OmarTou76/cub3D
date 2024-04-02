@@ -35,6 +35,7 @@ typedef struct s_game
 {
 	t_texture_paths	*paths;
 	t_colors		*colors;
+	char			**map;
 }					t_game;
 
 typedef struct s_node
@@ -66,11 +67,13 @@ int					trim_compare(char *base, char *to_compare, size_t size);
 // LIST UTILS
 t_node				*save_data(char const *filename);
 void				free_nodes(t_node *node);
+
 // PARSING
 int					is_valid_ext(char const *filename);
 void				init_fields(t_fields *f);
 int					check_fields(char *line, t_fields *fields);
 int					is_map_start(char *line);
+char				**node_to_map(t_node **node);
 int					is_valid_data(t_node *node);
 int					is_valid_map(t_node **node);
 void				store_data(t_game **game, t_node *node);

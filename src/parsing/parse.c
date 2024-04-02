@@ -76,6 +76,11 @@ void	store_data(t_game **game, t_node *node)
 	{
 		get_textures_paths(game, tmp->line);
 		get_colors(game, tmp->line);
+		if (ft_strlen(tmp->line) && is_map_start(tmp->line))
+		{
+			(*game)->map = node_to_map(&tmp);
+			break;
+		}
 		tmp = tmp->next;
 	}
 }
