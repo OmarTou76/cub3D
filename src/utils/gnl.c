@@ -21,7 +21,7 @@ static size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
 	return (srcsize);
 }
 
-static char	*ft_strdup(const char *src)
+char	*ft_strdup(const char *src)
 {
 	char	*dst;
 	size_t	len;

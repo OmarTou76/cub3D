@@ -55,17 +55,24 @@ int					ft_strncmp(const char *s1, const char *s2, size_t n);
 int					ft_strlen(const char *str);
 char				*ft_strnstr(const char *big, const char *little,
 						size_t len);
+char				*ft_strdup(const char *src);
 char				*get_next_line(int fd);
 char				*ft_strchr(char *s, int c);
 int					ft_isspace(int c);
+char				**ft_split(char const *s, char sep);
+int					ft_atoi(const char *str);
+int					trim_compare(char *base, char *to_compare, size_t size);
 
 // LIST UTILS
 t_node				*save_data(char const *filename);
-
+void				free_nodes(t_node *node);
 // PARSING
 int					is_valid_ext(char const *filename);
+void				init_fields(t_fields *f);
+int					check_fields(char *line, t_fields *fields);
+int					is_map_start(char *line);
 int					is_valid_data(t_node *node);
-
 int					is_valid_map(t_node **node);
+void				store_data(t_game **game, t_node *node);
 
 #endif

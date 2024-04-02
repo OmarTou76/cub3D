@@ -65,23 +65,10 @@ void	get_start_pos(t_vec *init, char *first_line)
 	init->y = 0;
 }
 
-void	fill_dir(t_vec dir[4])
-{
-	dir[0].x = 1;
-	dir[0].y = 0;
-	dir[1].x = 0;
-	dir[1].y = 1;
-	dir[2].x = -1;
-	dir[2].y = 0;
-	dir[3].x = 0;
-	dir[3].y = -1;
-}
-
 int	check_lines(char **m)
 {
-	int		x;
-	int		y;
-	t_vec	pos;
+	int	x;
+	int	y;
 
 	y = 0;
 	while (m[y])
@@ -89,15 +76,13 @@ int	check_lines(char **m)
 		x = 0;
 		while (m[y][x] && m[y][x] == ' ')
 			x++;
-		pos.x = x;
-		pos.y = y;
 		if (m[y][x] != '1')
 			return (0);
 		while (m[y][x])
 		{
 			if ((!m[y][x + 1] || m[y][x + 1] == ' ') && m[y][x] == '0')
 				return (0);
-			else if (m[y][x] == ' ' && (m[y][x + 1] && m[y][x + 1] == '0'))
+			else if ((m[y][x] == ' ' && (m[y][x + 1] && m[y][x + 1] == '0')))
 				return (0);
 			x++;
 		}
@@ -106,21 +91,17 @@ int	check_lines(char **m)
 	return (1);
 }
 
-int	check_columns(char **m, int map_height)
+int	check_columns(char **m)
 {
-	int		x;
-	int		y;
-	t_vec	pos;
+	int	x;
+	int	y;
 
 	x = 0;
-	(void)map_height;
 	while (m[0][x])
 	{
 		y = 0;
 		while (m[y][x] == ' ')
 			y++;
-		pos.y = y;
-		pos.x = x;
 		if (m[y][x] != '1')
 			return (0);
 		while (m[y])
@@ -135,30 +116,53 @@ int	check_columns(char **m, int map_height)
 	return (1);
 }
 
-int	check_map_edges(char **m, int map_height)
+int	check_map_borders(char **m)
 {
-	int	lines;
-	int	cols;
+	if (!check_columns(m) || !check_lines(m))
+	{
+		printf("Error\nMap borders\n");
+		return (0);
+	}
+	return (1);
+}
 
-	lines = check_lines(m);
-	cols = check_columns(m, map_height);
-	printf("LINES: %d - COLS: %d\n", lines, cols);
+int	check_start_pos(char **map)
+{
+	int		y;
+	int		x;
+	int		count;
+	char	c;
+
+	y = 0;
+	count = 0;
+	while (map[y])
+	{
+		x = 0;
+		while (map[y][x])
+		{
+			c = map[y][x];
+			if (c == 'N' || c == 'S' || c == 'W' || c == 'E')
+				count++;
+			if (count > 1)
+			{
+				printf("Error\nMultiple start position\n");
+				return (0);
+			}
+			x++;
+		}
+		y++;
+	}
 	return (1);
 }
 
 int	is_valid_map(t_node **node)
 {
 	char **map;
-	// int i = 0;
 
 	map = NULL;
 	copy_to_map(node, &map);
-	/* while (map[i])
-	{
-		printf("[%s]\n", map[i]);
-		i++;
-	} */
-	check_map_edges(map, get_map_height(*node));
-	exit(1);
-	return (0);
+	if (!check_map_borders(map) || !check_start_pos(map))
+		return (free(map), 0);
+	free(map);
+	return (1);
 }
