@@ -43,9 +43,18 @@ int	is_valid_data(t_node *node)
 		{
 			if (fields.is_ok && is_valid_map(&tmp))
 				return (1);
-			return (0);
+			else
+			{
+				printf("Error\nMissing params\n");
+				return (0);
+			}
 		}
 		tmp = tmp->next;
+	}
+	if (!fields.is_ok)
+	{
+		printf("Error\nMissing params\n");
+		return (0);
 	}
 	return (1);
 }
