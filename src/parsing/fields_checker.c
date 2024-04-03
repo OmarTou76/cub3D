@@ -25,7 +25,7 @@ int	is_valid_number(char *nb)
 	i = 0;
 	while (nb[i] && nb[i] == ' ')
 		i++;
-	while (nb[i] && (nb[i] >= '0' && nb[i] <= '9'))
+	while (nb[i] && ft_isdigit(nb[i]))
 		i++;
 	if (nb[i] || (ft_atoi(nb) > 255 || ft_atoi(nb) < 0))
 		return (0);
@@ -40,7 +40,7 @@ int	is_valid_RGB_data(char *line)
 
 	i = 0;
 	valid_data = 1;
-	while (*line && !(*line >= '0' && *line <= '9'))
+	while (*line && !ft_isdigit(*line))
 		line++;
 	if (!*line)
 		return (0);

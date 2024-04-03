@@ -36,6 +36,11 @@ int	is_valid_data(t_lines *node)
 	t_fields fields;
 
 	tmp = node;
+	if (!tmp)
+	{
+		printf("Error\nMap empty\n");
+		return (0);
+	}
 	init_fields(&fields);
 	while (tmp)
 	{
@@ -56,11 +61,6 @@ int	is_valid_data(t_lines *node)
 			}
 		}
 		tmp = tmp->next;
-	}
-	if (!fields.is_ok)
-	{
-		printf("Error\nMissing params\n");
-		return (0);
 	}
 	return (1);
 }
