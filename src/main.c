@@ -25,7 +25,7 @@ void	print_data(t_game *game)
 	printf("\n");
 }
 
-void	print_liness(t_lines *tmp)
+void	print_lines(t_lines *tmp)
 {
 	t_lines	*node;
 
@@ -55,7 +55,7 @@ int	main(int argc, char const *argv[])
 	node = save_data(argv[1]);
 	if (!is_valid_data(node))
 		return (free_nodes(node), 1);
-	// print_liness(node);
+	print_lines(node);
 	store_data(&game, node);
 	print_data(game);
 	free_nodes(node);
