@@ -1,18 +1,22 @@
 #include "../../include/cub3D.h"
 
-int	is_valid_ext(char const *filename)
+int	check_input(char const *progname, char const *filename, int argc)
 {
 	char	*ext;
 
+	if (argc != 2)
+		return(printf("Error\n[USAGE]: %s <FILENAME>.cub .\n", progname), 0);
 	ext = ft_strnstr(filename, ".cub", ft_strlen(filename));
+	if(open(filename, O_RDONLY) == -1)
+		return(printf("Error\n"), perror(filename), 0);
 	if (!ext || ft_strncmp(ext, ".cub", ft_strlen(ext)) != 0)
-		return (0);
+		return(printf("Error\n[USAGE]: %s <FILENAME>.cub .\n", progname), 0);
 	return (1);
 }
 
 int	is_map_start(char *line)
 {
-	int	i;
+	int	i;	
 
 	i = 0;
 	if (!ft_strlen(line))

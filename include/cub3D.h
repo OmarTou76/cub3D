@@ -60,7 +60,7 @@ t_node				*save_data(char const *filename);
 void				free_nodes(t_node *node);
 
 // PARSING
-int					is_valid_ext(char const *filename);
+int					check_input(char const *progname, char const *filename, int argc);
 void				init_fields(t_fields *f);
 int					check_fields(char *line, t_fields *fields);
 int					is_map_start(char *line);
