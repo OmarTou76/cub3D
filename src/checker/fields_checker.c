@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fields_checker.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ymeziane <ymeziane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: omar <omar@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 15:23:08 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/04/03 16:06:16 by ymeziane         ###   ########.fr       */
+/*   Updated: 2024/04/03 22:02:00 by omar             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 
 void	init_fields(t_fields *f)
 {
-	f->C = 0;
-	f->F = 0;
-	f->NO = 0;
-	f->WE = 0;
-	f->EA = 0;
-	f->SO = 0;
+	f->c = 0;
+	f->f = 0;
+	f->no = 0;
+	f->so = 0;
+	f->ea = 0;
+	f->we = 0;
 	f->is_ok = 0;
 }
 
@@ -73,21 +73,21 @@ static int	is_valid_rgb_data(char *line)
 int	check_fields(char *line, t_fields *fields)
 {
 	if (trim_compare(line, "NO ", 3) == 0)
-		fields->NO++;
+		fields->no++;
 	else if (trim_compare(line, "EA ", 3) == 0)
-		fields->EA++;
+		fields->ea++;
 	else if (trim_compare(line, "SO ", 3) == 0)
-		fields->SO++;
+		fields->so++;
 	else if (trim_compare(line, "WE ", 3) == 0)
-		fields->WE++;
+		fields->we++;
 	else if (trim_compare(line, "C ", 2) == 0 && is_valid_rgb_data(line))
-		fields->C++;
+		fields->c++;
 	else if (trim_compare(line, "F ", 2) == 0 && is_valid_rgb_data(line))
-		fields->F++;
+		fields->f++;
 	else
 		return (0);
-	if (fields->NO == 1 && fields->EA == 1 && fields->SO == 1 && fields->WE == 1
-		&& fields->C == 1 && fields->F == 1)
+	if (fields->no == 1 && fields->ea == 1 && fields->so == 1 && fields->we == 1
+		&& fields->c == 1 && fields->f == 1)
 		fields->is_ok = 1;
 	else
 		fields->is_ok = 0;

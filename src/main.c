@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ymeziane <ymeziane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: omar <omar@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 15:22:57 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/04/03 16:09:34 by ymeziane         ###   ########.fr       */
+/*   Updated: 2024/04/03 21:59:55 by omar             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,10 @@ static void	print_data(t_game *game)
 	printf("\tCEILING: %d - %d - %d\n", game->colors->ceiling[0],
 		game->colors->ceiling[1], game->colors->ceiling[2]);
 	printf("\nTEXTURES: \n\n");
-	printf("\tNO: %s\n", game->paths->NO);
-	printf("\tEA: %s\n", game->paths->EA);
-	printf("\tSO: %s\n", game->paths->SO);
-	printf("\tWE: %s\n", game->paths->WE);
+	printf("\tNO: %s\n", game->paths->no);
+	printf("\tEA: %s\n", game->paths->ea);
+	printf("\tSO: %s\n", game->paths->so);
+	printf("\tWE: %s\n", game->paths->we);
 	printf("\n");
 	printf("\nMAP:\n\n");
 	i = 0;

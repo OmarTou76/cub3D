@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ymeziane <ymeziane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: omar <omar@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 16:11:28 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/04/03 16:13:22 by ymeziane         ###   ########.fr       */
+/*   Updated: 2024/04/03 22:00:59 by omar             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,12 @@
 
 typedef struct s_fields
 {
-	int				NO;
-	int				SO;
-	int				WE;
-	int				EA;
-	int				F;
-	int				C;
+	int				no;
+	int				so;
+	int				we;
+	int				ea;
+	int				f;
+	int				c;
 	int				is_ok;
 }					t_fields;
 
@@ -38,10 +38,10 @@ typedef struct s_colors
 
 typedef struct s_texture_paths
 {
-	char			*NO;
-	char			*SO;
-	char			*WE;
-	char			*EA;
+	char			*no;
+	char			*so;
+	char			*we;
+	char			*ea;
 }					t_texture_paths;
 
 typedef struct s_game

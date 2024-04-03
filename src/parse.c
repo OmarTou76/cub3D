@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ymeziane <ymeziane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: omar <omar@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 15:25:15 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/04/03 16:10:34 by ymeziane         ###   ########.fr       */
+/*   Updated: 2024/04/03 22:02:47 by omar             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,13 @@ static char	*trimed_path(char *line)
 static void	get_textures_paths(t_game **game, char *line)
 {
 	if (trim_compare(line, "NO ", 3) == 0)
-		(*game)->paths->NO = trimed_path(line);
+		(*game)->paths->no = trimed_path(line);
 	else if (trim_compare(line, "EA ", 3) == 0)
-		(*game)->paths->EA = trimed_path(line);
+		(*game)->paths->ea = trimed_path(line);
 	else if (trim_compare(line, "WE ", 3) == 0)
-		(*game)->paths->WE = trimed_path(line);
+		(*game)->paths->we = trimed_path(line);
 	else if (trim_compare(line, "SO ", 3) == 0)
-		(*game)->paths->SO = trimed_path(line);
+		(*game)->paths->so = trimed_path(line);
 }
 
 static void	save_colors(unsigned int colors[3], char **colors_val)
