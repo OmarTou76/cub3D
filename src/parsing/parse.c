@@ -64,9 +64,9 @@ void	get_colors(t_game **game, char *line)
 }
 
 
-void	store_data(t_game **game, t_node *node)
+void	store_data(t_game **game, t_lines *node)
 {
-	t_node *tmp;
+	t_lines *tmp;
 
 	tmp = node;
 	(*game) = malloc(sizeof(t_game));

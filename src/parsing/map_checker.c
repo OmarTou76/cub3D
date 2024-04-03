@@ -17,10 +17,10 @@
 11111111 1111111 111111111111
  */
 
-int get_map_height(t_node *node)
+int get_map_height(t_lines *node)
 {
 	int i;
-	t_node *tmp;
+	t_lines *tmp;
 
 	i = 0;
 	tmp = node;
@@ -32,9 +32,9 @@ int get_map_height(t_node *node)
 	return (i);
 }
 
-char **node_to_map(t_node **node)
+char **node_to_map(t_lines **node)
 {
-	t_node *tmp;
+	t_lines *tmp;
 	int i;
 	int map_height;
 	char **map;
@@ -157,7 +157,7 @@ int check_start_pos(char **map)
 	return (1);
 }
 
-int is_valid_map(t_node **node)
+int is_valid_map(t_lines **node)
 {
 	char **map;
 

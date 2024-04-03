@@ -1,11 +1,11 @@
 #include "../../include/cub3D.h"
 
-void	save_line(t_node **node, char *line)
+void	save_line(t_lines **node, char *line)
 {
-	t_node	*nw;
-	t_node	*tmp;
+	t_lines	*nw;
+	t_lines	*tmp;
 
-	nw = malloc(sizeof(t_node));
+	nw = malloc(sizeof(t_lines));
 	nw->line = ft_strdup(line);
 	nw->next = NULL;
 	if (nw->line[ft_strlen(nw->line) - 1] == '\n')
@@ -21,11 +21,11 @@ void	save_line(t_node **node, char *line)
 	}
 }
 
-t_node	*save_data(char const *filename)
+t_lines	*save_data(char const *filename)
 {
 	int		fd;
 	char	*line;
-	t_node	*node;
+	t_lines	*node;
 
 	node = NULL;
 	fd = open(filename, O_RDONLY);
@@ -40,9 +40,9 @@ t_node	*save_data(char const *filename)
 	return (node);
 }
 
-void	free_nodes(t_node *node)
+void	free_nodes(t_lines *node)
 {
-	t_node *tmp;
+	t_lines *tmp;
 
 	while (node)
 	{

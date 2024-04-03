@@ -9,6 +9,8 @@ int	check_input(char const *progname, char const *filename, int argc)
 	ext = ft_strnstr(filename, ".cub", ft_strlen(filename));
 	if(open(filename, O_RDONLY) == -1)
 		return(printf("Error\n"), perror(filename), 0);
+	else
+		close(open(filename, O_RDONLY));
 	if (!ext || ft_strncmp(ext, ".cub", ft_strlen(ext)) != 0)
 		return(printf("Error\n[USAGE]: %s <FILENAME>.cub .\n", progname), 0);
 	return (1);
@@ -28,9 +30,9 @@ int	is_map_start(char *line)
 	return (1);
 }
 
-int	is_valid_data(t_node *node)
+int	is_valid_data(t_lines *node)
 {
-	t_node *tmp;
+	t_lines *tmp;
 	t_fields fields;
 
 	tmp = node;
