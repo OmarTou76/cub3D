@@ -1,0 +1,5 @@
+for file in maps/bad/*; do 
+    if [ -f "$file" ]; then 
+        echo "$file" && ./cub3D "$file"
+    fi 
+done

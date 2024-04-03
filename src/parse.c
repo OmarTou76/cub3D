@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ymeziane <ymeziane@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/04/03 15:25:15 by ymeziane          #+#    #+#             */
+/*   Updated: 2024/04/03 16:10:34 by ymeziane         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../include/cub3D.h"
 
-char	*trimed_path(char *line)
+static char	*trimed_path(char *line)
 {
 	int	i;
 
@@ -13,7 +25,7 @@ char	*trimed_path(char *line)
 	return (line + i);
 }
 
-void	get_textures_paths(t_game **game, char *line)
+static void	get_textures_paths(t_game **game, char *line)
 {
 	if (trim_compare(line, "NO ", 3) == 0)
 		(*game)->paths->NO = trimed_path(line);
@@ -25,7 +37,7 @@ void	get_textures_paths(t_game **game, char *line)
 		(*game)->paths->SO = trimed_path(line);
 }
 
-void	save_colors(unsigned int colors[3], char **colors_val)
+static void	save_colors(unsigned int colors[3], char **colors_val)
 {
 	int	i;
 
@@ -37,7 +49,7 @@ void	save_colors(unsigned int colors[3], char **colors_val)
 	}
 }
 
-void	get_colors(t_game **game, char *line)
+static void	get_colors(t_game **game, char *line)
 {
 	int		i;
 	char	**spl;
@@ -63,10 +75,9 @@ void	get_colors(t_game **game, char *line)
 	}
 }
 
-
 void	store_data(t_game **game, t_lines *node)
 {
-	t_lines *tmp;
+	t_lines	*tmp;
 
 	tmp = node;
 	(*game) = malloc(sizeof(t_game));
@@ -79,7 +90,7 @@ void	store_data(t_game **game, t_lines *node)
 		if (ft_strlen(tmp->line) && is_map_start(tmp->line))
 		{
 			(*game)->map = node_to_map(&tmp);
-			break;
+			break ;
 		}
 		tmp = tmp->next;
 	}

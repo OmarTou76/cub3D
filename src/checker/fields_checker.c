@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   fields_checker.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ymeziane <ymeziane@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/04/03 15:23:08 by ymeziane          #+#    #+#             */
+/*   Updated: 2024/04/03 16:06:16 by ymeziane         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../include/cub3D.h"
 
 void	init_fields(t_fields *f)
@@ -18,7 +30,7 @@ int	trim_compare(char *base, char *to_compare, size_t size)
 	return (ft_strncmp(base, to_compare, size));
 }
 
-int	is_valid_number(char *nb)
+static int	is_valid_number(char *nb)
 {
 	int	i;
 
@@ -32,7 +44,7 @@ int	is_valid_number(char *nb)
 	return (1);
 }
 
-int	is_valid_RGB_data(char *line)
+static int	is_valid_rgb_data(char *line)
 {
 	char	**data;
 	int		i;
@@ -68,9 +80,9 @@ int	check_fields(char *line, t_fields *fields)
 		fields->SO++;
 	else if (trim_compare(line, "WE ", 3) == 0)
 		fields->WE++;
-	else if (trim_compare(line, "C ", 2) == 0 && is_valid_RGB_data(line))
+	else if (trim_compare(line, "C ", 2) == 0 && is_valid_rgb_data(line))
 		fields->C++;
-	else if (trim_compare(line, "F ", 2) == 0 && is_valid_RGB_data(line))
+	else if (trim_compare(line, "F ", 2) == 0 && is_valid_rgb_data(line))
 		fields->F++;
 	else
 		return (0);

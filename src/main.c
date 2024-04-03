@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ymeziane <ymeziane@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/04/03 15:22:57 by ymeziane          #+#    #+#             */
+/*   Updated: 2024/04/03 16:09:34 by ymeziane         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../include/cub3D.h"
 
-void	print_data(t_game *game)
+static void	print_data(t_game *game)
 {
 	int	i;
 
@@ -25,7 +37,7 @@ void	print_data(t_game *game)
 	printf("\n");
 }
 
-void	print_lines(t_lines *tmp)
+static void	print_lines(t_lines *tmp)
 {
 	t_lines	*node;
 
@@ -37,7 +49,7 @@ void	print_lines(t_lines *tmp)
 	}
 }
 
-void	free_game(t_game *game)
+static void	free_game(t_game *game)
 {
 	free(game->colors);
 	free(game->paths);

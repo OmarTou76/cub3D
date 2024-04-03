@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cub3D.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ymeziane <ymeziane@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/04/03 16:11:28 by ymeziane          #+#    #+#             */
+/*   Updated: 2024/04/03 16:13:22 by ymeziane         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef CUB3D_H
 # define CUB3D_H
 
@@ -45,28 +57,29 @@ typedef struct s_lines
 	struct s_lines	*next;
 }					t_lines;
 
-typedef struct s_vec
-{
-	int				x;
-	int				y;
-	int				z;
-}					t_vec;
+///////////////////////////////////////////
+//	CHECKER FOLDER
 
-// UTILS
+//	CHECKER
+char				**node_to_map(t_lines **node);
+int					check_input(char const *progname, char const *filename,
+						int argc);
+int					is_map_start(char *line);
+int					is_valid_data(t_lines *node);
+//	FIELDS_CHECKER
+void				init_fields(t_fields *f);
 int					trim_compare(char *base, char *to_compare, size_t size);
+int					check_fields(char *line, t_fields *fields);
+//	MAP_CHECKER
+int					is_valid_map(t_lines **node);
+///////////////////////////////////////////
+// UTILS FOLDER
 
 // LIST UTILS
 t_lines				*save_data(char const *filename);
 void				free_nodes(t_lines *node);
-
-// PARSING
-int					check_input(char const *progname, char const *filename, int argc);
-void				init_fields(t_fields *f);
-int					check_fields(char *line, t_fields *fields);
-int					is_map_start(char *line);
-char				**node_to_map(t_lines **node);
-int					is_valid_data(t_lines *node);
-int					is_valid_map(t_lines **node);
+///////////////////////////////////////////
+// PARSE
 void				store_data(t_game **game, t_lines *node);
 
 #endif

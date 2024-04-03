@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   list_utils.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ymeziane <ymeziane@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/04/03 15:27:15 by ymeziane          #+#    #+#             */
+/*   Updated: 2024/04/03 16:08:36 by ymeziane         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../include/cub3D.h"
 
-void	save_line(t_lines **node, char *line)
+static void	save_line(t_lines **node, char *line)
 {
 	t_lines	*nw;
 	t_lines	*tmp;
@@ -42,7 +54,7 @@ t_lines	*save_data(char const *filename)
 
 void	free_nodes(t_lines *node)
 {
-	t_lines *tmp;
+	t_lines	*tmp;
 
 	while (node)
 	{

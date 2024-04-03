@@ -11,10 +11,9 @@ LIBFT_DIR = libft
 SRC_DIR = src
 OBJ_DIR = obj
 
-SRC_FILES = main \
+SRC_FILES = main parse\
 	utils/list_utils \
-	parsing/checker parsing/parse \
-	parsing/map_checker parsing/fields_checker \
+	checker/checker checker/map_checker checker/fields_checker \
 
 SRC = $(addprefix $(SRC_DIR)/, $(addsuffix .c, $(SRC_FILES)))
 OBJ = $(addprefix $(OBJ_DIR)/, $(addsuffix .o, $(SRC_FILES)))
