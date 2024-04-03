@@ -2,7 +2,7 @@
 
 #define BUFFER_SIZE 1
 
-static size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
+static size_t	ft_strlcpy_gnl(char *dst, const char *src, size_t dstsize)
 {
 	size_t	srcsize;
 	size_t	i;
@@ -21,7 +21,7 @@ static size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
 	return (srcsize);
 }
 
-char	*ft_strdup(const char *src)
+char	*ft_strdup_gnl(const char *src)
 {
 	char	*dst;
 	size_t	len;
@@ -30,11 +30,11 @@ char	*ft_strdup(const char *src)
 	dst = malloc(len);
 	if (dst == NULL)
 		return (NULL);
-	ft_strlcpy(dst, src, len);
+	ft_strlcpy_gnl(dst, src, len);
 	return (dst);
 }
 
-static char	*ft_strjoin(char *s1, char const *s2, size_t len)
+static char	*ft_strjoin_gnl(char *s1, char const *s2, size_t len)
 {
 	size_t	s1_len;
 	size_t	s2_len;
@@ -47,8 +47,8 @@ static char	*ft_strjoin(char *s1, char const *s2, size_t len)
 	join = (char *)malloc((s1_len + s2_len + 1) * sizeof(char));
 	if (!join)
 		return (NULL);
-	ft_strlcpy(join, s1, s1_len + 1);
-	ft_strlcpy((join + s1_len), s2, s2_len + 1);
+	ft_strlcpy_gnl(join, s1, s1_len + 1);
+	ft_strlcpy_gnl((join + s1_len), s2, s2_len + 1);
 	free(s1);
 	return (join);
 }
@@ -61,12 +61,12 @@ char	*get_next_line(int fd)
 	int countread;
 	int to_copy;
 
-	line = ft_strdup(buf);
+	line = ft_strdup_gnl(buf);
 	while (!(ft_strchr(line, '\n')) && (countread = read(fd, buf,
 				BUFFER_SIZE)) > 0)
 	{
 		buf[countread] = '\0';
-		line = ft_strjoin(line, buf, countread);
+		line = ft_strjoin_gnl(line, buf, countread);
 	}
 	if (ft_strlen(line) == 0)
 		return (free(line), NULL);
@@ -75,12 +75,12 @@ char	*get_next_line(int fd)
 	if (newline != NULL)
 	{
 		to_copy = newline - line + 1;
-		ft_strlcpy(buf, newline + 1, BUFFER_SIZE + 1);
+		ft_strlcpy_gnl(buf, newline + 1, BUFFER_SIZE + 1);
 	}
 	else
 	{
 		to_copy = ft_strlen(line);
-		ft_strlcpy(buf, "", BUFFER_SIZE + 1);
+		ft_strlcpy_gnl(buf, "", BUFFER_SIZE + 1);
 	}
 	line[to_copy] = '\0';
 	return (line);

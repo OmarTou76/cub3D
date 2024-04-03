@@ -1,6 +1,7 @@
 #ifndef CUB3D_H
 # define CUB3D_H
 
+# include "../libft/inc/libft.h"
 # include <fcntl.h>
 # include <stdio.h>
 # include <stdlib.h>
@@ -51,17 +52,7 @@ typedef struct s_vec
 	int				z;
 }					t_vec;
 
-// LIBFT
-int					ft_strncmp(const char *s1, const char *s2, size_t n);
-int					ft_strlen(const char *str);
-char				*ft_strnstr(const char *big, const char *little,
-						size_t len);
-char				*ft_strdup(const char *src);
-char				*get_next_line(int fd);
-char				*ft_strchr(char *s, int c);
-int					ft_isspace(int c);
-char				**ft_split(char const *s, char sep);
-int					ft_atoi(const char *str);
+// UTILS
 int					trim_compare(char *base, char *to_compare, size_t size);
 
 // LIST UTILS
