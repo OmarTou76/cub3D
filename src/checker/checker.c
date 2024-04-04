@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   checker.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ymeziane <ymeziane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: otourabi <otourabi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 15:23:42 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/04/03 16:04:44 by ymeziane         ###   ########.fr       */
+/*   Updated: 2024/04/04 14:00:08 by otourabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,11 +100,11 @@ int	is_valid_data(t_lines *node)
 	init_fields(&fields);
 	while (tmp)
 	{
+		if (ft_strlen(tmp->line) && fields.is_ok)
+			break ;
 		if (ft_strlen(tmp->line) && !fields.is_ok && !is_map_start(tmp->line)
 			&& !check_fields(tmp->line, &fields))
 			return (ft_putstr_fd("Error\nInvalid fields input\n", 2), 0);
-		if ((tmp->line) && is_map_start(tmp->line))
-			break ;
 		tmp = tmp->next;
 	}
 	if (tmp && fields.is_ok && is_valid_map(&tmp))
