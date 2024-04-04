@@ -3,10 +3,14 @@ NAME = cub3D
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
 
-INCLUDES = -I./inc -I./libft/inc
-
 LIBFT = libft/libft.a
 LIBFT_DIR = libft
+
+MLX_DIR = ./MLX42
+MLX_LIB = $(MLX_DIR)/build/libmlx42.a
+MLX_FLAGS = -L$(MLX_DIR) -ldl -lglfw -pthread -lm
+
+INCLUDES = -I./inc -I./libft/inc -I$(MLX_DIR)
 
 SRC_DIR = src
 OBJ_DIR = obj
@@ -24,10 +28,10 @@ NO_COLOR = \033[0m
 
 all: $(NAME)
 
-$(NAME): $(OBJ)
+$(NAME): $(OBJ) $(MLX_LIB)
 	@make -C $(LIBFT_DIR)
 	@echo "$(GREEN)Compiling $(NAME)...$(NO_COLOR)"
-	@$(CC) $(CFLAGS) $(INCLUDES) -o $(NAME) $(OBJ) $(LIBFT)
+	@$(CC) $(CFLAGS) $(INCLUDES) -o $(NAME) $(OBJ) $(LIBFT) $(MLX_FLAGS)
 	@echo "$(GREEN)$(NAME) compiled$(NO_COLOR)"
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
