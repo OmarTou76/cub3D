@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fields_checker.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omar <omar@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: ymeziane <ymeziane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 15:23:08 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/04/03 22:02:00 by omar             ###   ########.fr       */
+/*   Updated: 2024/04/04 15:16:15 by ymeziane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,15 +70,38 @@ static int	is_valid_rgb_data(char *line)
 	return (valid_data);
 }
 
+bool valid_texture_path(char *line)
+{
+	int	i;
+	int fd;
+
+	i = 0;
+	while (*line && *line == ' ')
+		line++;
+	line += 3;
+	while (*line && *line == ' ')
+		line++;
+	if (!(*line))
+		return (0);
+	while(line[i] && line[i] != ' ')
+		i++;
+	line[i] = '\0';
+	fd = open(line, O_RDONLY);
+	if(fd == -1)
+		return (0);
+	close(fd);
+	return (1);
+}
+
 int	check_fields(char *line, t_fields *fields)
 {
-	if (trim_compare(line, "NO ", 3) == 0)
+	if (trim_compare(line, "NO ", 3) == 0 && valid_texture_path(line))
 		fields->no++;
-	else if (trim_compare(line, "EA ", 3) == 0)
+	else if (trim_compare(line, "EA ", 3) == 0 && valid_texture_path(line))
 		fields->ea++;
-	else if (trim_compare(line, "SO ", 3) == 0)
+	else if (trim_compare(line, "SO ", 3) == 0 && valid_texture_path(line))
 		fields->so++;
-	else if (trim_compare(line, "WE ", 3) == 0)
+	else if (trim_compare(line, "WE ", 3) == 0 && valid_texture_path(line))
 		fields->we++;
 	else if (trim_compare(line, "C ", 2) == 0 && is_valid_rgb_data(line))
 		fields->c++;

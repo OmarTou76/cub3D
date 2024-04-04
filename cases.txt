@@ -1,0 +1,8 @@
+maps/bad/file_letter_end.cub
+maps/bad/forbidden.cub
+maps/bad/map_too_small.cub
+
+maps/bad/textures_dir.cub
+maps/bad/textures_forbidden.cub
+maps/bad/textures_invalid.cub
+maps/bad/textures_not_xpm.cub
