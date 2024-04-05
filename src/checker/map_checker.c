@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_checker.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ymeziane <ymeziane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: omar <omar@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 15:24:25 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/04/03 16:07:13 by ymeziane         ###   ########.fr       */
+/*   Updated: 2024/04/05 13:45:04 by omar             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,19 +81,29 @@ static int	check_start_pos(char **map)
 			if (c == 'N' || c == 'S' || c == 'W' || c == 'E')
 				count++;
 			if (count > 1)
-				return (ft_putstr_fd("Error\nMultiple start position\n", 2), 0);
+				return (0);
 			x++;
 		}
 		y++;
 	}
+	if (!count)
+		return (0);
 	return (1);
 }
 
 int	is_valid_map(t_lines **node)
 {
 	char	**map;
+	t_lines	*n;
 
-	map = node_to_map(node);
+	n = (*node);
+	map = node_to_map(&n);
+	while (n)
+	{
+		if (ft_strlen(n->line))
+			return (free(map), 0);
+		n = n->next;
+	}
 	if (!check_columns(map) || !check_lines(map) || !check_start_pos(map))
 		return (free(map), 0);
 	free(map);

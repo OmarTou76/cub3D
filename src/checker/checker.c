@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   checker.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: otourabi <otourabi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: omar <omar@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 15:23:42 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/04/04 14:00:08 by otourabi         ###   ########.fr       */
+/*   Updated: 2024/04/05 01:39:00 by omar             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,20 +29,18 @@ static int	get_map_height(t_lines *node)
 
 char	**node_to_map(t_lines **node)
 {
-	t_lines	*tmp;
 	int		i;
 	int		map_height;
 	char	**map;
 
 	map_height = get_map_height(*node);
 	map = malloc((map_height + 1) * sizeof(char *));
-	tmp = *node;
 	i = 0;
-	while (tmp && ft_strlen(tmp->line))
+	while ((*node) && ft_strlen((*node)->line))
 	{
-		map[i] = tmp->line;
+		map[i] = (*node)->line;
 		i++;
-		tmp = tmp->next;
+		(*node) = (*node)->next;
 	}
 	map[i] = NULL;
 	return (map);
