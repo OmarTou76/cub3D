@@ -6,7 +6,7 @@
 /*   By: ymeziane <ymeziane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 15:22:57 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/04/04 14:39:33 by ymeziane         ###   ########.fr       */
+/*   Updated: 2024/04/05 11:27:23 by ymeziane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,9 @@ static void	print_data(t_game *game)
 	printf("\n");
 	printf("\nMAP:\n\n");
 	i = 0;
-	while (game->map[i])
+	while (game->s_map.map[i])
 	{
-		printf("\t%s\n", game->map[i]);
+		printf("\t%s\n", game->s_map.map[i]);
 		i++;
 	}
 	printf("\n");
@@ -53,7 +53,7 @@ static void	free_game(t_game *game)
 {
 	free(game->colors);
 	free(game->paths);
-	free(game->map);
+	free(game->s_map.map);
 	free(game);
 }
 
@@ -61,15 +61,23 @@ int	main(int argc, char const *argv[])
 {
 	t_lines	*node;
 	t_game	*game;
+	mlx_t	*mlx;
 
 	if (!check_input(argv[0], argv[1], argc))
 		return (1);
 	node = save_data(argv[1]);
 	if (!is_valid_data(node))
 		return (free_nodes(node), 1);
-	print_lines(node);
 	store_data(&game, node);
+	printf("game->s_map.width = %d\n", game->s_map.width);
+	printf("game->s_map.height = %d\n", game->s_map.height);
+	mlx = mlx_init(game->s_map.width * TILE_SIZE, game->s_map.height * TILE_SIZE, "cub3D", true);
+	if(!mlx)
+		return(0);
+	mlx_loop(mlx);
+	print_lines(node);
 	print_data(game);
 	free_nodes(node);
 	free_game(game);
+	mlx_terminate(mlx);
 }

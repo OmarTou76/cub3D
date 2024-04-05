@@ -75,6 +75,16 @@ static void	get_colors(t_game **game, char *line)
 	}
 }
 
+size_t	get_map_height(char **map)
+{
+	int	height;
+
+	height = 0;
+	while (map[height])
+		height++;
+	return (height);
+}
+
 void	store_data(t_game **game, t_lines *node)
 {
 	t_lines	*tmp;
@@ -89,9 +99,11 @@ void	store_data(t_game **game, t_lines *node)
 		get_colors(game, tmp->line);
 		if (ft_strlen(tmp->line) && is_map_start(tmp->line))
 		{
-			(*game)->map = node_to_map(&tmp);
+			(*game)->s_map.map = node_to_map(&tmp);
 			break ;
 		}
 		tmp = tmp->next;
 	}
+	(*game)->s_map.width = ft_strlen((*game)->s_map.map[0]);
+	(*game)->s_map.height = get_map_height((*game)->s_map.map);
 }

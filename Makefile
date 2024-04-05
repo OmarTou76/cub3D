@@ -8,7 +8,7 @@ LIBFT_DIR = libft
 
 MLX_DIR = ./MLX42
 MLX_LIB = $(MLX_DIR)/build/libmlx42.a
-MLX_FLAGS = -L$(MLX_DIR) -ldl -lglfw -pthread -lm
+MLX_FLAGS = -L$(MLX_DIR)/build -lmlx42 -ldl -lglfw -pthread -lm
 
 INCLUDES = -I./inc -I./libft/inc -I$(MLX_DIR)
 

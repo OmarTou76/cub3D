@@ -6,7 +6,7 @@
 /*   By: ymeziane <ymeziane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 16:11:28 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/04/04 14:39:17 by ymeziane         ###   ########.fr       */
+/*   Updated: 2024/04/05 11:24:39 by ymeziane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
+
+# define TILE_SIZE 32
 
 typedef struct s_fields
 {
@@ -45,11 +47,18 @@ typedef struct s_texture_paths
 	char			*ea;
 }					t_texture_paths;
 
+typedef struct s_map
+{
+	char			**map;
+	unsigned int	height;
+	unsigned int	width;
+}					t_map;
+
 typedef struct s_game
 {
 	t_texture_paths	*paths;
 	t_colors		*colors;
-	char			**map;
+	t_map			s_map;
 }					t_game;
 
 typedef struct s_lines
