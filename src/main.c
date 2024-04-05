@@ -6,7 +6,7 @@
 /*   By: ymeziane <ymeziane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 15:22:57 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/04/05 11:27:23 by ymeziane         ###   ########.fr       */
+/*   Updated: 2024/04/05 15:58:21 by ymeziane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int	main(int argc, char const *argv[])
 {
 	t_lines	*node;
 	t_game	*game;
-	mlx_t	*mlx;
+	// mlx_t	*mlx;
 
 	if (!check_input(argv[0], argv[1], argc))
 		return (1);
@@ -71,13 +71,13 @@ int	main(int argc, char const *argv[])
 	store_data(&game, node);
 	printf("game->s_map.width = %d\n", game->s_map.width);
 	printf("game->s_map.height = %d\n", game->s_map.height);
-	mlx = mlx_init(game->s_map.width * TILE_SIZE, game->s_map.height * TILE_SIZE, "cub3D", true);
-	if(!mlx)
-		return(0);
-	mlx_loop(mlx);
+	// mlx = mlx_init(game->s_map.width * TILE_SIZE, game->s_map.height * TILE_SIZE, "cub3D", true);
+	// if(!mlx)
+	// 	return(0);
+	// mlx_loop(mlx);
 	print_lines(node);
 	print_data(game);
 	free_nodes(node);
 	free_game(game);
-	mlx_terminate(mlx);
+	// mlx_terminate(mlx);
 }
