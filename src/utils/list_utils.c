@@ -3,14 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   list_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ymeziane <ymeziane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: omar <omar@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 15:27:15 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/04/03 16:08:36 by ymeziane         ###   ########.fr       */
+/*   Updated: 2024/04/07 13:51:35 by omar             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/cub3D.h"
+
+void	free_vecs(t_vec *vecs)
+{
+	t_vec	*tmp;
+
+	while (vecs)
+	{
+		tmp = vecs->next;
+		free(vecs);
+		vecs = tmp;
+	}
+}
 
 static void	save_line(t_lines **node, char *line)
 {

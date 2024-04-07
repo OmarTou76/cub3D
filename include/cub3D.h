@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ymeziane <ymeziane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: omar <omar@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 16:11:28 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/04/05 11:24:39 by ymeziane         ###   ########.fr       */
+/*   Updated: 2024/04/07 13:53:46 by omar             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,13 @@ typedef struct s_lines
 	struct s_lines	*next;
 }					t_lines;
 
+typedef struct s_vec
+{
+	int				y;
+	int				x;
+	struct s_vec	*next;
+}					t_vec;
+
 ///////////////////////////////////////////
 //	CHECKER FOLDER
 
@@ -82,12 +89,17 @@ int					trim_compare(char *base, char *to_compare, size_t size);
 int					check_fields(char *line, t_fields *fields);
 //	MAP_CHECKER
 int					is_valid_map(t_lines **node);
+//	SPACES_CHECKER
+int					is_spaces_outside(t_vec **vecs, char **m, int y, int x);
 ///////////////////////////////////////////
 // UTILS FOLDER
 
 // LIST UTILS
 t_lines				*save_data(char const *filename);
 void				free_nodes(t_lines *node);
+void				add_vec(t_vec **vecs, int y, int x);
+bool				has_vec(t_vec *vec, int y, int x);
+void				free_vecs(t_vec *vecs);
 ///////////////////////////////////////////
 // PARSE
 void				store_data(t_game **game, t_lines *node);

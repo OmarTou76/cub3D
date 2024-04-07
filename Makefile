@@ -7,8 +7,13 @@ LIBFT = libft/libft.a
 LIBFT_DIR = libft
 
 MLX_DIR = ./MLX42
+ifeq ($(shell uname -m), arm64)
+	MLX_FLAGS = -L$(MLX_DIR) MLX42/build/libmlx42.a -Iinclude -lglfw
+else
+	MLX_FLAGS = -L$(MLX_DIR) -ldl -lglfw -pthread -lm
+endif
+
 MLX_LIB = $(MLX_DIR)/build/libmlx42.a
-MLX_FLAGS = -L$(MLX_DIR)/build -lmlx42 -ldl -lglfw -pthread -lm
 
 INCLUDES = -I./inc -I./libft/inc -I$(MLX_DIR)
 
@@ -17,7 +22,7 @@ OBJ_DIR = obj
 
 SRC_FILES = main parse\
 	utils/list_utils \
-	checker/checker checker/map_checker checker/fields_checker \
+	checker/checker checker/map_checker checker/fields_checker checker/spaces_checker \
 
 SRC = $(addprefix $(SRC_DIR)/, $(addsuffix .c, $(SRC_FILES)))
 OBJ = $(addprefix $(OBJ_DIR)/, $(addsuffix .o, $(SRC_FILES)))
@@ -31,7 +36,7 @@ all: $(NAME)
 $(NAME): $(OBJ) $(MLX_LIB)
 	@make -C $(LIBFT_DIR)
 	@echo "$(GREEN)Compiling $(NAME)...$(NO_COLOR)"
-	@$(CC) $(CFLAGS) $(INCLUDES) -o $(NAME) $(OBJ) $(LIBFT) $(MLX_FLAGS)
+	@$(CC) $(CFLAGS) $(INCLUDES) -o $(NAME) $(OBJ) $(LIBFT) $(MLX_FLAGS) -g
 	@echo "$(GREEN)$(NAME) compiled$(NO_COLOR)"
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
