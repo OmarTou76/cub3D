@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omar <omar@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: ymeziane <ymeziane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 16:11:28 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/04/07 13:53:46 by omar             ###   ########.fr       */
+/*   Updated: 2024/04/07 21:54:52 by ymeziane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,18 +47,27 @@ typedef struct s_texture_paths
 	char			*ea;
 }					t_texture_paths;
 
+typedef struct s_point
+{
+	int				x;
+	int				y;
+}					t_point;
+
 typedef struct s_map
 {
 	char			**map;
 	unsigned int	height;
 	unsigned int	width;
+	t_point			player;
 }					t_map;
 
 typedef struct s_game
 {
+	mlx_t			*mlx;
 	t_texture_paths	*paths;
 	t_colors		*colors;
 	t_map			s_map;
+	mlx_image_t		*img_player;
 }					t_game;
 
 typedef struct s_lines
@@ -103,5 +112,9 @@ void				free_vecs(t_vec *vecs);
 ///////////////////////////////////////////
 // PARSE
 void				store_data(t_game **game, t_lines *node);
+
+///////////////////////////////////////////
+// DRAW MAP 2D
+int					draw_map_2D(t_game *game);
 
 #endif

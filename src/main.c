@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omar <omar@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: ymeziane <ymeziane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 15:22:57 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/04/07 13:59:05 by omar             ###   ########.fr       */
+/*   Updated: 2024/04/07 21:53:41 by ymeziane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,11 +57,33 @@ static void	free_game(t_game *game)
 	free(game);
 }
 
+
+void	ft_moove_player(mlx_key_data_t key, void *param)
+{
+	t_game	*game;
+
+	game = (t_game *)param;
+	if (key.action == MLX_PRESS)
+	{
+		if (key.key == MLX_KEY_ESCAPE)
+			mlx_close_window(game->mlx);
+		if (key.key == MLX_KEY_UP)
+			game->img_player->instances[0].y -= TILE_SIZE;
+		if (key.key == MLX_KEY_DOWN)
+			game->img_player->instances[0].y += TILE_SIZE;
+		if (key.key == MLX_KEY_LEFT)
+			game->img_player->instances[0].x -= TILE_SIZE;
+		if (key.key == MLX_KEY_RIGHT)
+			game->img_player->instances[0].x += TILE_SIZE;
+	}
+}
+
+
+
 int	main(int argc, char const *argv[])
 {
 	t_lines	*node;
 	t_game	*game;
-	mlx_t	*mlx;
 
 	if (!check_input(argv[0], argv[1], argc))
 		return (1);
@@ -71,14 +93,19 @@ int	main(int argc, char const *argv[])
 	store_data(&game, node);
 	printf("game->s_map.width = %d\n", game->s_map.width);
 	printf("game->s_map.height = %d\n", game->s_map.height);
-	mlx = mlx_init(game->s_map.width * TILE_SIZE, game->s_map.height
+	printf("game->s_map.player.x = %d\n", game->s_map.player.x);
+	printf("game->s_map.player.y = %d\n", game->s_map.player.y);
+	game->mlx = mlx_init(game->s_map.width * TILE_SIZE, game->s_map.height
 			* TILE_SIZE, "cub3D", true);
-	if (!mlx)
+	if (!game->mlx)
 		return (0);
-	mlx_loop(mlx);
+	draw_map_2D(game);
+	mlx_key_hook(game->mlx, ft_moove_player, game);
+	mlx_loop(game->mlx);
 	print_lines(node);
 	print_data(game);
 	free_nodes(node);
 	free_game(game);
-	mlx_terminate(mlx);
+	mlx_terminate(game->mlx);
+	return (EXIT_SUCCESS);
 }

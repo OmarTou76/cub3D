@@ -6,7 +6,7 @@
 /*   By: ymeziane <ymeziane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 15:25:15 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/04/04 15:07:10 by ymeziane         ###   ########.fr       */
+/*   Updated: 2024/04/06 20:14:19 by ymeziane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,32 @@ size_t	get_map_height(char **map)
 	return (height);
 }
 
+t_point	*get_player_position(char **map)
+{
+	int		i;
+	int		j;
+	t_point	*player;
+
+	player = malloc(sizeof(t_point));
+	i = 0;
+	while (map[i])
+	{
+		j = 0;
+		while (map[i][j])
+		{
+			if (ft_strchr("NSWE", map[i][j]))
+			{
+				player->x = j;
+				player->y = i;
+				return (player);
+			}
+			j++;
+		}
+		i++;
+	}
+	return (NULL);
+}
+
 void	store_data(t_game **game, t_lines *node)
 {
 	t_lines	*tmp;
@@ -106,4 +132,5 @@ void	store_data(t_game **game, t_lines *node)
 	}
 	(*game)->s_map.width = ft_strlen((*game)->s_map.map[0]);
 	(*game)->s_map.height = get_map_height((*game)->s_map.map);
+	(*game)->s_map.player = *get_player_position((*game)->s_map.map);
 }

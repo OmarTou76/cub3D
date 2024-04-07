@@ -7,12 +7,7 @@ LIBFT = libft/libft.a
 LIBFT_DIR = libft
 
 MLX_DIR = ./MLX42
-ifeq ($(shell uname -m), arm64)
-	MLX_FLAGS = -L$(MLX_DIR) MLX42/build/libmlx42.a -Iinclude -lglfw
-else
-	MLX_FLAGS = -L$(MLX_DIR) -ldl -lglfw -pthread -lm
-endif
-
+MLX_FLAGS = -L$(MLX_DIR) MLX42/build/libmlx42.a -Iinclude -lglfw
 MLX_LIB = $(MLX_DIR)/build/libmlx42.a
 
 INCLUDES = -I./inc -I./libft/inc -I$(MLX_DIR)
@@ -20,7 +15,7 @@ INCLUDES = -I./inc -I./libft/inc -I$(MLX_DIR)
 SRC_DIR = src
 OBJ_DIR = obj
 
-SRC_FILES = main parse\
+SRC_FILES = main parse draw_map2d\
 	utils/list_utils \
 	checker/checker checker/map_checker checker/fields_checker checker/spaces_checker \
 

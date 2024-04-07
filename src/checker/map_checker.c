@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_checker.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omar <omar@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: ymeziane <ymeziane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 15:24:25 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/04/07 13:52:42 by omar             ###   ########.fr       */
+/*   Updated: 2024/04/07 20:19:29 by ymeziane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ static int	check_columns(char **m)
 	while (m[0][x])
 	{
 		y = 0;
-		while (m[y][x] == ' ')
+		while (m[y][x] && m[y][x] == ' ')
 			y++;
 		if (m[y][x] != '1')
 			return (0);
