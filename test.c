@@ -79,9 +79,9 @@ int32_t main(void)
 		return(EXIT_FAILURE);
 	}
 	
-    // mlx_put_pixel(image, 90, 90, ft_pixel(0xFF, 0xFF, 0xFF, 0xFF));
-	// mlx_loop_hook(mlx, ft_randomize, mlx);
-	// mlx_loop_hook(mlx, ft_hook, mlx);
+    mlx_put_pixel(image, 90, 90, ft_pixel(0xFF, 0xFF, 0xFF, 0xFF));
+	mlx_loop_hook(mlx, ft_randomize, mlx);
+	mlx_loop_hook(mlx, ft_hook, mlx);
 
 	mlx_loop(mlx);
 	mlx_terminate(mlx);

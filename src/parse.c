@@ -6,7 +6,7 @@
 /*   By: ymeziane <ymeziane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 15:25:15 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/04/06 20:14:19 by ymeziane         ###   ########.fr       */
+/*   Updated: 2024/04/08 17:54:08 by ymeziane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ t_point	*get_player_position(char **map)
 	int		j;
 	t_point	*player;
 
-	player = malloc(sizeof(t_point));
+	player = NULL;
 	i = 0;
 	while (map[i])
 	{
@@ -100,6 +100,9 @@ t_point	*get_player_position(char **map)
 		{
 			if (ft_strchr("NSWE", map[i][j]))
 			{
+				player = malloc(sizeof(t_point));
+				if (player == NULL)
+					return (NULL);
 				player->x = j;
 				player->y = i;
 				return (player);
@@ -108,6 +111,8 @@ t_point	*get_player_position(char **map)
 		}
 		i++;
 	}
+	 if (player != NULL)
+        free(player);
 	return (NULL);
 }
 

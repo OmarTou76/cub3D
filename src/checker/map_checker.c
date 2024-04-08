@@ -6,7 +6,7 @@
 /*   By: ymeziane <ymeziane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 15:24:25 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/04/07 20:19:29 by ymeziane         ###   ########.fr       */
+/*   Updated: 2024/04/08 16:54:59 by ymeziane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,8 @@ static int	check_columns(char **m)
 			return (0);
 		while (m[y])
 		{
-			if ((!m[y + 1] || !m[y + 1][x] || m[y + 1][x] == ' ')
-				&& m[y][x] == '0')
+			if ((!m[y + 1] || (int)ft_strlen(m[y + 1]) <= x || m[y + 1][x] == ' ')
+				&& ((int)ft_strlen(m[y]) > x && m[y][x] == '0'))
 				return (0);
 			y++;
 		}

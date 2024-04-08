@@ -6,7 +6,7 @@
 /*   By: ymeziane <ymeziane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 15:22:57 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/04/07 21:53:41 by ymeziane         ###   ########.fr       */
+/*   Updated: 2024/04/08 17:19:04 by ymeziane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,13 +49,16 @@ static void	print_lines(t_lines *tmp)
 	}
 }
 
-static void	free_game(t_game *game)
-{
-	free(game->colors);
-	free(game->paths);
-	free(game->s_map.map);
-	free(game);
+static void free_game(t_game *game) {
+    if (game != NULL)
+	{
+        free(game->s_map.map);
+        free(game->colors);
+        free(game->paths);
+        free(game);
+    }
 }
+
 
 
 void	ft_moove_player(mlx_key_data_t key, void *param)
@@ -105,7 +108,7 @@ int	main(int argc, char const *argv[])
 	print_lines(node);
 	print_data(game);
 	free_nodes(node);
-	free_game(game);
 	mlx_terminate(game->mlx);
+	free_game(game);
 	return (EXIT_SUCCESS);
 }
