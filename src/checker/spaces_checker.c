@@ -1,4 +1,16 @@
-#include "../../include/cub3D.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   spaces_checker.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ymeziane <ymeziane@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/04/09 14:24:02 by ymeziane          #+#    #+#             */
+/*   Updated: 2024/04/09 14:28:29 by ymeziane         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "cub3D.h"
 
 bool	has_vec(t_vec *vec, int y, int x)
 {
@@ -52,10 +64,10 @@ void	fill_directions(int d[4][2])
 
 int	is_spaces_outside(t_vec **vecs, char **m, int y, int x)
 {
-	int i;
-	int dy;
-	int dx;
-	int directions[4][2];
+	int	i;
+	int	dy;
+	int	dx;
+	int	directions[4][2];
 
 	if (!m[y] || !m[y][x])
 		return (1);

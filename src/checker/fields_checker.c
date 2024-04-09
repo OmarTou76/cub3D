@@ -6,11 +6,11 @@
 /*   By: ymeziane <ymeziane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 15:23:08 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/04/04 15:16:15 by ymeziane         ###   ########.fr       */
+/*   Updated: 2024/04/09 14:25:37 by ymeziane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/cub3D.h"
+#include "cub3D.h"
 
 void	init_fields(t_fields *f)
 {
@@ -70,10 +70,10 @@ static int	is_valid_rgb_data(char *line)
 	return (valid_data);
 }
 
-bool valid_texture_path(char *line)
+bool	valid_texture_path(char *line)
 {
 	int	i;
-	int fd;
+	int	fd;
 
 	i = 0;
 	while (*line && *line == ' ')
@@ -83,11 +83,11 @@ bool valid_texture_path(char *line)
 		line++;
 	if (!(*line))
 		return (0);
-	while(line[i] && line[i] != ' ')
+	while (line[i] && line[i] != ' ')
 		i++;
 	line[i] = '\0';
 	fd = open(line, O_RDONLY);
-	if(fd == -1)
+	if (fd == -1)
 		return (0);
 	close(fd);
 	return (1);

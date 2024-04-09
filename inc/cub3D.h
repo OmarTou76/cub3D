@@ -6,7 +6,7 @@
 /*   By: ymeziane <ymeziane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 16:11:28 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/04/08 15:27:46 by ymeziane         ###   ########.fr       */
+/*   Updated: 2024/04/09 14:29:43 by ymeziane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include "../MLX42/include/MLX42/MLX42.h"
 # include "../libft/inc/libft.h"
 # include <fcntl.h>
+# include <math.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
@@ -61,13 +62,22 @@ typedef struct s_map
 	t_point			player;
 }					t_map;
 
+typedef struct s_player
+{
+	t_point			pos;
+	double			delta_x;
+	double			delta_y;
+	double			angle;
+	mlx_image_t		*img;
+}					t_player;
+
 typedef struct s_game
 {
 	mlx_t			*mlx;
 	t_texture_paths	*paths;
 	t_colors		*colors;
 	t_map			s_map;
-	mlx_image_t		*img_player;
+	t_player		*player;
 }					t_game;
 
 typedef struct s_lines
@@ -109,12 +119,21 @@ void				free_nodes(t_lines *node);
 void				add_vec(t_vec **vecs, int y, int x);
 bool				has_vec(t_vec *vec, int y, int x);
 void				free_vecs(t_vec *vecs);
+
+// PRINT UTILS
+void				print_data(t_game *game);
+void				print_lines(t_lines *tmp);
 ///////////////////////////////////////////
 // PARSE
 void				store_data(t_game **game, t_lines *node);
-
 ///////////////////////////////////////////
 // DRAW MAP 2D
-int					draw_map_2D(t_game *game);
+int					draw_map2d(t_game *game);
+///////////////////////////////////////////
+// FREE
+void				free_game(t_game *game);
+///////////////////////////////////////////
+// HOOK
+void				ft_moove_player(mlx_key_data_t key, void *param);
 
 #endif

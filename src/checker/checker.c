@@ -6,11 +6,11 @@
 /*   By: ymeziane <ymeziane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 15:23:42 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/04/05 15:02:05 by ymeziane         ###   ########.fr       */
+/*   Updated: 2024/04/09 14:23:45 by ymeziane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/cub3D.h"
+#include "cub3D.h"
 
 static int	get_map_height(t_lines *node)
 {

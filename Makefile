@@ -15,8 +15,8 @@ INCLUDES = -I./inc -I./libft/inc -I$(MLX_DIR)
 SRC_DIR = src
 OBJ_DIR = obj
 
-SRC_FILES = main parse draw_map2d\
-	utils/list_utils \
+SRC_FILES = main parse draw_map2d hook free\
+	utils/list_utils utils/print_utils \
 	checker/checker checker/map_checker checker/fields_checker checker/spaces_checker \
 
 SRC = $(addprefix $(SRC_DIR)/, $(addsuffix .c, $(SRC_FILES)))

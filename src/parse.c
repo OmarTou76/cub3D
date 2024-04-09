@@ -6,11 +6,11 @@
 /*   By: ymeziane <ymeziane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 15:25:15 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/04/08 17:54:08 by ymeziane         ###   ########.fr       */
+/*   Updated: 2024/04/09 14:25:18 by ymeziane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/cub3D.h"
+#include "cub3D.h"
 
 static char	*trimed_path(char *line)
 {
@@ -85,11 +85,11 @@ size_t	get_map_height(char **map)
 	return (height);
 }
 
-t_point	*get_player_position(char **map)
+t_player	*get_info_player(char **map)
 {
-	int		i;
-	int		j;
-	t_point	*player;
+	int			i;
+	int			j;
+	t_player	*player;
 
 	player = NULL;
 	i = 0;
@@ -100,19 +100,21 @@ t_point	*get_player_position(char **map)
 		{
 			if (ft_strchr("NSWE", map[i][j]))
 			{
-				player = malloc(sizeof(t_point));
+				player = malloc(sizeof(t_player));
 				if (player == NULL)
 					return (NULL);
-				player->x = j;
-				player->y = i;
+				player->pos.x = j;
+				player->pos.y = i;
+				player->delta_x = 0;
+				player->delta_y = 0;
 				return (player);
 			}
 			j++;
 		}
 		i++;
 	}
-	 if (player != NULL)
-        free(player);
+	if (player != NULL)
+		free(player);
 	return (NULL);
 }
 
@@ -137,5 +139,5 @@ void	store_data(t_game **game, t_lines *node)
 	}
 	(*game)->s_map.width = ft_strlen((*game)->s_map.map[0]);
 	(*game)->s_map.height = get_map_height((*game)->s_map.map);
-	(*game)->s_map.player = *get_player_position((*game)->s_map.map);
+	(*game)->player = get_info_player((*game)->s_map.map);
 }

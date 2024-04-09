@@ -6,11 +6,11 @@
 /*   By: ymeziane <ymeziane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 15:24:25 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/04/08 16:54:59 by ymeziane         ###   ########.fr       */
+/*   Updated: 2024/04/09 14:28:45 by ymeziane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/cub3D.h"
+#include "cub3D.h"
 
 static int	check_lines(char **m)
 {
@@ -58,8 +58,9 @@ static int	check_columns(char **m)
 			return (0);
 		while (m[y])
 		{
-			if ((!m[y + 1] || (int)ft_strlen(m[y + 1]) <= x || m[y + 1][x] == ' ')
-				&& ((int)ft_strlen(m[y]) > x && m[y][x] == '0'))
+			if ((!m[y + 1] || (int)ft_strlen(m[y + 1]) <= x || m[y
+						+ 1][x] == ' ') && ((int)ft_strlen(m[y]) > x
+						&& m[y][x] == '0'))
 				return (0);
 			y++;
 		}
