@@ -21,7 +21,7 @@
 # include <stdlib.h>
 # include <unistd.h>
 
-# define TILE_SIZE 100
+# define TILE_SIZE 48
 # define PLAYER_SIZE TILE_SIZE / 6
 # define LINE_WIDTH PLAYER_SIZE / 4
 # define LINE_HEIGHT TILE_SIZE * 2
