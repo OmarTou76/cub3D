@@ -6,7 +6,7 @@
 /*   By: ymeziane <ymeziane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 16:11:28 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/04/09 17:00:24 by ymeziane         ###   ########.fr       */
+/*   Updated: 2024/04/09 19:32:12 by ymeziane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 # define TILE_SIZE 100
 # define PLAYER_SIZE TILE_SIZE / 6
 # define LINE_WIDTH PLAYER_SIZE / 4
-# define LINE_HEIGHT TILE_SIZE / 2
+# define LINE_HEIGHT TILE_SIZE * 2
 
 typedef struct s_fields
 {
@@ -118,10 +118,9 @@ int					is_spaces_outside(t_vec **vecs, char **m, int y, int x);
 
 // LIST UTILS
 t_lines				*save_data(char const *filename);
-void				free_nodes(t_lines *node);
 void				add_vec(t_vec **vecs, int y, int x);
 bool				has_vec(t_vec *vec, int y, int x);
-void				free_vecs(t_vec *vecs);
+float				radian_to_degree(float angle);
 
 // PRINT UTILS
 void				print_data(t_game *game);
@@ -132,9 +131,14 @@ void				store_data(t_game **game, t_lines *node);
 ///////////////////////////////////////////
 // DRAW MAP 2D
 int					draw_map2d(t_game *game);
+void				color_line(mlx_image_t *img, uint32_t color,
+						t_player *player);
+int32_t				ft_pixel(int32_t r, int32_t g, int32_t b, int32_t a);
 ///////////////////////////////////////////
 // FREE
 void				free_game(t_game *game);
+void				free_nodes(t_lines *node);
+void				free_vecs(t_vec *vecs);
 ///////////////////////////////////////////
 // HOOK
 void				ft_moove_player(mlx_key_data_t key, void *param);

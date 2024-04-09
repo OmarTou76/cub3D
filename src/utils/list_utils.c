@@ -6,22 +6,15 @@
 /*   By: ymeziane <ymeziane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 15:27:15 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/04/09 14:19:42 by ymeziane         ###   ########.fr       */
+/*   Updated: 2024/04/09 19:27:22 by ymeziane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-void	free_vecs(t_vec *vecs)
+float	radian_to_degree(float angle)
 {
-	t_vec	*tmp;
-
-	while (vecs)
-	{
-		tmp = vecs->next;
-		free(vecs);
-		vecs = tmp;
-	}
+	return (angle * (180 / M_PI));
 }
 
 static void	save_line(t_lines **node, char *line)
@@ -62,17 +55,4 @@ t_lines	*save_data(char const *filename)
 	}
 	close(fd);
 	return (node);
-}
-
-void	free_nodes(t_lines *node)
-{
-	t_lines	*tmp;
-
-	while (node)
-	{
-		tmp = node->next;
-		free(node->line);
-		free(node);
-		node = tmp;
-	}
 }

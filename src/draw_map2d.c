@@ -6,13 +6,13 @@
 /*   By: ymeziane <ymeziane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/07 21:53:03 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/04/09 17:08:03 by ymeziane         ###   ########.fr       */
+/*   Updated: 2024/04/09 22:05:50 by ymeziane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-static int32_t	ft_pixel(int32_t r, int32_t g, int32_t b, int32_t a)
+int32_t	ft_pixel(int32_t r, int32_t g, int32_t b, int32_t a)
 {
 	return (r << 24 | g << 16 | b << 8 | a);
 }
@@ -42,8 +42,9 @@ static mlx_image_t	*draw_player(mlx_t *mlx, t_player *player)
 
 	color = ft_pixel(255, 0, 0, 0xFF);
 	img = mlx_new_image(mlx, PLAYER_SIZE, PLAYER_SIZE);
-	if (!img || (mlx_image_to_window(mlx, img, player->pos.x * TILE_SIZE + TILE_SIZE / 2 - PLAYER_SIZE / 2
-		, player->pos.y * TILE_SIZE + TILE_SIZE / 2 - PLAYER_SIZE / 2) == -1))
+	if (!img || (mlx_image_to_window(mlx, img, player->pos.x * TILE_SIZE
+				+ TILE_SIZE / 2 - PLAYER_SIZE / 2, player->pos.y * TILE_SIZE
+				+ TILE_SIZE / 2 - PLAYER_SIZE / 2) == -1))
 		return (printf("Error\n"), NULL);
 	color_img(img, color, PLAYER_SIZE, PLAYER_SIZE);
 	img->instances[0].z = 1;
@@ -80,25 +81,71 @@ static mlx_image_t	*draw_void(mlx_t *mlx, t_point void_p)
 	return (img);
 }
 
-void color_line(mlx_image_t *img, uint32_t color, t_player *player)
+typedef struct s_line_data
 {
-	uint32_t	x;
-	uint32_t	y;
+	int				start_x;
+	int				start_y;
+	int				end_x;
+	int				end_y;
+	int				delta_x;
+	int				delta_y;
+	int				step_x;
+	int				step_y;
+	int				error;
+	int				error2;
+}					t_line_data;
 
-	y = 0;
-	while (y < TILE_SIZE - 1)
+void	initialize_line_data(t_line_data *line_data, t_player *player)
+{
+	float	angle_radians;
+
+	line_data->start_x = LINE_HEIGHT;
+	line_data->start_y = LINE_HEIGHT;
+	angle_radians = player->angle * M_PI / 180.0;
+	line_data->end_x = line_data->start_x + (int)(LINE_HEIGHT
+			* cos(angle_radians));
+	line_data->end_y = line_data->start_y - (int)(LINE_HEIGHT
+			* sin(angle_radians));
+	line_data->delta_x = abs(line_data->end_x - line_data->start_x);
+	line_data->delta_y = abs(line_data->end_y - line_data->start_y);
+	if(line_data->start_x < line_data->end_x)
+		line_data->step_x = 1;
+	else
+		line_data->step_x = -1;
+	if(line_data->start_y < line_data->end_y)
+		line_data->step_y = 1;
+	else
+		line_data->step_y = -1;
+	line_data->error = line_data->delta_x - line_data->delta_y;
+}
+
+void	color_line(mlx_image_t *img, uint32_t color, t_player *player)
+{
+	t_line_data	line_data;
+
+	img->instances[0].x = player->img_player->instances[0].x - LINE_HEIGHT
+		+ player->img_player->width / 2;
+	img->instances[0].y = player->img_player->instances[0].y - LINE_HEIGHT
+		+ player->img_player->height / 2;
+	color_img(img, 0, img->width, img->height);
+	initialize_line_data(&line_data, player);
+	while ((line_data.start_x != line_data.end_x
+			|| line_data.start_y != line_data.end_y) && (line_data.start_x >= 0
+			&& line_data.start_x < (int)img->width && line_data.start_y >= 0
+			&& line_data.start_y < (int)img->height))
 	{
-		x = 0;
-		while (x < TILE_SIZE - 1)
+		mlx_put_pixel(img, line_data.start_x, line_data.start_y, color);
+		line_data.error2 = line_data.error * 2;
+		if (line_data.error2 > -line_data.delta_y)
 		{
-			if((x + (player->pos.x * TILE_SIZE) >= player->img_player->instances->x + player->img_player->width / 2 - LINE_WIDTH / 2 - 1)
-				&& (x + (player->pos.x * TILE_SIZE) <= player->img_player->instances->x + player->img_player->width / 2 - 1)
-				&& (y + (player->pos.y * TILE_SIZE) >= player->img_player->instances->y + player->img_player->height / 2 - LINE_HEIGHT)
-				&& (y + (player->pos.y * TILE_SIZE) <= player->img_player->instances->y + player->img_player->height / 2))
-					mlx_put_pixel(img, x, y, color);
-			x++;
+			line_data.error -= line_data.delta_y;
+			line_data.start_x += line_data.step_x;
 		}
-		y++;
+		if (line_data.error2 < line_data.delta_x)
+		{
+			line_data.error += line_data.delta_x;
+			line_data.start_y += line_data.step_y;
+		}
 	}
 }
 
@@ -108,9 +155,14 @@ static mlx_image_t	*draw_line(mlx_t *mlx, t_player *player)
 	uint32_t	color;
 
 	color = ft_pixel(255, 0, 0, 0xFF);
-	img = mlx_new_image(mlx, TILE_SIZE, TILE_SIZE);
-	if (!img || (mlx_image_to_window(mlx, img, player->pos.x * TILE_SIZE + 1, player->pos.y * TILE_SIZE + 1) == -1))
+	img = mlx_new_image(mlx, LINE_HEIGHT * 2, LINE_HEIGHT * 2);
+	if (!img || (mlx_image_to_window(mlx, img,
+				player->img_player->instances[0].x - LINE_HEIGHT
+				+ player->img_player->width / 2,
+				player->img_player->instances[0].y - LINE_HEIGHT
+				+ player->img_player->height / 2) == -1))
 		return (printf("Error\n"), NULL);
+	// color_img(img, color, LINE_HEIGHT * 2, LINE_HEIGHT * 2);
 	color_line(img, color, player);
 	img->instances[0].z = 3;
 	return (img);
