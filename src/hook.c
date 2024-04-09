@@ -6,7 +6,7 @@
 /*   By: ymeziane <ymeziane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 14:17:33 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/04/09 14:29:24 by ymeziane         ###   ########.fr       */
+/*   Updated: 2024/04/09 14:57:46 by ymeziane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,13 +55,13 @@ void	ft_moove_player(mlx_key_data_t key, void *param)
 		if (key.key == MLX_KEY_ESCAPE)
 			mlx_close_window(game->mlx);
 		if (key.key == MLX_KEY_UP)
-			game->player->img->instances[0].y -= TILE_SIZE / 10;
+			game->player->img_player->instances[0].y -= TILE_SIZE / 10;
 		if (key.key == MLX_KEY_DOWN)
-			game->player->img->instances[0].y += TILE_SIZE / 10;
+			game->player->img_player->instances[0].y += TILE_SIZE / 10;
 		if (key.key == MLX_KEY_LEFT)
-			game->player->img->instances[0].x -= TILE_SIZE / 10;
+			game->player->img_player->instances[0].x -= TILE_SIZE / 10;
 		if (key.key == MLX_KEY_RIGHT)
-			game->player->img->instances[0].x += TILE_SIZE / 10;
+			game->player->img_player->instances[0].x += TILE_SIZE / 10;
 		if (key.key == MLX_KEY_Z || key.key == MLX_KEY_S || key.key == MLX_KEY_Q
 			|| key.key == MLX_KEY_D)
 			ft_turn_player(key, param);

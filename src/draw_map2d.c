@@ -6,7 +6,7 @@
 /*   By: ymeziane <ymeziane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/07 21:53:03 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/04/09 14:27:52 by ymeziane         ###   ########.fr       */
+/*   Updated: 2024/04/09 15:36:13 by ymeziane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,15 +35,15 @@ static void	color_img(mlx_image_t *img, uint32_t color, int width, int height)
 	}
 }
 
-static mlx_image_t	*draw_player(mlx_t *mlx, t_point player)
+static mlx_image_t	*draw_player(mlx_t *mlx, t_player *player)
 {
 	mlx_image_t	*img;
 	uint32_t	color;
 
 	color = ft_pixel(255, 0, 0, 0xFF);
 	img = mlx_new_image(mlx, TILE_SIZE / 4, TILE_SIZE / 4);
-	if (!img || (mlx_image_to_window(mlx, img, player.x * TILE_SIZE + TILE_SIZE
-				/ 3, player.y * TILE_SIZE + +TILE_SIZE / 3) == -1))
+	if (!img || (mlx_image_to_window(mlx, img, player->pos.x * TILE_SIZE + TILE_SIZE
+				/ 3, player->pos.y * TILE_SIZE + TILE_SIZE / 3) == -1))
 		return (printf("Error\n"), NULL);
 	color_img(img, color, TILE_SIZE / 4, TILE_SIZE / 4);
 	img->instances[0].z = 1;
@@ -80,6 +80,20 @@ static mlx_image_t	*draw_void(mlx_t *mlx, t_point void_p)
 	return (img);
 }
 
+static mlx_image_t	*draw_line(mlx_t *mlx, t_player *player)
+{
+	mlx_image_t	*img;
+	uint32_t	color;
+
+	color = ft_pixel(255, 0, 0, 0xFF);
+	img = mlx_new_image(mlx, TILE_SIZE, TILE_SIZE);
+	if (!img || (mlx_image_to_window(mlx, img, player->img_player->instances->x + player->img_player->width / 2 - (LINE_WIDTH / 2), player->img_player->instances->y + player->img_player->height / 2) == -1))
+		return (printf("Error\n"), NULL);
+	color_img(img, color, LINE_WIDTH, LINE_HEIGHT);
+	img->instances[0].z = 3;
+	return (img);
+}
+
 void	set_depth_img(mlx_image_t *img, int z)
 {
 	unsigned int	x;
@@ -97,7 +111,8 @@ int	draw_map2d(t_game *game)
 	unsigned int	x;
 	unsigned int	y;
 
-	game->player->img = draw_player(game->mlx, game->player->pos);
+	game->player->img_player = draw_player(game->mlx, game->player);
+	game->player->img_line = draw_line(game->mlx, game->player);
 	if (!draw_void(game->mlx, game->player->pos))
 		return (0);
 	y = 0;

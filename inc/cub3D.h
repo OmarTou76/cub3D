@@ -6,7 +6,7 @@
 /*   By: ymeziane <ymeziane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 16:11:28 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/04/09 14:29:43 by ymeziane         ###   ########.fr       */
+/*   Updated: 2024/04/09 15:36:37 by ymeziane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,9 @@
 # include <stdlib.h>
 # include <unistd.h>
 
-# define TILE_SIZE 64
+# define TILE_SIZE 100
+# define LINE_WIDTH TILE_SIZE / 15
+# define LINE_HEIGHT TILE_SIZE / 2
 
 typedef struct s_fields
 {
@@ -59,7 +61,6 @@ typedef struct s_map
 	char			**map;
 	unsigned int	height;
 	unsigned int	width;
-	t_point			player;
 }					t_map;
 
 typedef struct s_player
@@ -68,7 +69,8 @@ typedef struct s_player
 	double			delta_x;
 	double			delta_y;
 	double			angle;
-	mlx_image_t		*img;
+	mlx_image_t		*img_player;
+	mlx_image_t		*img_line;
 }					t_player;
 
 typedef struct s_game
