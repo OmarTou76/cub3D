@@ -6,7 +6,7 @@
 /*   By: ymeziane <ymeziane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 16:11:28 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/04/09 15:36:37 by ymeziane         ###   ########.fr       */
+/*   Updated: 2024/04/09 17:00:24 by ymeziane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@
 # include <unistd.h>
 
 # define TILE_SIZE 100
-# define LINE_WIDTH TILE_SIZE / 15
+# define PLAYER_SIZE TILE_SIZE / 6
+# define LINE_WIDTH PLAYER_SIZE / 4
 # define LINE_HEIGHT TILE_SIZE / 2
 
 typedef struct s_fields

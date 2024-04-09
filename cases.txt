@@ -2,3 +2,5 @@ maps/bad/forbidden.cub
 maps/bad/textures_dir.cub
 maps/bad/textures_forbidden.cub
 maps/bad/textures_not_xpm.cub
+
+make with .h

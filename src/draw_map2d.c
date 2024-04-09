@@ -6,7 +6,7 @@
 /*   By: ymeziane <ymeziane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/07 21:53:03 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/04/09 15:36:13 by ymeziane         ###   ########.fr       */
+/*   Updated: 2024/04/09 17:08:03 by ymeziane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,16 +22,16 @@ static void	color_img(mlx_image_t *img, uint32_t color, int width, int height)
 	int	x;
 	int	y;
 
-	x = 0;
-	while (x < width)
+	y = 0;
+	while (y < height)
 	{
-		y = 0;
-		while (y < height)
+		x = 0;
+		while (x < width)
 		{
 			mlx_put_pixel(img, x, y, color);
-			y++;
+			x++;
 		}
-		x++;
+		y++;
 	}
 }
 
@@ -41,11 +41,11 @@ static mlx_image_t	*draw_player(mlx_t *mlx, t_player *player)
 	uint32_t	color;
 
 	color = ft_pixel(255, 0, 0, 0xFF);
-	img = mlx_new_image(mlx, TILE_SIZE / 4, TILE_SIZE / 4);
-	if (!img || (mlx_image_to_window(mlx, img, player->pos.x * TILE_SIZE + TILE_SIZE
-				/ 3, player->pos.y * TILE_SIZE + TILE_SIZE / 3) == -1))
+	img = mlx_new_image(mlx, PLAYER_SIZE, PLAYER_SIZE);
+	if (!img || (mlx_image_to_window(mlx, img, player->pos.x * TILE_SIZE + TILE_SIZE / 2 - PLAYER_SIZE / 2
+		, player->pos.y * TILE_SIZE + TILE_SIZE / 2 - PLAYER_SIZE / 2) == -1))
 		return (printf("Error\n"), NULL);
-	color_img(img, color, TILE_SIZE / 4, TILE_SIZE / 4);
+	color_img(img, color, PLAYER_SIZE, PLAYER_SIZE);
 	img->instances[0].z = 1;
 	return (img);
 }
@@ -57,8 +57,8 @@ static mlx_image_t	*draw_wall(mlx_t *mlx, t_point wall)
 
 	color = ft_pixel(0, 0, 0, 0xFF);
 	img = mlx_new_image(mlx, TILE_SIZE, TILE_SIZE);
-	if (!img || (mlx_image_to_window(mlx, img, wall.x * TILE_SIZE - 1, wall.y
-				* TILE_SIZE - 1) == -1))
+	if (!img || (mlx_image_to_window(mlx, img, wall.x * TILE_SIZE + 1, wall.y
+				* TILE_SIZE + 1) == -1))
 		return (printf("Error\n"), NULL);
 	color_img(img, color, TILE_SIZE - 1, TILE_SIZE - 1);
 	img->instances[0].z = 2;
@@ -72,12 +72,34 @@ static mlx_image_t	*draw_void(mlx_t *mlx, t_point void_p)
 
 	color = ft_pixel(255, 255, 255, 0xFF);
 	img = mlx_new_image(mlx, TILE_SIZE, TILE_SIZE);
-	if (!img || (mlx_image_to_window(mlx, img, void_p.x * TILE_SIZE - 1,
-				void_p.y * TILE_SIZE - 1) == -1))
+	if (!img || (mlx_image_to_window(mlx, img, void_p.x * TILE_SIZE + 1,
+				void_p.y * TILE_SIZE + 1) == -1))
 		return (printf("Error\n"), NULL);
 	color_img(img, color, TILE_SIZE - 1, TILE_SIZE - 1);
 	img->instances[0].z = 0;
 	return (img);
+}
+
+void color_line(mlx_image_t *img, uint32_t color, t_player *player)
+{
+	uint32_t	x;
+	uint32_t	y;
+
+	y = 0;
+	while (y < TILE_SIZE - 1)
+	{
+		x = 0;
+		while (x < TILE_SIZE - 1)
+		{
+			if((x + (player->pos.x * TILE_SIZE) >= player->img_player->instances->x + player->img_player->width / 2 - LINE_WIDTH / 2 - 1)
+				&& (x + (player->pos.x * TILE_SIZE) <= player->img_player->instances->x + player->img_player->width / 2 - 1)
+				&& (y + (player->pos.y * TILE_SIZE) >= player->img_player->instances->y + player->img_player->height / 2 - LINE_HEIGHT)
+				&& (y + (player->pos.y * TILE_SIZE) <= player->img_player->instances->y + player->img_player->height / 2))
+					mlx_put_pixel(img, x, y, color);
+			x++;
+		}
+		y++;
+	}
 }
 
 static mlx_image_t	*draw_line(mlx_t *mlx, t_player *player)
@@ -87,9 +109,9 @@ static mlx_image_t	*draw_line(mlx_t *mlx, t_player *player)
 
 	color = ft_pixel(255, 0, 0, 0xFF);
 	img = mlx_new_image(mlx, TILE_SIZE, TILE_SIZE);
-	if (!img || (mlx_image_to_window(mlx, img, player->img_player->instances->x + player->img_player->width / 2 - (LINE_WIDTH / 2), player->img_player->instances->y + player->img_player->height / 2) == -1))
+	if (!img || (mlx_image_to_window(mlx, img, player->pos.x * TILE_SIZE + 1, player->pos.y * TILE_SIZE + 1) == -1))
 		return (printf("Error\n"), NULL);
-	color_img(img, color, LINE_WIDTH, LINE_HEIGHT);
+	color_line(img, color, player);
 	img->instances[0].z = 3;
 	return (img);
 }
