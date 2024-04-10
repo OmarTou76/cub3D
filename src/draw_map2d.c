@@ -6,7 +6,7 @@
 /*   By: ymeziane <ymeziane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/07 21:53:03 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/04/09 22:05:50 by ymeziane         ###   ########.fr       */
+/*   Updated: 2024/04/10 11:36:24 by ymeziane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static mlx_image_t	*draw_player(mlx_t *mlx, t_player *player)
 				+ TILE_SIZE / 2 - PLAYER_SIZE / 2) == -1))
 		return (printf("Error\n"), NULL);
 	color_img(img, color, PLAYER_SIZE, PLAYER_SIZE);
-	img->instances[0].z = 1;
+	img->instances[0].z = 2;
 	return (img);
 }
 
@@ -62,7 +62,7 @@ static mlx_image_t	*draw_wall(mlx_t *mlx, t_point wall)
 				* TILE_SIZE + 1) == -1))
 		return (printf("Error\n"), NULL);
 	color_img(img, color, TILE_SIZE - 1, TILE_SIZE - 1);
-	img->instances[0].z = 2;
+	img->instances[0].z = 3;
 	return (img);
 }
 
@@ -77,6 +77,20 @@ static mlx_image_t	*draw_void(mlx_t *mlx, t_point void_p)
 				void_p.y * TILE_SIZE + 1) == -1))
 		return (printf("Error\n"), NULL);
 	color_img(img, color, TILE_SIZE - 1, TILE_SIZE - 1);
+	img->instances[0].z = 1;
+	return (img);
+}
+
+static mlx_image_t	*draw_background(mlx_t *mlx)
+{
+	mlx_image_t	*img;
+	uint32_t	color;
+
+	color = ft_pixel(155, 155, 155, 0xFF);
+	img = mlx_new_image(mlx, mlx->width, mlx->height);
+	if (!img || (mlx_image_to_window(mlx, img, 0, 0) == -1))
+		return (printf("Error\n"), NULL);
+	color_img(img, color, mlx->width, mlx->height);
 	img->instances[0].z = 0;
 	return (img);
 }
@@ -164,7 +178,7 @@ static mlx_image_t	*draw_line(mlx_t *mlx, t_player *player)
 		return (printf("Error\n"), NULL);
 	// color_img(img, color, LINE_HEIGHT * 2, LINE_HEIGHT * 2);
 	color_line(img, color, player);
-	img->instances[0].z = 3;
+	img->instances[0].z = 2;
 	return (img);
 }
 
@@ -185,6 +199,7 @@ int	draw_map2d(t_game *game)
 	unsigned int	x;
 	unsigned int	y;
 
+	draw_background(game->mlx);
 	game->player->img_player = draw_player(game->mlx, game->player);
 	game->player->img_line = draw_line(game->mlx, game->player);
 	if (!draw_void(game->mlx, game->player->pos))
