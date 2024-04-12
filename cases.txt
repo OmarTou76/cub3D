@@ -4,3 +4,6 @@ maps/bad/textures_forbidden.cub
 maps/bad/textures_not_xpm.cub
 
 make with .h
+D direction
+collision not clean (sud)
+La ligne doit etre egal a la valeur la plus grande entre la hauteur et la largeur de la mlx

@@ -6,7 +6,7 @@
 /*   By: ymeziane <ymeziane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/07 21:53:03 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/04/12 16:24:28 by ymeziane         ###   ########.fr       */
+/*   Updated: 2024/04/12 17:45:31 by ymeziane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,51 +48,6 @@ static mlx_image_t	*draw_player(mlx_t *mlx, t_player *player)
 		return (printf("Error\n"), NULL);
 	color_img(img, color, PLAYER_SIZE, PLAYER_SIZE);
 	img->instances[0].z = 2;
-	return (img);
-}
-
-static mlx_image_t	*draw_wall(mlx_t *mlx, t_point wall)
-{
-	mlx_image_t	*img;
-	uint32_t	color;
-
-	color = ft_pixel(0, 0, 0, 0xFF);
-	img = mlx_new_image(mlx, TILE_SIZE, TILE_SIZE);
-	if (!img || (mlx_image_to_window(mlx, img, wall.x * TILE_SIZE + 1, wall.y
-				* TILE_SIZE + 1) == -1))
-		return (printf("Error\n"), NULL);
-	color_img(img, color, TILE_SIZE - 1, TILE_SIZE - 1);
-	img->instances[0].z = 5;
-	return (img);
-}
-
-static mlx_image_t	*draw_background(mlx_t *mlx, t_point wall)
-{
-	mlx_image_t	*img;
-	uint32_t	color;
-
-	color = ft_pixel(155, 155, 155, 0xFF);
-	img = mlx_new_image(mlx, TILE_SIZE, TILE_SIZE);
-	if (!img || (mlx_image_to_window(mlx, img, wall.x * TILE_SIZE, wall.y
-				* TILE_SIZE) == -1))
-		return (printf("Error\n"), NULL);
-	color_img(img, color, TILE_SIZE, TILE_SIZE);
-	img->instances[0].z = 4;
-	return (img);
-}
-
-static mlx_image_t	*draw_void(mlx_t *mlx, t_point void_p)
-{
-	mlx_image_t	*img;
-	uint32_t	color;
-
-	color = ft_pixel(255, 255, 255, 0xFF);
-	img = mlx_new_image(mlx, TILE_SIZE, TILE_SIZE);
-	if (!img || (mlx_image_to_window(mlx, img, void_p.x * TILE_SIZE + 1,
-				void_p.y * TILE_SIZE + 1) == -1))
-		return (printf("Error\n"), NULL);
-	color_img(img, color, TILE_SIZE - 1, TILE_SIZE - 1);
-	img->instances[0].z = 1;
 	return (img);
 }
 
@@ -202,6 +157,21 @@ void	set_depth_img(mlx_image_t *img, int z)
 	}
 }
 
+static mlx_image_t *draw_img(mlx_t *mlx, t_point pos, uint32_t color, int z)
+{
+	mlx_image_t	*img;
+	int add;
+
+	add = (z != 4);
+	img = mlx_new_image(mlx, TILE_SIZE, TILE_SIZE);
+	if (!img || (mlx_image_to_window(mlx, img, pos.x * TILE_SIZE + add, pos.y
+				* TILE_SIZE + add) == -1))
+		return (printf("Error\n"), NULL);
+	color_img(img, color, TILE_SIZE - add, TILE_SIZE - add);
+	img->instances[0].z = z;
+	return (img);
+}
+
 int	draw_map2d(t_game *game)
 {
 	unsigned int	x;
@@ -209,7 +179,7 @@ int	draw_map2d(t_game *game)
 
 	game->player->img_player = draw_player(game->mlx, game->player);
 	game->player->line->img_line = draw_line(game->mlx, game);
-	if (!draw_void(game->mlx, game->player->pos))
+	if (!draw_img(game->mlx, game->player->pos, ft_pixel(255, 255, 255, 0xFF), 1))
 		return (0);
 	y = 0;
 	while (y < game->s_map.height)
@@ -219,13 +189,13 @@ int	draw_map2d(t_game *game)
 		{
 			if (game->s_map.map[y][x] == '1')
 			{
-				if (!draw_wall(game->mlx, (t_point){x, y})
-					|| !draw_background(game->mlx, (t_point){x, y}))
+				if (!draw_img(game->mlx, (t_point){x, y}, ft_pixel(0, 0, 0, 0xFF), 5)
+					|| !draw_img(game->mlx, (t_point){x, y}, ft_pixel(155, 155, 155, 0xFF), 4))
 					return (0);
 			}
 			else if (game->s_map.map[y][x] == '0')
 			{
-				if (!draw_void(game->mlx, (t_point){x, y}))
+				if (!draw_img(game->mlx, (t_point){x, y}, ft_pixel(255, 255, 255, 0xFF), 0))
 					return (0);
 			}
 			x++;
