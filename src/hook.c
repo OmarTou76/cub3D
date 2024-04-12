@@ -6,7 +6,7 @@
 /*   By: ymeziane <ymeziane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 14:17:33 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/04/10 11:05:43 by ymeziane         ###   ########.fr       */
+/*   Updated: 2024/04/12 11:02:45 by ymeziane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,21 +58,51 @@ static void	ft_turn_player(mlx_key_data_t key, void *param)
 void	ft_moove_player(mlx_key_data_t key, void *param)
 {
 	t_game	*game;
+	float	angle_radians;
+	float angle_perpendicular;
 
 	game = (t_game *)param;
 	if (key.action == MLX_PRESS || key.action == MLX_REPEAT)
 	{
 		if (key.key == MLX_KEY_ESCAPE)
 			mlx_close_window(game->mlx);
+		angle_radians = game->player->angle * M_PI / 180.0;
 		if (key.key == MLX_KEY_W)
-			game->player->img_player->instances[0].y -= TILE_SIZE / 5;
-		if (key.key == MLX_KEY_S)
-			game->player->img_player->instances[0].y += TILE_SIZE / 5;
-		if (key.key == MLX_KEY_A)
-			game->player->img_player->instances[0].x -= TILE_SIZE / 5;
-		if (key.key == MLX_KEY_D)
-			game->player->img_player->instances[0].x += TILE_SIZE / 5;
-		color_line(game->player->img_line, ft_pixel(255, 0, 0, 0xFF), game->player);
+		{
+			game->player->img_player->instances[0].x += PLAYER_SPEED
+				* cos(angle_radians);
+			game->player->img_player->instances[0].y -= PLAYER_SPEED
+				* sin(angle_radians);
+		}
+		else if (key.key == MLX_KEY_S)
+		{
+			game->player->img_player->instances[0].x -= PLAYER_SPEED
+				* cos(angle_radians);
+			game->player->img_player->instances[0].y += PLAYER_SPEED
+				* sin(angle_radians);
+		}
+		else if (key.key == MLX_KEY_A)
+		{
+			// Déplacement vers la gauche (perpendiculaire à la direction du joueur)
+			angle_perpendicular = angle_radians + M_PI / 2.0;
+				// Ajoute 90 degrés
+			game->player->img_player->instances[0].x += PLAYER_SPEED
+				* cos(angle_perpendicular);
+			game->player->img_player->instances[0].y -= PLAYER_SPEED
+				* sin(angle_perpendicular);
+		}
+		else if (key.key == MLX_KEY_D)
+		{
+			// Déplacement vers la droite (perpendiculaire à la direction du joueur)
+			angle_perpendicular = angle_radians - M_PI / 2.0;
+				// Soustrait 90 degrés
+			game->player->img_player->instances[0].x += PLAYER_SPEED
+				* cos(angle_perpendicular);
+			game->player->img_player->instances[0].y -= PLAYER_SPEED
+				* sin(angle_perpendicular);
+		}
+		color_line(game->player->img_line, ft_pixel(255, 0, 0, 0xFF),
+			game->player);
 		if (key.key == MLX_KEY_LEFT || key.key == MLX_KEY_RIGHT)
 			ft_turn_player(key, param);
 	}

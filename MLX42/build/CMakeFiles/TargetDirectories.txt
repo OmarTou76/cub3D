@@ -1,7 +1,7 @@
-/home/yacode/cub3D/MLX42/build/CMakeFiles/mlx42.dir
-/home/yacode/cub3D/MLX42/build/CMakeFiles/edit_cache.dir
-/home/yacode/cub3D/MLX42/build/CMakeFiles/rebuild_cache.dir
-/home/yacode/cub3D/MLX42/build/CMakeFiles/list_install_components.dir
-/home/yacode/cub3D/MLX42/build/CMakeFiles/install.dir
-/home/yacode/cub3D/MLX42/build/CMakeFiles/install/local.dir
-/home/yacode/cub3D/MLX42/build/CMakeFiles/install/strip.dir
+/home/ymeziane/Documents/cub3D/MLX42/build/CMakeFiles/install/strip.dir
+/home/ymeziane/Documents/cub3D/MLX42/build/CMakeFiles/install.dir
+/home/ymeziane/Documents/cub3D/MLX42/build/CMakeFiles/list_install_components.dir
+/home/ymeziane/Documents/cub3D/MLX42/build/CMakeFiles/rebuild_cache.dir
+/home/ymeziane/Documents/cub3D/MLX42/build/CMakeFiles/edit_cache.dir
+/home/ymeziane/Documents/cub3D/MLX42/build/CMakeFiles/install/local.dir
+/home/ymeziane/Documents/cub3D/MLX42/build/CMakeFiles/mlx42.dir
