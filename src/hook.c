@@ -6,7 +6,7 @@
 /*   By: ymeziane <ymeziane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 14:17:33 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/04/12 11:02:45 by ymeziane         ###   ########.fr       */
+/*   Updated: 2024/04/12 13:11:48 by ymeziane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	ft_moove_player(mlx_key_data_t key, void *param)
 {
 	t_game	*game;
 	float	angle_radians;
-	float angle_perpendicular;
+	float	angle_perpendicular;
 
 	game = (t_game *)param;
 	if (key.action == MLX_PRESS || key.action == MLX_REPEAT)
@@ -85,7 +85,7 @@ void	ft_moove_player(mlx_key_data_t key, void *param)
 		{
 			// Déplacement vers la gauche (perpendiculaire à la direction du joueur)
 			angle_perpendicular = angle_radians + M_PI / 2.0;
-				// Ajoute 90 degrés
+			// Ajoute 90 degrés
 			game->player->img_player->instances[0].x += PLAYER_SPEED
 				* cos(angle_perpendicular);
 			game->player->img_player->instances[0].y -= PLAYER_SPEED
@@ -95,14 +95,18 @@ void	ft_moove_player(mlx_key_data_t key, void *param)
 		{
 			// Déplacement vers la droite (perpendiculaire à la direction du joueur)
 			angle_perpendicular = angle_radians - M_PI / 2.0;
-				// Soustrait 90 degrés
+			// Soustrait 90 degrés
 			game->player->img_player->instances[0].x += PLAYER_SPEED
 				* cos(angle_perpendicular);
 			game->player->img_player->instances[0].y -= PLAYER_SPEED
 				* sin(angle_perpendicular);
 		}
-		color_line(game->player->img_line, ft_pixel(255, 0, 0, 0xFF),
-			game->player);
+		color_img(game->player->img_line, 0, game->player->img_line->width,
+			game->player->img_line->height);
+		for (double i = game->player->angle - 30; i < game->player->angle
+			+ 30; i += 2)
+			color_line(game->player->img_line, ft_pixel(255, 0, 0, 0xFF), game,
+				i);
 		if (key.key == MLX_KEY_LEFT || key.key == MLX_KEY_RIGHT)
 			ft_turn_player(key, param);
 	}

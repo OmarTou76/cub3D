@@ -6,7 +6,7 @@
 /*   By: ymeziane <ymeziane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 16:11:28 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/04/12 11:00:02 by ymeziane         ###   ########.fr       */
+/*   Updated: 2024/04/12 13:15:52 by ymeziane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,6 @@
 # define TILE_SIZE 64
 # define PLAYER_SIZE TILE_SIZE / 6
 # define PLAYER_SPEED TILE_SIZE / 5
-# define LINE_WIDTH PLAYER_SIZE / 4
-# define LINE_HEIGHT TILE_SIZE * 2
 
 typedef struct s_fields
 {
@@ -131,9 +129,11 @@ void				print_lines(t_lines *tmp);
 void				store_data(t_game **game, t_lines *node);
 ///////////////////////////////////////////
 // DRAW MAP 2D
+void				color_img(mlx_image_t *img, uint32_t color, int width,
+						int height);
 int					draw_map2d(t_game *game);
-void				color_line(mlx_image_t *img, uint32_t color,
-						t_player *player);
+void				color_line(mlx_image_t *img, uint32_t color, t_game *game,
+						double angle);
 int32_t				ft_pixel(int32_t r, int32_t g, int32_t b, int32_t a);
 ///////////////////////////////////////////
 // FREE
