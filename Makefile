@@ -15,9 +15,10 @@ INCLUDES = -I./inc -I./libft/inc -I$(MLX_DIR)
 SRC_DIR = src
 OBJ_DIR = obj
 
-SRC_FILES = main parse draw_map2d hook free\
-	utils/list_utils utils/print_utils \
-	checker/checker checker/map_checker checker/fields_checker checker/spaces_checker \
+SRC_FILES = main draw_map2d hook free\
+	utils/list utils/print \
+	checker/checker checker/map checker/fields checker/spaces \
+	parsing/map_player parsing/texture_color
 
 SRC = $(addprefix $(SRC_DIR)/, $(addsuffix .c, $(SRC_FILES)))
 OBJ = $(addprefix $(OBJ_DIR)/, $(addsuffix .o, $(SRC_FILES)))

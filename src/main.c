@@ -6,7 +6,7 @@
 /*   By: ymeziane <ymeziane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 15:22:57 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/04/09 14:27:02 by ymeziane         ###   ########.fr       */
+/*   Updated: 2024/04/12 14:54:23 by ymeziane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,6 @@ int	main(int argc, char const *argv[])
 	if (!is_valid_data(node))
 		return (free_nodes(node), 1);
 	store_data(&game, node);
-	printf("game->s_map.width = %d\n", game->s_map.width);
-	printf("game->s_map.height = %d\n", game->s_map.height);
-	printf("game->player->pos.x = %d\n", game->player->pos.x);
-	printf("game->player->pos.y = %d\n", game->player->pos.y);
 	game->mlx = mlx_init(game->s_map.width * TILE_SIZE, game->s_map.height
 			* TILE_SIZE, "cub3D", true);
 	if (!game->mlx)

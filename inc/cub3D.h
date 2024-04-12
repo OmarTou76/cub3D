@@ -6,7 +6,7 @@
 /*   By: ymeziane <ymeziane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 16:11:28 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/04/12 13:15:52 by ymeziane         ###   ########.fr       */
+/*   Updated: 2024/04/12 15:29:34 by ymeziane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,21 @@ typedef struct s_map
 	unsigned int	width;
 }					t_map;
 
+typedef struct s_direction_line
+{
+	mlx_image_t		*img_line;
+	int				start_x;
+	int				start_y;
+	int				end_x;
+	int				end_y;
+	int				delta_x;
+	int				delta_y;
+	int				step_x;
+	int				step_y;
+	int				error;
+	int				error2;
+}					t_direction_line;
+
 typedef struct s_player
 {
 	t_point			pos;
@@ -70,7 +85,7 @@ typedef struct s_player
 	double			delta_y;
 	double			angle;
 	mlx_image_t		*img_player;
-	mlx_image_t		*img_line;
+	t_direction_line	*line;
 }					t_player;
 
 typedef struct s_game
@@ -104,29 +119,34 @@ int					check_input(char const *progname, char const *filename,
 						int argc);
 int					is_map_start(char *line);
 int					is_valid_data(t_lines *node);
-//	FIELDS_CHECKER
+//	FIELDS
 void				init_fields(t_fields *f);
 int					trim_compare(char *base, char *to_compare, size_t size);
 int					check_fields(char *line, t_fields *fields);
-//	MAP_CHECKER
+//	MAP
 int					is_valid_map(t_lines **node);
-//	SPACES_CHECKER
+//	SPACES
 int					is_spaces_outside(t_vec **vecs, char **m, int y, int x);
+///////////////////////////////////////////
+//	PARSING FOLDER
+
+// MAP_PLAYER
+void				store_data(t_game **game, t_lines *node);
+// TEXTURE_COLOR
+void				get_colors(t_game **game, char *line);
+void				get_textures_paths(t_game **game, char *line);
 ///////////////////////////////////////////
 // UTILS FOLDER
 
-// LIST UTILS
+// LIST
 t_lines				*save_data(char const *filename);
 void				add_vec(t_vec **vecs, int y, int x);
 bool				has_vec(t_vec *vec, int y, int x);
 float				radian_to_degree(float angle);
 
-// PRINT UTILS
+// PRINT
 void				print_data(t_game *game);
 void				print_lines(t_lines *tmp);
-///////////////////////////////////////////
-// PARSE
-void				store_data(t_game **game, t_lines *node);
 ///////////////////////////////////////////
 // DRAW MAP 2D
 void				color_img(mlx_image_t *img, uint32_t color, int width,
