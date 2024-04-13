@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ymeziane <ymeziane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: omar <omar@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 15:22:57 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/04/12 14:54:23 by ymeziane         ###   ########.fr       */
+/*   Updated: 2024/04/13 15:05:50 by omar             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ int	main(int argc, char const *argv[])
 	draw_map2d(game);
 	mlx_key_hook(game->mlx, ft_moove_player, game);
 	mlx_loop(game->mlx);
-	print_lines(node);
-	print_data(game);
+	// print_lines(node);
+	// print_data(game);
 	free_nodes(node);
 	mlx_terminate(game->mlx);
 	free_game(game);

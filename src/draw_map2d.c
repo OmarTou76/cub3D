@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw_map2d.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ymeziane <ymeziane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: omar <omar@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/07 21:53:03 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/04/12 17:45:31 by ymeziane         ###   ########.fr       */
+/*   Updated: 2024/04/13 15:59:49 by omar             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,10 +80,10 @@ void	color_line(mlx_image_t *img, uint32_t color, t_game *game, double angle)
 	int	x;
 
 	img->instances[0].x = game->player->img_player->instances[0].x
-		- game->mlx->height + game->player->img_player->width / 2;
+		- game->player->line->length + game->player->img_player->width / 2;
 	img->instances[0].y = game->player->img_player->instances[0].y
-		- game->mlx->height + game->player->img_player->height / 2;
-	initialize_line_data(game->player->line, angle, game->mlx->height);
+		- game->player->line->length + game->player->img_player->height / 2;
+	initialize_line_data(game->player->line, angle, game->player->line->length);
 	while ((game->player->line->start_x != game->player->line->end_x
 			|| game->player->line->start_y != game->player->line->end_y)
 		&& (game->player->line->start_x >= 0
@@ -112,34 +112,37 @@ void	color_line(mlx_image_t *img, uint32_t color, t_game *game, double angle)
 	}
 }
 
+static void	init_line_length(mlx_t *mlx, t_game *game)
+{
+	if (mlx->height > mlx->width)
+		game->player->line->length = mlx->height;
+	else
+		game->player->line->length = mlx->width;
+}
+
 static mlx_image_t	*draw_line(mlx_t *mlx, t_game *game)
 {
-	mlx_image_t		*img;
-	uint32_t		color;
-	unsigned int	line_height;
-	double			i;
+	mlx_image_t	*img;
+	uint32_t	color;
+	double		i;
 
-	line_height = mlx->height;
+	init_line_length(mlx, game);
 	color = ft_pixel(255, 0, 0, 0xFF);
-	img = mlx_new_image(mlx, line_height * 2, line_height * 2);
+	img = mlx_new_image(mlx, game->player->line->length * 2,
+			game->player->line->length * 2);
 	if (!img || (mlx_image_to_window(mlx, img,
-				game->player->img_player->instances[0].x - line_height
-				+ game->player->img_player->width / 2,
-				game->player->img_player->instances[0].y - line_height
-				+ game->player->img_player->height / 2) == -1))
+				game->player->img_player->instances[0].x
+				- game->player->line->length + game->player->img_player->width
+				/ 2, game->player->img_player->instances[0].y
+				- game->player->line->length + game->player->img_player->height
+				/ 2) == -1))
 		return (printf("Error\n"), NULL);
 	color_img(img, 0, img->width, img->height);
-	i = game->player->angle;
+	i = game->player->angle - 30;
 	while (i < game->player->angle + 30)
 	{
 		color_line(img, color, game, i);
 		i++;
-	}
-	color_line(img, color, game, game->player->angle);
-	while (i > game->player->angle - 30)
-	{
-		color_line(img, color, game, i);
-		i--;
 	}
 	img->instances[0].z = 3;
 	return (img);
@@ -157,10 +160,10 @@ void	set_depth_img(mlx_image_t *img, int z)
 	}
 }
 
-static mlx_image_t *draw_img(mlx_t *mlx, t_point pos, uint32_t color, int z)
+static mlx_image_t	*draw_img(mlx_t *mlx, t_point pos, uint32_t color, int z)
 {
 	mlx_image_t	*img;
-	int add;
+	int			add;
 
 	add = (z != 4);
 	img = mlx_new_image(mlx, TILE_SIZE, TILE_SIZE);
@@ -179,7 +182,8 @@ int	draw_map2d(t_game *game)
 
 	game->player->img_player = draw_player(game->mlx, game->player);
 	game->player->line->img_line = draw_line(game->mlx, game);
-	if (!draw_img(game->mlx, game->player->pos, ft_pixel(255, 255, 255, 0xFF), 1))
+	if (!draw_img(game->mlx, game->player->pos, ft_pixel(255, 255, 255, 0xFF),
+			1))
 		return (0);
 	y = 0;
 	while (y < game->s_map.height)
@@ -189,13 +193,15 @@ int	draw_map2d(t_game *game)
 		{
 			if (game->s_map.map[y][x] == '1')
 			{
-				if (!draw_img(game->mlx, (t_point){x, y}, ft_pixel(0, 0, 0, 0xFF), 5)
-					|| !draw_img(game->mlx, (t_point){x, y}, ft_pixel(155, 155, 155, 0xFF), 4))
+				if (!draw_img(game->mlx, (t_point){x, y}, ft_pixel(0, 0, 0,
+							0xFF), 5) || !draw_img(game->mlx, (t_point){x, y},
+						ft_pixel(155, 155, 155, 0xFF), 4))
 					return (0);
 			}
 			else if (game->s_map.map[y][x] == '0')
 			{
-				if (!draw_img(game->mlx, (t_point){x, y}, ft_pixel(255, 255, 255, 0xFF), 0))
+				if (!draw_img(game->mlx, (t_point){x, y}, ft_pixel(255, 255,
+							255, 0xFF), 0))
 					return (0);
 			}
 			x++;

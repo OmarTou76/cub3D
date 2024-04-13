@@ -29,13 +29,13 @@ NO_COLOR = \033[0m
 
 all: $(NAME)
 
-$(NAME): $(OBJ) $(MLX_LIB)
+$(NAME): $(OBJ) $(MLX_LIB) inc/cub3D.h
 	@make -C $(LIBFT_DIR)
 	@echo "$(GREEN)Compiling $(NAME)...$(NO_COLOR)"
 	@$(CC) $(CFLAGS) $(INCLUDES) -o $(NAME) $(OBJ) $(LIBFT) $(MLX_FLAGS) -g
 	@echo "$(GREEN)$(NAME) compiled$(NO_COLOR)"
 
-$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c inc/cub3D.h
 	@echo "$(GREEN)Generating $(NAME) objects...$(NO_COLOR)"
 	@mkdir -p $(@D)
 	@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
