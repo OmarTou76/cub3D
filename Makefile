@@ -15,7 +15,7 @@ INCLUDES = -I./inc -I./libft/inc -I$(MLX_DIR)
 SRC_DIR = src
 OBJ_DIR = obj
 
-SRC_FILES = main draw_map2d hook free\
+SRC_FILES = main draw_map2d  hook free\
 	utils/list utils/print \
 	checker/checker checker/map checker/fields checker/spaces \
 	parsing/map_player parsing/texture_color

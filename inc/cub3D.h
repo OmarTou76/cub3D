@@ -6,7 +6,7 @@
 /*   By: omar <omar@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 16:11:28 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/04/13 15:37:25 by omar             ###   ########.fr       */
+/*   Updated: 2024/04/14 00:05:52 by omar             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,7 @@ typedef struct s_game
 	t_colors			*colors;
 	t_map				s_map;
 	t_player			*player;
+	mlx_image_t			*img_view_3d;
 }						t_game;
 
 typedef struct s_lines

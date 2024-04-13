@@ -6,7 +6,7 @@
 /*   By: omar <omar@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/07 21:53:03 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/04/13 15:59:49 by omar             ###   ########.fr       */
+/*   Updated: 2024/04/13 23:57:27 by omar             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,16 +74,54 @@ void	initialize_line_data(t_direction_line *line, double angle,
 	line->error = line->delta_x - line->delta_y;
 }
 
+void	draw_3d_col(t_game *game, double angle, float wall_height)
+{
+	int		width;
+	double	min;
+	int		index;
+	int		y;
+	int		x;
+	int		o;
+
+	index = 0;
+	min = game->player->angle - 30;
+	while (min != angle)
+	{
+		min++;
+		index++;
+	}
+	width = game->img_view_3d->width / 60;
+	y = 0;
+	o = ((game->s_map.height / 2) - (wall_height / 2)) * TILE_SIZE;
+	while (y < (wall_height * TILE_SIZE))
+	{
+		x = index * width;
+		while (x < (index * width) + width)
+		{
+			mlx_put_pixel(game->img_view_3d, x, y + o, ft_pixel(255, 0, 0,
+					0xFF));
+			x++;
+		}
+		y++;
+	}
+}
+
 void	color_line(mlx_image_t *img, uint32_t color, t_game *game, double angle)
 {
-	int	y;
-	int	x;
+	int		y;
+	int		x;
+	float	dist;
+	int		start_x;
+	int		start_y;
 
+	dist = 0;
 	img->instances[0].x = game->player->img_player->instances[0].x
 		- game->player->line->length + game->player->img_player->width / 2;
 	img->instances[0].y = game->player->img_player->instances[0].y
 		- game->player->line->length + game->player->img_player->height / 2;
 	initialize_line_data(game->player->line, angle, game->player->line->length);
+	start_x = game->player->line->start_x;
+	start_y = game->player->line->start_y;
 	while ((game->player->line->start_x != game->player->line->end_x
 			|| game->player->line->start_y != game->player->line->end_y)
 		&& (game->player->line->start_x >= 0
@@ -95,7 +133,13 @@ void	color_line(mlx_image_t *img, uint32_t color, t_game *game, double angle)
 		x = (img->instances[0].x + game->player->line->start_x) / TILE_SIZE;
 		if (game->s_map.map[y] && game->s_map.map[y][x]
 			&& game->s_map.map[y][x] == '1')
+		{
+			dist = sqrt(pow(game->player->line->start_x - start_x, 2)
+					+ pow(game->player->line->start_y - start_y, 2));
+			printf("ANGLE: [%f] | DIST: [%f]\n", angle, dist);
+			draw_3d_col(game, angle, (TILE_SIZE * game->s_map.height) / dist);
 			return ;
+		}
 		mlx_put_pixel(img, game->player->line->start_x,
 			game->player->line->start_y, color);
 		game->player->line->error2 = game->player->line->error * 2;
@@ -120,6 +164,14 @@ static void	init_line_length(mlx_t *mlx, t_game *game)
 		game->player->line->length = mlx->width;
 }
 
+static void	init_3d_view(mlx_t *mlx, t_game *game)
+{
+	game->img_view_3d = mlx_new_image(mlx, (game->s_map.width * TILE_SIZE),
+			game->s_map.height * TILE_SIZE);
+	mlx_image_to_window(mlx, game->img_view_3d, (game->s_map.width * TILE_SIZE),
+		0);
+}
+
 static mlx_image_t	*draw_line(mlx_t *mlx, t_game *game)
 {
 	mlx_image_t	*img;
@@ -127,6 +179,7 @@ static mlx_image_t	*draw_line(mlx_t *mlx, t_game *game)
 	double		i;
 
 	init_line_length(mlx, game);
+	init_3d_view(mlx, game);
 	color = ft_pixel(255, 0, 0, 0xFF);
 	img = mlx_new_image(mlx, game->player->line->length * 2,
 			game->player->line->length * 2);
