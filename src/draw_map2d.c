@@ -6,7 +6,7 @@
 /*   By: omar <omar@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/07 21:53:03 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/04/13 23:57:27 by omar             ###   ########.fr       */
+/*   Updated: 2024/04/14 13:15:41 by omar             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ void	draw_3d_col(t_game *game, double angle, float wall_height)
 	int		index;
 	int		y;
 	int		x;
-	int		o;
+	int		offset;
 
 	index = 0;
 	min = game->player->angle - 30;
@@ -92,14 +92,15 @@ void	draw_3d_col(t_game *game, double angle, float wall_height)
 	}
 	width = game->img_view_3d->width / 60;
 	y = 0;
-	o = ((game->s_map.height / 2) - (wall_height / 2)) * TILE_SIZE;
+	offset = ((game->s_map.height / 2) - (wall_height / 2)) * TILE_SIZE;
 	while (y < (wall_height * TILE_SIZE))
 	{
 		x = index * width;
 		while (x < (index * width) + width)
 		{
-			mlx_put_pixel(game->img_view_3d, x, y + o, ft_pixel(255, 0, 0,
-					0xFF));
+			if (y + offset >= 0)
+				mlx_put_pixel(game->img_view_3d, x, y + offset, ft_pixel(255, 0,
+						0, 0xFF));
 			x++;
 		}
 		y++;
@@ -136,7 +137,6 @@ void	color_line(mlx_image_t *img, uint32_t color, t_game *game, double angle)
 		{
 			dist = sqrt(pow(game->player->line->start_x - start_x, 2)
 					+ pow(game->player->line->start_y - start_y, 2));
-			printf("ANGLE: [%f] | DIST: [%f]\n", angle, dist);
 			draw_3d_col(game, angle, (TILE_SIZE * game->s_map.height) / dist);
 			return ;
 		}
