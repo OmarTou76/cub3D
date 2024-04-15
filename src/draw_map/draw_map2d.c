@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw_map2d.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: otourabi <otourabi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ymeziane <ymeziane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/07 21:53:03 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/04/15 11:55:39 by otourabi         ###   ########.fr       */
+/*   Updated: 2024/04/15 14:17:46 by ymeziane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,51 +51,60 @@ void	initialize_line_data(t_direction_line *line, double angle,
 	line->error = line->delta_x - line->delta_y;
 }
 
+
+uint32_t convert_rgba_to_argb(uint32_t rgba) {
+    uint8_t red = (rgba >> 24) & 0xFF;  // Extract red
+    uint8_t green = (rgba >> 16) & 0xFF;  // Extract green
+    uint8_t blue = (rgba >> 8) & 0xFF;  // Extract blue
+    uint8_t alpha = rgba & 0xFF;  // Extract alpha
+
+    return (alpha << 24) | (blue << 16) | (green << 8) | red;  // Reassemble in ARGB, swapping red and blue
+}
+
+
 void	draw_3d_col(t_game *game, double angle, float wall_height)
 {
-	int		width;
-	double	min;
-	int		index;
-	int		y;
-	int		x;
-	int		offset;
+    int	width, index, y, x, offset, texture_y, texture_index;
+    double	min;
+    float	texture_x;
 
-	index = 59;
-	min = game->player->angle - 30;
-	while (min != angle)
-	{
-		min++;
-		index--;
-	}
-	width = game->img_view_3d->width / 60;
-	y = 0;
-	offset = ((game->s_map.height / 2) - (wall_height / 2)) * TILE_SIZE;
-	while (y < (int)game->img_view_3d->height)
-	{
-		x = (index * width);
-		while (x < (index * width) + width)
-		{
-			if ((y < wall_height * TILE_SIZE && y + offset >= 0))
-			{
-				mlx_put_pixel(game->img_view_3d, x, y + offset, ft_pixel(255, 0,
-						0, 0xFF));
-			}
-			if (y < offset)
-				mlx_put_pixel(game->img_view_3d, x, y,
-					ft_pixel(game->colors->ceiling[0], game->colors->ceiling[1],
-						game->colors->ceiling[2], 0xFF));
-			else if (y > offset + wall_height * TILE_SIZE)
-				mlx_put_pixel(game->img_view_3d, x, y,
-					ft_pixel(game->colors->floor[0], game->colors->floor[1],
-						game->colors->floor[2], 0xFF));
-			else 
-				mlx_put_pixel(game->img_view_3d, x, y, ft_pixel(255, 0,
-						0, 0xFF));
-			x++;
-		}
-		y++;
-	}
+    index = 59;
+    min = game->player->angle - 30;
+    while (min != angle) {
+        min++;
+        index--;
+    }
+    width = game->img_view_3d->width / 60;
+    texture_x = (float)(index % game->wall_image->width);
+
+    offset = ((game->s_map.height / 2) - (wall_height / 2)) * TILE_SIZE;
+    for (y = 0; y < (int)game->img_view_3d->height; y++)
+    {
+        x = (index * width);
+        while (x < (index * width) + width)
+        {
+            if (y >= offset && y < offset + wall_height * TILE_SIZE)
+            {
+                texture_y = ((float)(y - offset) / (wall_height * TILE_SIZE)) * game->wall_image->height;
+                if (texture_y >= (int)game->wall_image->height) texture_y = game->wall_image->height - 1;
+                texture_index = (texture_y * game->wall_image->width + (int)texture_x) % (game->wall_image->width * game->wall_image->height);
+                uint32_t rgba_color = ((uint32_t *)game->wall_image->pixels)[texture_index];
+                uint32_t argb_color = convert_rgba_to_argb(rgba_color);
+                mlx_put_pixel(game->img_view_3d, x, y, argb_color);
+            }
+            else if (y < offset)
+            {
+                mlx_put_pixel(game->img_view_3d, x, y, ft_pixel(game->colors->ceiling[0], game->colors->ceiling[1], game->colors->ceiling[2], 0xFF));
+            }
+            else
+            {
+                mlx_put_pixel(game->img_view_3d, x, y, ft_pixel(game->colors->floor[0], game->colors->floor[1], game->colors->floor[2], 0xFF));
+            }
+            x++;
+        }
+    }
 }
+
 
 static void	init_line_length(mlx_t *mlx, t_game *game)
 {

@@ -6,7 +6,7 @@
 /*   By: ymeziane <ymeziane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 16:11:28 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/04/15 11:04:04 by ymeziane         ###   ########.fr       */
+/*   Updated: 2024/04/15 13:31:53 by ymeziane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,7 @@ typedef struct s_game
 	t_map				s_map;
 	t_player			*player;
 	mlx_image_t			*img_view_3d;
+	mlx_image_t			*wall_image;
 }						t_game;
 
 typedef struct s_lines
