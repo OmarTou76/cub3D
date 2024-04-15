@@ -6,7 +6,7 @@
 /*   By: otourabi <otourabi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/07 21:53:03 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/04/15 11:42:46 by otourabi         ###   ########.fr       */
+/*   Updated: 2024/04/15 11:55:39 by otourabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,9 +70,6 @@ void	draw_3d_col(t_game *game, double angle, float wall_height)
 	width = game->img_view_3d->width / 60;
 	y = 0;
 	offset = ((game->s_map.height / 2) - (wall_height / 2)) * TILE_SIZE;
-	(void)offset;
-	(void)width;
-	(void)index;
 	while (y < (int)game->img_view_3d->height)
 	{
 		x = (index * width);
@@ -87,10 +84,13 @@ void	draw_3d_col(t_game *game, double angle, float wall_height)
 				mlx_put_pixel(game->img_view_3d, x, y,
 					ft_pixel(game->colors->ceiling[0], game->colors->ceiling[1],
 						game->colors->ceiling[2], 0xFF));
-			if (y > offset + wall_height * TILE_SIZE)
+			else if (y > offset + wall_height * TILE_SIZE)
 				mlx_put_pixel(game->img_view_3d, x, y,
 					ft_pixel(game->colors->floor[0], game->colors->floor[1],
 						game->colors->floor[2], 0xFF));
+			else 
+				mlx_put_pixel(game->img_view_3d, x, y, ft_pixel(255, 0,
+						0, 0xFF));
 			x++;
 		}
 		y++;

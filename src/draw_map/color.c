@@ -6,7 +6,7 @@
 /*   By: otourabi <otourabi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 09:56:00 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/04/15 11:28:35 by otourabi         ###   ########.fr       */
+/*   Updated: 2024/04/15 11:52:45 by otourabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ static int	process_line_drawing(mlx_image_t *img, t_game *game, uint32_t color,
 		{
 			dist = sqrt(pow(game->player->line->start_x - start_x, 2)
 					+ pow(game->player->line->start_y - start_y, 2));
-			draw_3d_col(game, angle, (TILE_SIZE * game->s_map.height) / dist);
+			draw_3d_col(game, angle, ((TILE_SIZE * game->s_map.height) /2) / dist);
 			return (0);
 		}
 		mlx_put_pixel(img, game->player->line->start_x,
