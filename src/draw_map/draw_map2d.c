@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw_map2d.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ymeziane <ymeziane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: otourabi <otourabi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/07 21:53:03 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/04/15 11:03:32 by ymeziane         ###   ########.fr       */
+/*   Updated: 2024/04/15 11:42:46 by otourabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,12 +60,12 @@ void	draw_3d_col(t_game *game, double angle, float wall_height)
 	int		x;
 	int		offset;
 
-	index = 0;
+	index = 59;
 	min = game->player->angle - 30;
 	while (min != angle)
 	{
 		min++;
-		index++;
+		index--;
 	}
 	width = game->img_view_3d->width / 60;
 	y = 0;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   color.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ymeziane <ymeziane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: otourabi <otourabi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 09:56:00 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/04/15 11:02:55 by ymeziane         ###   ########.fr       */
+/*   Updated: 2024/04/15 11:28:35 by otourabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,12 +71,7 @@ static int	process_line_drawing(mlx_image_t *img, t_game *game, uint32_t color,
 
 	start_x = game->player->line->start_x;
 	start_y = game->player->line->start_y;
-	while ((game->player->line->start_x != game->player->line->end_x
-			|| game->player->line->start_y != game->player->line->end_y)
-		&& (game->player->line->start_x >= 0
-			&& game->player->line->start_x < (int)img->width
-			&& game->player->line->start_y >= 0
-			&& game->player->line->start_y < (int)img->height))
+	while (1)
 	{
 		y = (img->instances[0].y + game->player->line->start_y) / TILE_SIZE;
 		x = (img->instances[0].x + game->player->line->start_x) / TILE_SIZE;
