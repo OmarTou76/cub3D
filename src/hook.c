@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hook.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ymeziane <ymeziane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: omar <omar@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 14:17:33 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/04/15 14:30:47 by ymeziane         ###   ########.fr       */
+/*   Updated: 2024/04/17 14:35:16 by omar             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,9 +58,9 @@ static void	check_and_moves(mlx_key_data_t key, t_game *game, int new_y,
 		new_y -= game->player->delta_y;
 	}
 	update_left_and_right(key, game, &new_y, &new_x);
-	if ((game->s_map.map[new_y / TILE_SIZE][new_x / TILE_SIZE] != '1')
-		&& game->s_map.map[(new_y + PLAYER_SIZE) / TILE_SIZE][(new_x
-			+ PLAYER_SIZE) / TILE_SIZE] != '1')
+	if ((game->s_map.map[new_y / (MAP_TILE_SIZE)][new_x
+			/ (MAP_TILE_SIZE)] != '1') && game->s_map.map[(new_y + PLAYER_SIZE)
+		/ (MAP_TILE_SIZE)][(new_x + PLAYER_SIZE) / (MAP_TILE_SIZE)] != '1')
 	{
 		game->player->img_player->instances[0].y = new_y;
 		game->player->img_player->instances[0].x = new_x;
@@ -91,6 +91,22 @@ static void	ft_turn_player(mlx_key_data_t key, t_game *game)
 			game->player->img_player->instances[0].x);
 }
 
+void	display_map(t_game *game)
+{
+	if (game->s_map.image_map->instances[0].enabled == false)
+	{
+		game->s_map.image_map->instances[0].enabled = true;
+		game->player->img_player->instances[0].enabled = true;
+		game->player->line->img_line[0].enabled = true;
+	}
+	else
+	{
+		game->s_map.image_map->instances[0].enabled = false;
+		game->player->img_player->instances[0].enabled = false;
+		game->player->line->img_line[0].enabled = false;
+	}
+}
+
 void	ft_moove_player(mlx_key_data_t key, void *param)
 {
 	t_game	*game;
@@ -101,6 +117,8 @@ void	ft_moove_player(mlx_key_data_t key, void *param)
 	{
 		if (key.key == MLX_KEY_ESCAPE)
 			mlx_close_window(game->mlx);
+		if (key.key == MLX_KEY_C)
+			display_map(game);
 		else if (key.key == MLX_KEY_W || key.key == MLX_KEY_S
 			|| key.key == MLX_KEY_A || key.key == MLX_KEY_D
 			|| key.key == MLX_KEY_LEFT || key.key == MLX_KEY_RIGHT)
