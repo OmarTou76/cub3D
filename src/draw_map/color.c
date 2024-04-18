@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   color.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omar <omar@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: otourabi <otourabi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 09:56:00 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/04/17 19:52:24 by omar             ###   ########.fr       */
+/*   Updated: 2024/04/18 16:24:29 by otourabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static void	initialize_line(t_direction_line *line, mlx_image_t *img,
 		- line->length + game->player->img_player->width / 2;
 	img->instances[0].y = game->player->img_player->instances[0].y
 		- line->length + game->player->img_player->height / 2;
-	initialize_line_data(line, angle, line->length);
+	initialize_line_data(line, angle, game);
 }
 
 static void	update_line_position(t_direction_line *line)

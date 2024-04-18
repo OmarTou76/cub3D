@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omar <omar@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: otourabi <otourabi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 16:11:28 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/04/17 20:30:54 by omar             ###   ########.fr       */
+/*   Updated: 2024/04/18 13:42:00 by otourabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 # include <unistd.h>
 
 # define TILE_SIZE 48
-# define FOV 100.0
+# define FOV 60.0
 # define MAP_TILE_SIZE TILE_SIZE / 4
 # define PLAYER_SIZE MAP_TILE_SIZE / 2
 # define PLAYER_SPEED TILE_SIZE / 5
@@ -164,8 +164,9 @@ void					color_line(mlx_image_t *img, uint32_t color,
 int32_t					ft_pixel(int32_t r, int32_t g, int32_t b, int32_t a);
 // DRAW MAP 2D
 void					draw_map2d(t_game *game);
+void					start_drawing(t_game *game);
 void					initialize_line_data(t_direction_line *line,
-							double angle, unsigned int line_height);
+							double angle, t_game *game);
 void					draw_3d_col(t_game *game, double angle,
 							float wall_height);
 ///////////////////////////////////////////
