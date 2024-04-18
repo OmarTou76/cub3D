@@ -6,7 +6,7 @@
 /*   By: omar <omar@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/07 21:53:03 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/04/17 14:32:03 by omar             ###   ########.fr       */
+/*   Updated: 2024/04/17 20:54:04 by omar             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,23 +61,24 @@ uint32_t	convert_rgba_to_argb(uint32_t rgba)
 	return ((alpha << 24) | (blue << 16) | (green << 8) | red);
 	// Reassemble in ARGB, swapping red and blue
 }
-
+// ESSAYER de mettre les pixels en fonction de l'image
 void	draw_3d_col(t_game *game, double angle, float wall_height)
 {
 	double		min;
+	int			index;
 	float		texture_x;
 	uint32_t	rgba_color;
 	uint32_t	argb_color;
 
-	int width, index, y, x, offset, texture_y, texture_index;
-	index = 59;
-	min = game->player->angle - 30;
+	int width, y, x, offset, texture_y, texture_index;
+	index = FOV - 1;
+	min = game->player->angle - (FOV / 2);
 	while (min != angle)
 	{
 		min++;
 		index--;
 	}
-	width = game->img_view_3d->width / 59;
+	width = game->img_view_3d->width / (FOV - 1);
 	texture_x = (float)(index % game->wall_image->width);
 	offset = ((game->s_map.height / 2) - (wall_height / 2)) * TILE_SIZE;
 	for (y = 0; y < (int)game->img_view_3d->height; y++)
@@ -144,8 +145,8 @@ void	init_and_draw_lines(t_game *game)
 	if (!game->player->line->img_line || (mlx_image_to_window(game->mlx,
 				game->player->line->img_line, 0, 0) == -1))
 		return (printf("Error\n"), (void)NULL);
-	i = game->player->angle - 30;
-	while (i < game->player->angle + 30)
+	i = game->player->angle - FOV / 2;
+	while (i < game->player->angle + FOV / 2)
 	{
 		color_line(game->player->line->img_line, color, game, i);
 		i++;

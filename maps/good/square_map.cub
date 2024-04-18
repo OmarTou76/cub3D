@@ -5,13 +5,13 @@ NO      textures/wolfenstein/grey_stone.xpm
 
 SO textures/wolfenstein/red_brick.xpm
 
-F   69, 222, 199
+F   100, 100, 110
 
 EA textures/wolfenstein/mossy.xpm
 
 
 
-C 235, 198, 52
+C 90, 90, 90
 
 111111111111111111111111
 100000000000000000000001

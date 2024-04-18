@@ -6,7 +6,7 @@
 /*   By: omar <omar@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 16:11:28 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/04/17 14:33:00 by omar             ###   ########.fr       */
+/*   Updated: 2024/04/17 20:30:54 by omar             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@
 # include <unistd.h>
 
 # define TILE_SIZE 48
-# define MAP_TILE_SIZE TILE_SIZE / 2
+# define FOV 100.0
+# define MAP_TILE_SIZE TILE_SIZE / 4
 # define PLAYER_SIZE MAP_TILE_SIZE / 2
 # define PLAYER_SPEED TILE_SIZE / 5
 

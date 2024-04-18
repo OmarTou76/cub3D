@@ -6,7 +6,7 @@
 /*   By: omar <omar@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 14:17:33 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/04/17 14:35:16 by omar             ###   ########.fr       */
+/*   Updated: 2024/04/17 19:55:04 by omar             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,12 +128,12 @@ void	ft_moove_player(mlx_key_data_t key, void *param)
 			game->player->line->img_line->height);
 		color_img(game->img_view_3d, 0, game->img_view_3d->width,
 			game->img_view_3d->height);
-		i = game->player->angle - 30;
-		while (i < game->player->angle + 30)
+		i = game->player->angle - FOV / 2;
+		while (i < game->player->angle + FOV / 2)
 		{
 			color_line(game->player->line->img_line, ft_pixel(255, 0, 0, 0xFF),
 				game, i);
-			i++;
+			i += 1;
 		}
 	}
 }
