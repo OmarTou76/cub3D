@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_player.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omar <omar@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: ymeziane <ymeziane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 15:25:15 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/04/13 17:08:29 by omar             ###   ########.fr       */
+/*   Updated: 2024/04/19 20:06:06 by ymeziane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ t_player	*get_info_player(char **map)
 	return (player);
 }
 
-void	store_data(t_game **game, t_lines *node)
+int	store_data(t_game **game, t_lines *node)
 {
 	t_lines	*tmp;
 
@@ -86,6 +86,8 @@ void	store_data(t_game **game, t_lines *node)
 		if (ft_strlen(tmp->line) && is_map_start(tmp->line))
 		{
 			(*game)->s_map.map = node_to_map(&tmp);
+			if(!(*game)->s_map.map)
+				return (0);
 			break ;
 		}
 		tmp = tmp->next;
@@ -93,4 +95,5 @@ void	store_data(t_game **game, t_lines *node)
 	(*game)->s_map.width = ft_strlen((*game)->s_map.map[0]);
 	(*game)->s_map.height = get_map_height((*game)->s_map.map);
 	(*game)->player = get_info_player((*game)->s_map.map);
+	return (1);
 }

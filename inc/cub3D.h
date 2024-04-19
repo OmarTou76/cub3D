@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omar <omar@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: ymeziane <ymeziane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 16:11:28 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/04/17 14:33:00 by omar             ###   ########.fr       */
+/*   Updated: 2024/04/19 20:04:18 by ymeziane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,10 @@
 # include <stdlib.h>
 # include <unistd.h>
 
-# define TILE_SIZE 48
-# define MAP_TILE_SIZE TILE_SIZE / 2
+# define TILE_SIZE 32
+# define MAP_TILE_SIZE TILE_SIZE / 4
 # define PLAYER_SIZE MAP_TILE_SIZE / 2
-# define PLAYER_SPEED TILE_SIZE / 5
+# define PLAYER_SPEED MAP_TILE_SIZE / 5
 
 typedef struct s_fields
 {
@@ -136,7 +136,7 @@ int						is_spaces_outside(t_vec **vecs, char **m, int y, int x);
 //	PARSING FOLDER
 
 // MAP_PLAYER
-void					store_data(t_game **game, t_lines *node);
+int						store_data(t_game **game, t_lines *node);
 // TEXTURE_COLOR
 void					get_colors(t_game **game, char *line);
 void					get_textures_paths(t_game **game, char *line);
@@ -165,8 +165,6 @@ int32_t					ft_pixel(int32_t r, int32_t g, int32_t b, int32_t a);
 void					draw_map2d(t_game *game);
 void					initialize_line_data(t_direction_line *line,
 							double angle, unsigned int line_height);
-void					draw_3d_col(t_game *game, double angle,
-							float wall_height);
 ///////////////////////////////////////////
 // FREE
 void					free_game(t_game *game);
@@ -174,6 +172,6 @@ void					free_nodes(t_lines *node);
 void					free_vecs(t_vec *vecs);
 ///////////////////////////////////////////
 // HOOK
-void					ft_moove_player(mlx_key_data_t key, void *param);
+void					ft_move_player(mlx_key_data_t key, void *param);
 
 #endif
