@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ymeziane <ymeziane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: omar <omar@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 16:11:28 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/04/15 11:04:04 by ymeziane         ###   ########.fr       */
+/*   Updated: 2024/04/20 12:39:29 by omar             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <unistd.h>
 
 # define TILE_SIZE 16
+# define FOV 60.0
 # define PLAYER_SIZE TILE_SIZE / 6
 # define PLAYER_SPEED TILE_SIZE / 5
 
@@ -159,10 +160,13 @@ void					color_line(mlx_image_t *img, uint32_t color,
 							t_game *game, double angle);
 int32_t					ft_pixel(int32_t r, int32_t g, int32_t b, int32_t a);
 // DRAW MAP 2D
+void					raycast(t_game *game);
 int						draw_map2d(t_game *game);
-void	initialize_line_data(t_direction_line *line, double angle,
-		unsigned int line_height);
-void	draw_3d_col(t_game *game, double angle, float wall_height);
+void					initialize_line_data(t_direction_line *line,
+							double angle, t_game *game);
+void					update_line_position(t_direction_line *line);
+void					draw_3d_col(t_game *game, double angle,
+							float wall_height);
 ///////////////////////////////////////////
 // FREE
 void					free_game(t_game *game);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw_map2d.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: otourabi <otourabi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: omar <omar@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/07 21:53:03 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/04/15 11:55:39 by otourabi         ###   ########.fr       */
+/*   Updated: 2024/04/20 12:57:08 by omar             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,16 +28,17 @@ static mlx_image_t	*draw_player(mlx_t *mlx, t_player *player)
 	return (img);
 }
 
-void	initialize_line_data(t_direction_line *line, double angle,
-		unsigned int line_height)
+void	initialize_line_data(t_direction_line *line, double angle, t_game *game)
 {
 	float	angle_radians;
 
-	line->start_x = line_height;
-	line->start_y = line_height;
+	line->start_x = game->player->line->length;
+	line->start_y = game->player->line->length;
 	angle_radians = angle * M_PI / 180.0;
-	line->end_x = line->start_x + line_height * cos(angle_radians);
-	line->end_y = line->start_y - line_height * sin(angle_radians);
+	line->end_x = line->start_x + game->player->line->length
+		* cos(angle_radians);
+	line->end_y = line->start_y - game->player->line->length
+		* sin(angle_radians);
 	line->delta_x = abs(line->end_x - line->start_x);
 	line->delta_y = abs(line->end_y - line->start_y);
 	if (line->start_x < line->end_x)
@@ -88,9 +89,9 @@ void	draw_3d_col(t_game *game, double angle, float wall_height)
 				mlx_put_pixel(game->img_view_3d, x, y,
 					ft_pixel(game->colors->floor[0], game->colors->floor[1],
 						game->colors->floor[2], 0xFF));
-			else 
-				mlx_put_pixel(game->img_view_3d, x, y, ft_pixel(255, 0,
-						0, 0xFF));
+			else
+				mlx_put_pixel(game->img_view_3d, x, y, ft_pixel(255, 0, 0,
+						0xFF));
 			x++;
 		}
 		y++;
@@ -113,15 +114,71 @@ static void	init_3d_view(mlx_t *mlx, t_game *game)
 		0);
 }
 
+double	compute_distance(t_game *game, double col_angle)
+{
+	t_direction_line	line;
+	double				theta;
+	double				y;
+	double				x;
+	double				step_y;
+	double				step_x;
+
+	line.start_x = game->player->img_player->instances[0].x;
+	line.start_y = game->player->img_player->instances[0].y;
+	y = game->player->img_player->instances[0].y;
+	x = game->player->img_player->instances[0].x;
+	theta = col_angle * M_PI / 180.0;
+	step_y = sin(theta) * .1;
+	step_x = cos(theta) * .1;
+	while (true)
+	{
+		if (game->s_map.map[(int)round(y) / TILE_SIZE][(int)round(x)
+			/ TILE_SIZE] == '1')
+			return (sqrt(pow(x - line.start_x, 2) + pow(y - line.start_y, 2)));
+		x += step_x;
+		y += step_y;
+	}
+	return (-1);
+}
+
+void	raycast(t_game *game)
+{
+	int		col_nb;
+	int		index;
+	double	min;
+	double	col_angle;
+	double	distance;
+	int		col_height;
+	int		y_start;
+	int		y_end;
+
+	col_nb = game->img_view_3d->width;
+	index = 1;
+	min = game->player->angle - (FOV / 2);
+	while (index < col_nb)
+	{
+		col_angle = min + (index * FOV / col_nb);
+		distance = compute_distance(game, col_angle);
+		col_height = ((TILE_SIZE * game->s_map.height) / distance) * TILE_SIZE;
+		y_start = (game->img_view_3d->height - col_height) / 2;
+		y_end = y_start + col_height;
+		for (int y = y_start; y < y_end; y++)
+			mlx_put_pixel(game->img_view_3d, index, y, ft_pixel(50, 100, 150,
+					0xFF));
+		index++;
+	}
+}
+
 static mlx_image_t	*draw_line(mlx_t *mlx, t_game *game)
 {
 	mlx_image_t	*img;
 	uint32_t	color;
-	double		i;
 
+	// double		i;
 	init_line_length(mlx, game);
 	init_3d_view(mlx, game);
 	color = ft_pixel(255, 0, 0, 0xFF);
+	(void)color;
 	img = mlx_new_image(mlx, game->player->line->length * 2,
 			game->player->line->length * 2);
 	if (!img || (mlx_image_to_window(mlx, img,
@@ -131,13 +188,7 @@ static mlx_image_t	*draw_line(mlx_t *mlx, t_game *game)
 				- game->player->line->length + game->player->img_player->height
 				/ 2) == -1))
 		return (printf("Error\n"), NULL);
-	// color_img(img, 0, img->width, img->height);
-	i = game->player->angle - 30;
-	while (i < game->player->angle + 30)
-	{
-		color_line(img, color, game, i);
-		i++;
-	}
+	raycast(game);
 	img->instances[0].z = 3;
 	return (img);
 }

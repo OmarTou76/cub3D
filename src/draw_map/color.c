@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   color.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: otourabi <otourabi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: omar <omar@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 09:56:00 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/04/15 11:52:45 by otourabi         ###   ########.fr       */
+/*   Updated: 2024/04/20 11:34:37 by omar             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,14 +38,14 @@ void	color_img(mlx_image_t *img, uint32_t color, int width, int height)
 static void	initialize_line(t_direction_line *line, mlx_image_t *img,
 		t_game *game, double angle)
 {
-	initialize_line_data(line, angle, line->length);
+	initialize_line_data(line, angle, game);
 	img->instances[0].x = game->player->img_player->instances[0].x
 		- line->length + game->player->img_player->width / 2;
 	img->instances[0].y = game->player->img_player->instances[0].y
 		- line->length + game->player->img_player->height / 2;
 }
 
-static void	update_line_position(t_direction_line *line)
+void	update_line_position(t_direction_line *line)
 {
 	line->error2 = line->error * 2;
 	if (line->error2 > -line->delta_y)
@@ -80,7 +80,8 @@ static int	process_line_drawing(mlx_image_t *img, t_game *game, uint32_t color,
 		{
 			dist = sqrt(pow(game->player->line->start_x - start_x, 2)
 					+ pow(game->player->line->start_y - start_y, 2));
-			draw_3d_col(game, angle, ((TILE_SIZE * game->s_map.height) /2) / dist);
+			draw_3d_col(game, angle, ((TILE_SIZE * game->s_map.height) / 2)
+				/ dist);
 			return (0);
 		}
 		mlx_put_pixel(img, game->player->line->start_x,
