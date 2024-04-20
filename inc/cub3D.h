@@ -6,7 +6,7 @@
 /*   By: omar <omar@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 16:11:28 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/04/20 22:09:04 by omar             ###   ########.fr       */
+/*   Updated: 2024/04/21 00:05:55 by omar             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ typedef struct s_map
 	char				**map;
 	unsigned int		height;
 	unsigned int		width;
+	mlx_image_t			*img_map;
 }						t_map;
 
 typedef struct s_direction_line
@@ -146,7 +147,6 @@ void					get_textures_paths(t_game **game, char *line);
 t_lines					*save_data(char const *filename);
 void					add_vec(t_vec **vecs, int y, int x);
 bool					has_vec(t_vec *vec, int y, int x);
-float					radian_to_degree(float angle);
 
 // PRINT
 void					print_data(t_game *game);
@@ -157,17 +157,23 @@ void					print_lines(t_lines *tmp);
 // COLOR
 void					color_img(mlx_image_t *img, uint32_t color, int width,
 							int height);
-void					color_line(mlx_image_t *img, uint32_t color,
-							t_game *game, double angle);
-int32_t					ft_pixel(int32_t r, int32_t g, int32_t b, int32_t a);
+void					draw_line_on_map(mlx_image_t *img, t_game *game,
+							uint32_t color, double angle);
 // DRAW MAP 2D
-void					raycast(t_game *game);
-int						draw_map2d(t_game *game);
-void					initialize_line_data(t_direction_line *line,
-							double angle, t_game *game);
+void					init_game(t_game *game);
 void					update_line_position(t_direction_line *line);
-void					draw_3d_col(t_game *game, double angle,
-							float wall_height);
+
+// RAYCAST
+double					compute_distance(t_game *game, double col_angle);
+uint32_t				convert_rgba_to_argb(uint32_t rgba);
+double					get_wall_height_and_draw_line(t_game *game,
+							double left_angle, int index);
+uint32_t				get_pixel_from_texture(t_game *game, double col_height,
+							int y, int x);
+void					draw_column(t_game *game, int index, double col_height);
+void					raycast(t_game *game);
+float					radian_to_degree(float angle);
+int32_t					ft_pixel(int32_t r, int32_t g, int32_t b, int32_t a);
 ///////////////////////////////////////////
 // FREE
 void					free_game(t_game *game);

@@ -18,8 +18,9 @@ OBJ_DIR = obj
 SRC_FILES = main hook free \
 	utils/list utils/print \
 	checker/checker checker/map checker/fields checker/spaces \
-	draw_map/draw_map2d draw_map/color \
-	parsing/map_player parsing/texture_color
+	draw_map/init_game draw_map/lines_map \
+	parsing/map_player parsing/texture_color \
+	raycast/raycast raycast/utils
 
 SRC = $(addprefix $(SRC_DIR)/, $(addsuffix .c, $(SRC_FILES)))
 OBJ = $(addprefix $(OBJ_DIR)/, $(addsuffix .o, $(SRC_FILES)))

@@ -1,21 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   color.c                                            :+:      :+:    :+:   */
+/*   lines_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: omar <omar@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 09:56:00 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/04/20 21:40:35 by omar             ###   ########.fr       */
+/*   Updated: 2024/04/21 00:10:04 by omar             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
-
-int32_t	ft_pixel(int32_t r, int32_t g, int32_t b, int32_t a)
-{
-	return (r << 24 | g << 16 | b << 8 | a);
-}
 
 void	color_img(mlx_image_t *img, uint32_t color, int width, int height)
 {
@@ -33,6 +28,30 @@ void	color_img(mlx_image_t *img, uint32_t color, int width, int height)
 		}
 		y++;
 	}
+}
+
+void	initialize_line_data(t_direction_line *line, double angle, t_game *game)
+{
+	float	angle_radians;
+
+	line->start_x = game->player->line->length;
+	line->start_y = game->player->line->length;
+	angle_radians = angle * M_PI / 180.0;
+	line->end_x = line->start_x + game->player->line->length
+		* cos(angle_radians);
+	line->end_y = line->start_y - game->player->line->length
+		* sin(angle_radians);
+	line->delta_x = abs(line->end_x - line->start_x);
+	line->delta_y = abs(line->end_y - line->start_y);
+	if (line->start_x < line->end_x)
+		line->step_x = 1;
+	else
+		line->step_x = -1;
+	if (line->start_y < line->end_y)
+		line->step_y = 1;
+	else
+		line->step_y = -1;
+	line->error = line->delta_x - line->delta_y;
 }
 
 static void	initialize_line(t_direction_line *line, mlx_image_t *img,
@@ -60,30 +79,23 @@ void	update_line_position(t_direction_line *line)
 	}
 }
 
-static int	process_line_drawing(mlx_image_t *img, t_game *game, uint32_t color,
+void	draw_line_on_map(mlx_image_t *img, t_game *game, uint32_t color,
 		double angle)
 {
 	int	x;
 	int	y;
 
-	(void)angle;
+	(void)color;
+	initialize_line(game->player->line, img, game, angle);
 	while (1)
 	{
 		y = (img->instances[0].y + game->player->line->start_y) / TILE_SIZE;
 		x = (img->instances[0].x + game->player->line->start_x) / TILE_SIZE;
 		if (game->s_map.map[y] && game->s_map.map[y][x]
 			&& game->s_map.map[y][x] == '1')
-			return (0);
+			break ;
 		mlx_put_pixel(img, game->player->line->start_x,
 			game->player->line->start_y, color);
 		update_line_position(game->player->line);
 	}
-	return (1);
-}
-
-void	color_line(mlx_image_t *img, uint32_t color, t_game *game, double angle)
-{
-	initialize_line(game->player->line, img, game, angle);
-	if (!process_line_drawing(img, game, color, angle))
-		return ;
 }

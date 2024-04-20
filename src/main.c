@@ -6,7 +6,7 @@
 /*   By: omar <omar@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 15:22:57 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/04/20 22:01:50 by omar             ###   ########.fr       */
+/*   Updated: 2024/04/21 00:09:33 by omar             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	main(int argc, char const *argv[])
 		return (0);
 	txt = mlx_load_png("./textures/plank.png");
 	game->wall_image = mlx_texture_to_image(game->mlx, txt);
-	draw_map2d(game);
+	init_game(game);
 	mlx_key_hook(game->mlx, ft_moove_player, game);
 	mlx_loop(game->mlx);
 	// print_lines(node);
