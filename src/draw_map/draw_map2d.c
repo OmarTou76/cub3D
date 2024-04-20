@@ -6,7 +6,7 @@
 /*   By: omar <omar@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/07 21:53:03 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/04/20 12:57:08 by omar             ###   ########.fr       */
+/*   Updated: 2024/04/20 22:35:35 by omar             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static mlx_image_t	*draw_player(mlx_t *mlx, t_player *player)
 				+ TILE_SIZE / 2 - PLAYER_SIZE / 2) == -1))
 		return (printf("Error\n"), NULL);
 	color_img(img, color, PLAYER_SIZE, PLAYER_SIZE);
-	img->instances[0].z = 2;
+	img->instances[0].z = 1;
 	return (img);
 }
 
@@ -127,7 +127,7 @@ double	compute_distance(t_game *game, double col_angle)
 	line.start_y = game->player->img_player->instances[0].y;
 	y = game->player->img_player->instances[0].y;
 	x = game->player->img_player->instances[0].x;
-	theta = col_angle * M_PI / 180.0;
+	theta = (-col_angle * M_PI) / 180.0;
 	step_y = sin(theta) * .1;
 	step_x = cos(theta) * .1;
 	while (true)
@@ -137,20 +137,36 @@ double	compute_distance(t_game *game, double col_angle)
 			return (sqrt(pow(x - line.start_x, 2) + pow(y - line.start_y, 2)));
 		x += step_x;
 		y += step_y;
+		update_line_position(game->player->line);
 	}
 	return (-1);
 }
 
+uint32_t	convert_rgba_to_argb(uint32_t rgba)
+{
+	uint8_t red = (rgba >> 24) & 0xFF;   // Extract red
+	uint8_t green = (rgba >> 16) & 0xFF; // Extract green
+	uint8_t blue = (rgba >> 8) & 0xFF;   // Extract blue
+	uint8_t alpha = rgba & 0xFF;         // Extract alpha
+	return ((alpha << 24) | (blue << 16) | (green << 8) | red);
+	// Reassemble in ARGB, swapping red and blue
+}
+
 void	raycast(t_game *game)
 {
-	int		col_nb;
-	int		index;
-	double	min;
-	double	col_angle;
-	double	distance;
-	int		col_height;
-	int		y_start;
-	int		y_end;
+	int			col_nb;
+	int			index;
+	double		min;
+	double		col_angle;
+	double		distance;
+	int			col_height;
+	float		texture_x;
+	float		texture_y;
+	int			texture_index;
+	uint32_t	rgba_color;
+	uint32_t	argb_color;
+	int			y;
+	int			y_start;
 
 	col_nb = game->img_view_3d->width;
 	index = 1;
@@ -158,39 +174,60 @@ void	raycast(t_game *game)
 	while (index < col_nb)
 	{
 		col_angle = min + (index * FOV / col_nb);
+		texture_x = (float)(index % game->wall_image->width);
 		distance = compute_distance(game, col_angle);
-		col_height = ((TILE_SIZE * game->s_map.height) / distance) * TILE_SIZE;
+		col_height = ((TILE_SIZE * game->s_map.height) / distance) * (TILE_SIZE
+				/ 2);
 		y_start = (game->img_view_3d->height - col_height) / 2;
-		y_end = y_start + col_height;
-		for (int y = y_start; y < y_end; y++)
-			mlx_put_pixel(game->img_view_3d, index, y, ft_pixel(50, 100, 150,
-					0xFF));
+		y = 0;
+		while (y < (int)game->img_view_3d->height)
+		{
+			if (y >= y_start && y <= y_start + col_height)
+			{
+				texture_y = ((float)(y - (game->img_view_3d->height
+								- col_height) / 2) / col_height)
+					* game->wall_image->height;
+				texture_index = ((int)texture_y * game->wall_image->width
+						+ (int)texture_x) % (game->wall_image->width
+						* game->wall_image->height);
+				rgba_color = ((uint32_t *)game->wall_image->pixels)[texture_index];
+				argb_color = convert_rgba_to_argb(rgba_color);
+				mlx_put_pixel(game->img_view_3d, game->img_view_3d->width
+					- index, y, argb_color);
+			}
+			else if (y < y_start)
+				mlx_put_pixel(game->img_view_3d, game->img_view_3d->width
+					- index, y, ft_pixel(game->colors->ceiling[0],
+						game->colors->ceiling[1], game->colors->ceiling[2],
+						0xFF));
+			else if (y > y_start + col_height)
+				mlx_put_pixel(game->img_view_3d, game->img_view_3d->width
+					- index, y, ft_pixel(game->colors->floor[0],
+						game->colors->floor[1], game->colors->floor[2], 0xFF));
+			y++;
+		}
+		color_line(game->player->line->img_line, ft_pixel(50, 100, 150, 0xFF),
+			game, col_angle);
 		index++;
 	}
 }
 
-static mlx_image_t	*draw_line(mlx_t *mlx, t_game *game)
+void	draw_line(mlx_t *mlx, t_game *game)
 {
-	mlx_image_t	*img;
-	uint32_t	color;
-
-	// double		i;
 	init_line_length(mlx, game);
 	init_3d_view(mlx, game);
-	color = ft_pixel(255, 0, 0, 0xFF);
-	(void)color;
-	img = mlx_new_image(mlx, game->player->line->length * 2,
-			game->player->line->length * 2);
-	if (!img || (mlx_image_to_window(mlx, img,
+	game->player->line->img_line = mlx_new_image(mlx, game->player->line->length
+			* 2, game->player->line->length * 2);
+	if (!game->player->line->img_line || (mlx_image_to_window(mlx,
+				game->player->line->img_line,
 				game->player->img_player->instances[0].x
 				- game->player->line->length + game->player->img_player->width
 				/ 2, game->player->img_player->instances[0].y
 				- game->player->line->length + game->player->img_player->height
 				/ 2) == -1))
-		return (printf("Error\n"), NULL);
+		return (printf("Error\n"), (void)NULL);
 	raycast(game);
-	img->instances[0].z = 3;
-	return (img);
+	game->player->img_player->instances[0].z = 2;
 }
 
 void	set_depth_img(mlx_image_t *img, int z)
@@ -226,7 +263,7 @@ int	draw_map2d(t_game *game)
 	unsigned int	y;
 
 	game->player->img_player = draw_player(game->mlx, game->player);
-	game->player->line->img_line = draw_line(game->mlx, game);
+	draw_line(game->mlx, game);
 	if (!draw_img(game->mlx, game->player->pos, ft_pixel(255, 255, 255, 0xFF),
 			1))
 		return (0);

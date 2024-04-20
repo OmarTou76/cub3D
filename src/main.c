@@ -6,7 +6,7 @@
 /*   By: omar <omar@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 15:22:57 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/04/20 10:47:31 by omar             ###   ########.fr       */
+/*   Updated: 2024/04/20 22:01:50 by omar             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,9 @@
 
 int	main(int argc, char const *argv[])
 {
-	t_lines	*node;
-	t_game	*game;
+	t_lines			*node;
+	t_game			*game;
+	mlx_texture_t	*txt;
 
 	if (!check_input(argv[0], argv[1], argc))
 		return (1);
@@ -27,6 +28,8 @@ int	main(int argc, char const *argv[])
 			* TILE_SIZE, "cub3D", true);
 	if (!game->mlx)
 		return (0);
+	txt = mlx_load_png("./textures/plank.png");
+	game->wall_image = mlx_texture_to_image(game->mlx, txt);
 	draw_map2d(game);
 	mlx_key_hook(game->mlx, ft_moove_player, game);
 	mlx_loop(game->mlx);

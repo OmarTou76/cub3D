@@ -6,7 +6,7 @@
 /*   By: omar <omar@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 14:17:33 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/04/20 12:39:41 by omar             ###   ########.fr       */
+/*   Updated: 2024/04/20 14:19:37 by omar             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,10 @@ void	ft_moove_player(mlx_key_data_t key, void *param)
 			game->player->line->img_line->height);
 		color_img(game->img_view_3d, 0, game->img_view_3d->width,
 			game->img_view_3d->height);
+		game->player->line->img_line->instances[0].x = game->player->img_player->instances[0].x
+			- game->player->line->length + game->player->img_player->width / 2;
+		game->player->line->img_line->instances[0].y = game->player->img_player->instances[0].y
+			- game->player->line->length + game->player->img_player->height / 2;
 		raycast(game);
 	}
 }

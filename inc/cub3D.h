@@ -6,7 +6,7 @@
 /*   By: omar <omar@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 16:11:28 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/04/20 12:39:29 by omar             ###   ########.fr       */
+/*   Updated: 2024/04/20 22:09:04 by omar             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 # include <stdlib.h>
 # include <unistd.h>
 
-# define TILE_SIZE 16
+# define TILE_SIZE 24
 # define FOV 60.0
 # define PLAYER_SIZE TILE_SIZE / 6
 # define PLAYER_SPEED TILE_SIZE / 5
@@ -98,6 +98,7 @@ typedef struct s_game
 	t_map				s_map;
 	t_player			*player;
 	mlx_image_t			*img_view_3d;
+	mlx_image_t			*wall_image;
 }						t_game;
 
 typedef struct s_lines

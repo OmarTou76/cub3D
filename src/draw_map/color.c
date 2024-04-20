@@ -6,7 +6,7 @@
 /*   By: omar <omar@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 09:56:00 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/04/20 11:34:37 by omar             ###   ########.fr       */
+/*   Updated: 2024/04/20 21:40:35 by omar             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,27 +63,17 @@ void	update_line_position(t_direction_line *line)
 static int	process_line_drawing(mlx_image_t *img, t_game *game, uint32_t color,
 		double angle)
 {
-	int		x;
-	int		y;
-	float	dist;
-	int		start_x;
-	int		start_y;
+	int	x;
+	int	y;
 
-	start_x = game->player->line->start_x;
-	start_y = game->player->line->start_y;
+	(void)angle;
 	while (1)
 	{
 		y = (img->instances[0].y + game->player->line->start_y) / TILE_SIZE;
 		x = (img->instances[0].x + game->player->line->start_x) / TILE_SIZE;
 		if (game->s_map.map[y] && game->s_map.map[y][x]
 			&& game->s_map.map[y][x] == '1')
-		{
-			dist = sqrt(pow(game->player->line->start_x - start_x, 2)
-					+ pow(game->player->line->start_y - start_y, 2));
-			draw_3d_col(game, angle, ((TILE_SIZE * game->s_map.height) / 2)
-				/ dist);
 			return (0);
-		}
 		mlx_put_pixel(img, game->player->line->start_x,
 			game->player->line->start_y, color);
 		update_line_position(game->player->line);
