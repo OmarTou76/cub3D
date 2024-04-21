@@ -40,8 +40,7 @@ double	get_wall_height_and_draw_line(t_game *game, double left_angle,
 	distance = compute_distance(game, col_angle);
 	/* Draw line in map
 		- Do we need to call this function elsewhere? (we need <col_angle> property) */
-	draw_line_on_map(game->player->line->img_line, game, ft_pixel(50, 100, 150,
-			0xFF), col_angle);
+	draw_line_on_map(game->player->line->img_line, game, col_angle);
 	return ((TILE_SIZE * game->s_map.height) / distance) * (TILE_SIZE / 2);
 }
 

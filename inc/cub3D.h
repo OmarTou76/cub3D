@@ -6,7 +6,7 @@
 /*   By: omar <omar@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 16:11:28 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/04/21 00:05:55 by omar             ###   ########.fr       */
+/*   Updated: 2024/04/21 19:59:49 by omar             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,7 +158,7 @@ void					print_lines(t_lines *tmp);
 void					color_img(mlx_image_t *img, uint32_t color, int width,
 							int height);
 void					draw_line_on_map(mlx_image_t *img, t_game *game,
-							uint32_t color, double angle);
+							double angle);
 // DRAW MAP 2D
 void					init_game(t_game *game);
 void					update_line_position(t_direction_line *line);
