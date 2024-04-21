@@ -6,7 +6,7 @@
 /*   By: omar <omar@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/07 21:53:03 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/04/21 20:41:12 by omar             ###   ########.fr       */
+/*   Updated: 2024/04/21 23:55:20 by omar             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,7 @@ void	init_and_draw_map(t_game *game)
 
 void	init_game(t_game *game)
 {
+	init_and_load_textures(game);
 	init_and_draw_map(game);
 	init_and_draw_player(game->mlx, game);
 	init_and_draw_line_and_raycast(game->mlx, game);

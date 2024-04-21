@@ -6,7 +6,7 @@
 /*   By: omar <omar@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 16:11:28 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/04/21 20:39:41 by omar             ###   ########.fr       */
+/*   Updated: 2024/04/21 23:56:22 by omar             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,14 @@ typedef struct s_player
 	t_direction_line	*line;
 }						t_player;
 
+typedef struct s_textures
+{
+	mlx_image_t			*north;
+	mlx_image_t			*south;
+	mlx_image_t			*east;
+	mlx_image_t			*west;
+}						t_textures;
+
 typedef struct s_game
 {
 	mlx_t				*mlx;
@@ -101,6 +109,7 @@ typedef struct s_game
 	t_player			*player;
 	mlx_image_t			*img_view_3d;
 	mlx_image_t			*wall_image;
+	t_textures			textures;
 }						t_game;
 
 typedef struct s_lines
@@ -175,6 +184,7 @@ void					draw_column(t_game *game, int index, double col_height);
 void					raycast(t_game *game);
 float					radian_to_degree(float angle);
 int32_t					ft_pixel(int32_t r, int32_t g, int32_t b, int32_t a);
+void					init_and_load_textures(t_game *game);
 ///////////////////////////////////////////
 // FREE
 void					free_game(t_game *game);
