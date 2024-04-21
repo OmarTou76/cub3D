@@ -6,7 +6,7 @@
 /*   By: omar <omar@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 09:56:00 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/04/21 20:03:39 by omar             ###   ########.fr       */
+/*   Updated: 2024/04/21 20:42:40 by omar             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,8 +87,8 @@ void	draw_line_on_map(mlx_image_t *img, t_game *game, double angle)
 	initialize_line(game->player->line, img, game, angle);
 	while (1)
 	{
-		y = (img->instances[0].y + game->player->line->start_y) / TILE_SIZE;
-		x = (img->instances[0].x + game->player->line->start_x) / TILE_SIZE;
+		y = (img->instances[0].y + game->player->line->start_y) / MAP_TILE_SIZE;
+		x = (img->instances[0].x + game->player->line->start_x) / MAP_TILE_SIZE;
 		if (game->s_map.map[y] && game->s_map.map[y][x]
 			&& game->s_map.map[y][x] == '1')
 			break ;

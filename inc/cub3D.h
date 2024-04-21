@@ -6,7 +6,7 @@
 /*   By: omar <omar@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 16:11:28 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/04/21 19:59:49 by omar             ###   ########.fr       */
+/*   Updated: 2024/04/21 20:39:41 by omar             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,11 @@
 # include <stdlib.h>
 # include <unistd.h>
 
-# define TILE_SIZE 24
 # define FOV 60.0
-# define PLAYER_SIZE TILE_SIZE / 6
-# define PLAYER_SPEED TILE_SIZE / 5
+# define TILE_SIZE 32
+# define MAP_TILE_SIZE (TILE_SIZE / 2)
+# define PLAYER_SIZE (TILE_SIZE / 6)
+# define PLAYER_SPEED (TILE_SIZE / 5)
 
 typedef struct s_fields
 {

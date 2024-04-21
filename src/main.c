@@ -6,7 +6,7 @@
 /*   By: omar <omar@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 15:22:57 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/04/21 00:09:33 by omar             ###   ########.fr       */
+/*   Updated: 2024/04/21 20:22:01 by omar             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	main(int argc, char const *argv[])
 	if (!is_valid_data(node))
 		return (free_nodes(node), 1);
 	store_data(&game, node);
-	game->mlx = mlx_init((game->s_map.width * TILE_SIZE) * 2, game->s_map.height
+	game->mlx = mlx_init((game->s_map.width * TILE_SIZE), game->s_map.height
 			* TILE_SIZE, "cub3D", true);
 	if (!game->mlx)
 		return (0);
@@ -33,8 +33,6 @@ int	main(int argc, char const *argv[])
 	init_game(game);
 	mlx_key_hook(game->mlx, ft_moove_player, game);
 	mlx_loop(game->mlx);
-	// print_lines(node);
-	// print_data(game);
 	free_nodes(node);
 	mlx_terminate(game->mlx);
 	free_game(game);

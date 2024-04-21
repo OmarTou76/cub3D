@@ -9,10 +9,10 @@ double	compute_distance(t_game *game, double col_angle)
 	double				step_y;
 	double				step_x;
 
-	line.start_x = game->player->img_player->instances[0].x;
-	line.start_y = game->player->img_player->instances[0].y;
-	y = game->player->img_player->instances[0].y;
-	x = game->player->img_player->instances[0].x;
+	line.start_x = game->player->img_player->instances[0].x * 2;
+	line.start_y = game->player->img_player->instances[0].y * 2;
+	y = line.start_y;
+	x = line.start_x;
 	theta = (-col_angle * M_PI) / 180.0;
 	step_y = sin(theta) * .1;
 	step_x = cos(theta) * .1;
@@ -23,7 +23,6 @@ double	compute_distance(t_game *game, double col_angle)
 			return (sqrt(pow(x - line.start_x, 2) + pow(y - line.start_y, 2)));
 		x += step_x;
 		y += step_y;
-		update_line_position(game->player->line);
 	}
 	return (-1);
 }
