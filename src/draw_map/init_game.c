@@ -6,7 +6,7 @@
 /*   By: omar <omar@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/07 21:53:03 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/04/21 23:55:20 by omar             ###   ########.fr       */
+/*   Updated: 2024/04/22 14:27:50 by omar             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static void	init_3d_view(mlx_t *mlx, t_game *game)
 	game->img_view_3d->instances[0].z = 1;
 }
 
-void	init_and_draw_line_and_raycast(mlx_t *mlx, t_game *game)
+void	init_and_draw_line(mlx_t *mlx, t_game *game)
 {
 	init_line_length(game);
 	init_3d_view(mlx, game);
@@ -59,7 +59,6 @@ void	init_and_draw_line_and_raycast(mlx_t *mlx, t_game *game)
 		return (printf("Error\n"), (void)NULL);
 	game->player->line->img_line->instances[0].z = 2;
 	game->player->line->img_line->enabled = false;
-	raycast(game);
 }
 
 void	fill_by_pixel(mlx_image_t *img, int posY, int posX, int32_t color)
@@ -67,10 +66,10 @@ void	fill_by_pixel(mlx_image_t *img, int posY, int posX, int32_t color)
 	int	y;
 	int	x;
 
-	y = posY + 1;
+	y = posY;
 	while (y < posY + MAP_TILE_SIZE)
 	{
-		x = posX + 1;
+		x = posX;
 		while (x < posX + MAP_TILE_SIZE)
 		{
 			mlx_put_pixel(img, x, y, color);
@@ -110,5 +109,6 @@ void	init_game(t_game *game)
 	init_and_load_textures(game);
 	init_and_draw_map(game);
 	init_and_draw_player(game->mlx, game);
-	init_and_draw_line_and_raycast(game->mlx, game);
+	init_and_draw_line(game->mlx, game);
+	raycast(game);
 }

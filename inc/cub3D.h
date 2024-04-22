@@ -6,7 +6,7 @@
 /*   By: omar <omar@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 16:11:28 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/04/22 10:50:14 by omar             ###   ########.fr       */
+/*   Updated: 2024/04/23 00:53:45 by omar             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@
 # define TILE_FACTOR 4
 # define MAP_TILE_SIZE (TILE_SIZE / TILE_FACTOR)
 # define PLAYER_SIZE (MAP_TILE_SIZE / 4)
-# define PLAYER_SPEED (MAP_TILE_SIZE / 2)
+# define PLAYER_SPEED (MAP_TILE_SIZE / 3)
 
 typedef struct s_fields
 {
@@ -126,6 +126,14 @@ typedef struct s_vec
 	struct s_vec		*next;
 }						t_vec;
 
+typedef struct s_wall
+{
+	double				column_angle;
+	double				distance;
+	double				height;
+	mlx_image_t			*img;
+}						t_wall;
+
 ///////////////////////////////////////////
 //	CHECKER FOLDER
 
@@ -168,20 +176,20 @@ void					print_lines(t_lines *tmp);
 // COLOR
 void					color_img(mlx_image_t *img, uint32_t color, int width,
 							int height);
-void					draw_line_on_map(mlx_image_t *img, t_game *game,
-							double angle);
+void					draw_line_on_map(t_game *game, double angle);
 // DRAW MAP 2D
 void					init_game(t_game *game);
 void					update_line_position(t_direction_line *line);
 
 // RAYCAST
-double					compute_distance(t_game *game, double col_angle);
+void					compute_distance_and_select_wall(t_game *game,
+							t_wall *wall);
 uint32_t				convert_rgba_to_argb(uint32_t rgba);
 double					get_wall_height_and_draw_line(t_game *game,
 							double left_angle, int index);
-uint32_t				get_pixel_from_texture(t_game *game, double col_height,
-							int y, int x);
-void					draw_column(t_game *game, int index, double col_height);
+uint32_t				get_pixel_from_texture(t_game *game, t_wall wall, int y,
+							int x);
+void					draw_column(t_game *game, t_wall wall, int index);
 void					raycast(t_game *game);
 float					radian_to_degree(float angle);
 int32_t					ft_pixel(int32_t r, int32_t g, int32_t b, int32_t a);

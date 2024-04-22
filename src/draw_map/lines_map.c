@@ -6,7 +6,7 @@
 /*   By: omar <omar@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 09:56:00 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/04/22 10:39:11 by omar             ###   ########.fr       */
+/*   Updated: 2024/04/22 14:17:56 by omar             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,11 +79,13 @@ void	update_line_position(t_direction_line *line)
 	}
 }
 
-void	draw_line_on_map(mlx_image_t *img, t_game *game, double angle)
+void	draw_line_on_map(t_game *game, double angle)
 {
-	int	x;
-	int	y;
+	int			x;
+	int			y;
+	mlx_image_t	*img;
 
+	img = game->player->line->img_line;
 	initialize_line(game->player->line, img, game, angle);
 	while (1)
 	{
