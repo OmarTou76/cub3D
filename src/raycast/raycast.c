@@ -9,8 +9,8 @@ double	compute_distance(t_game *game, double col_angle)
 	double				step_y;
 	double				step_x;
 
-	line.start_x = game->player->img_player->instances[0].x * 2;
-	line.start_y = game->player->img_player->instances[0].y * 2;
+	line.start_x = game->player->img_player->instances[0].x * TILE_FACTOR;
+	line.start_y = game->player->img_player->instances[0].y * TILE_FACTOR;
 	y = line.start_y;
 	x = line.start_x;
 	theta = (-col_angle * M_PI) / 180.0;
