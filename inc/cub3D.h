@@ -6,7 +6,7 @@
 /*   By: omar <omar@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 16:11:28 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/04/23 00:53:45 by omar             ###   ########.fr       */
+/*   Updated: 2024/04/24 17:19:51 by omar             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,6 +132,8 @@ typedef struct s_wall
 	double				distance;
 	double				height;
 	mlx_image_t			*img;
+	double				collision_y;
+	double				collision_x;
 }						t_wall;
 
 ///////////////////////////////////////////
@@ -187,8 +189,7 @@ void					compute_distance_and_select_wall(t_game *game,
 uint32_t				convert_rgba_to_argb(uint32_t rgba);
 double					get_wall_height_and_draw_line(t_game *game,
 							double left_angle, int index);
-uint32_t				get_pixel_from_texture(t_game *game, t_wall wall, int y,
-							int x);
+uint32_t				get_pixel_from_texture(t_wall wall, int y);
 void					draw_column(t_game *game, t_wall wall, int index);
 void					raycast(t_game *game);
 float					radian_to_degree(float angle);

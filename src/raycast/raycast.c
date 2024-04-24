@@ -1,55 +1,26 @@
 #include "cub3D.h"
 
-int	is_round(double num)
+int	r(double nb)
 {
-	double	rounded;
-
-	rounded = round(num);
-	if (fabs(rounded - num) < 1e-6)
-	{
-		return (1);
-	}
-	else
-	{
-		return (0);
-	}
+	return (int)round(nb);
 }
 
-void	get_wall_img(t_wall *wall, t_game *game, double wall_y, double wall_x)
+void	get_wall_img(t_wall *wall, t_game *game)
 {
-	int		player_y;
-	int		player_x;
-	double	y;
-	double	x;
+	int	round_y;
+	int	round_x;
+	int	player_x;
+	int	player_y;
 
-	player_y = game->player->img_player->instances[0].y / MAP_TILE_SIZE;
+	// Trouver la bonne texture a afficher
 	player_x = game->player->img_player->instances[0].x / MAP_TILE_SIZE;
-	if ((int)round(wall_y) / TILE_SIZE == 0)
-		wall->img = game->textures.north;
-	else if ((int)round(wall_y) / TILE_SIZE == (int)game->s_map.height - 1)
-		wall->img = game->textures.south;
-	else if ((int)round(wall_x) / TILE_SIZE == 0)
-		wall->img = game->textures.west;
-	else if ((int)round(wall_x) / TILE_SIZE == (int)game->s_map.width - 1)
-		wall->img = game->textures.east;
-	else
-	{
-		// Murs a l'interieur de la map ()
-		// Trouver une solution pour afficher les bonnes textures
-		y = wall_y / (double)TILE_SIZE;
-		x = wall_x / (double)TILE_SIZE;
-		printf("%d %d -> %f %f\n", player_y, player_x, y, x);
-		if ((double)player_y < y && is_round(x))
-		{
-			wall->img = game->textures.east;
-		}
-		/* else if ((double)player_x < x && is_round(y))
-		{
-			wall->img = game->textures.west;
-		} */
-		else
-			wall->img = game->textures.south;
-	}
+	player_y = game->player->img_player->instances[0].y / MAP_TILE_SIZE;
+	round_y = r(wall->collision_y);
+	round_x = r(wall->collision_x);
+	printf("P: %d %d -> W: [%d][%d] -> [%c]\n", player_y, player_x, round_y,
+		round_x, game->s_map.map[round_y][round_x]);
+	// -----------
+	wall->img = game->textures.south;
 }
 
 void	compute_distance_and_select_wall(t_game *game, t_wall *wall)
@@ -70,10 +41,11 @@ void	compute_distance_and_select_wall(t_game *game, t_wall *wall)
 	step_x = cos(theta) * .1;
 	while (true)
 	{
-		if (game->s_map.map[(int)round(y) / TILE_SIZE][(int)round(x)
-			/ TILE_SIZE] == '1')
+		if (game->s_map.map[r(y) / TILE_SIZE][r(x) / TILE_SIZE] == '1')
 		{
-			get_wall_img(wall, game, y, x);
+			wall->collision_y = y / TILE_SIZE;
+			wall->collision_x = x / TILE_SIZE;
+			get_wall_img(wall, game);
 			wall->distance = (sqrt(pow(x - line.start_x, 2) + pow(y
 							- line.start_y, 2)));
 			return ;
@@ -90,39 +62,41 @@ void	get_wall(t_game *game, t_wall *wall, double left_angle, int index)
 	column_count = game->img_view_3d->width;
 	wall->column_angle = left_angle + (index * FOV / column_count);
 	compute_distance_and_select_wall(game, wall);
-	wall->height = ((TILE_SIZE * game->s_map.height) / wall->distance)
-		* (TILE_SIZE / 2);
+	wall->height = (game->img_view_3d->height / wall->distance) * (TILE_SIZE);
 }
 
-uint32_t	get_pixel_from_texture(t_game *game, t_wall wall, int y, int x)
+uint32_t	get_pixel_from_texture(t_wall wall, int y)
 {
-	float	texture_y;
+	double	texture_x;
+	double	texture_y;
 	int		texture_index;
+	double	fract_x;
+	double	fract_y;
 
-	texture_y = ((float)(y - (game->img_view_3d->height - wall.height) / 2)
-			/ wall.height) * wall.img->height;
-	texture_index = ((int)texture_y * wall.img->width + x) % (wall.img->width
-			* wall.img->height);
+	fract_x = fmod(wall.collision_x, 1.0f);
+	fract_y = fmod(wall.collision_y, 1.0f);
+	if (fract_x < 0.98 || fract_y > 0.98)
+		texture_x = fract_x;
+	else
+		texture_x = fract_y;
+	texture_y = (double)y / wall.height;
+	texture_index = ((int)(texture_y * wall.img->height) * wall.img->width)
+		+ (int)(texture_x * wall.img->width);
+	texture_index %= (wall.img->height * wall.img->width);
 	return (convert_rgba_to_argb(((uint32_t *)wall.img->pixels)[texture_index]));
 }
 
 void	draw_column(t_game *game, t_wall wall, int index)
 {
-	int	texture_x;
-	int	y;
-	int	y_start;
+	int			y_start;
+	int			y;
+	uint32_t	color;
 
-	texture_x = (index % wall.img->width);
 	y_start = (game->img_view_3d->height - wall.height) / 2;
 	y = 0;
 	while (y < (int)game->img_view_3d->height)
 	{
-		if (y >= y_start && y <= y_start + wall.height)
-		{
-			mlx_put_pixel(game->img_view_3d, game->img_view_3d->width - index,
-				y, get_pixel_from_texture(game, wall, y, texture_x));
-		}
-		else if (y < y_start)
+		if (y < y_start)
 			mlx_put_pixel(game->img_view_3d, game->img_view_3d->width - index,
 				y, ft_pixel(game->colors->ceiling[0], game->colors->ceiling[1],
 					game->colors->ceiling[2], 0xFF));
@@ -130,16 +104,22 @@ void	draw_column(t_game *game, t_wall wall, int index)
 			mlx_put_pixel(game->img_view_3d, game->img_view_3d->width - index,
 				y, ft_pixel(game->colors->floor[0], game->colors->floor[1],
 					game->colors->floor[2], 0xFF));
+		else
+		{
+			color = get_pixel_from_texture(wall, y - y_start);
+			mlx_put_pixel(game->img_view_3d, game->img_view_3d->width - index,
+				y, color);
+		}
 		y++;
 	}
 }
 
 void	raycast(t_game *game)
 {
-	int col_nb;
-	int index;
-	double left_angle;
-	t_wall wall;
+	int		col_nb;
+	int		index;
+	double	left_angle;
+	t_wall	wall;
 
 	col_nb = game->img_view_3d->width;
 	index = 1;
