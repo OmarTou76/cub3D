@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_player.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omar <omar@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: ymeziane <ymeziane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 15:25:15 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/04/13 17:08:29 by omar             ###   ########.fr       */
+/*   Updated: 2024/04/25 12:37:09 by ymeziane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,22 @@ t_player	*get_info_player(char **map)
 	return (player);
 }
 
+int get_max_width(char **map)
+{
+	size_t	i;
+	size_t	max_width;
+
+	i = 0;
+	max_width = 0;
+	while (map[i])
+	{
+		if(ft_strlen(map[i]) > max_width)
+			max_width = ft_strlen(map[i]);
+		i++;
+	}
+	return (max_width);
+}
+
 void	store_data(t_game **game, t_lines *node)
 {
 	t_lines	*tmp;
@@ -90,7 +106,7 @@ void	store_data(t_game **game, t_lines *node)
 		}
 		tmp = tmp->next;
 	}
-	(*game)->s_map.width = ft_strlen((*game)->s_map.map[0]);
+	(*game)->s_map.width = get_max_width((*game)->s_map.map);
 	(*game)->s_map.height = get_map_height((*game)->s_map.map);
 	(*game)->player = get_info_player((*game)->s_map.map);
 }

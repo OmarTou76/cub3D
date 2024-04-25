@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hook.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omar <omar@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: ymeziane <ymeziane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 14:17:33 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/04/22 14:22:05 by omar             ###   ########.fr       */
+/*   Updated: 2024/04/25 12:50:24 by ymeziane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,19 +30,21 @@ void	update_left_and_right(mlx_key_data_t key, t_game *game, int *new_y,
 {
 	if (key.key == MLX_KEY_A)
 	{
-		*new_x += PLAYER_SPEED * cos((game->player->angle * M_PI / 180.0) + M_PI
+		*new_x += (PLAYER_SPEED) * cos((game->player->angle * M_PI / 180.0) + M_PI
 				/ 2.0);
-		*new_y -= PLAYER_SPEED * sin((game->player->angle * M_PI / 180.0) + M_PI
+		*new_y -= (PLAYER_SPEED) * sin((game->player->angle * M_PI / 180.0) + M_PI
 				/ 2.0);
 	}
 	else if (key.key == MLX_KEY_D)
 	{
-		*new_x += PLAYER_SPEED * cos((game->player->angle * M_PI / 180.0) - M_PI
+		*new_x += (PLAYER_SPEED) * cos((game->player->angle * M_PI / 180.0) - M_PI
 				/ 2.0);
-		*new_y -= PLAYER_SPEED * sin((game->player->angle * M_PI / 180.0) - M_PI
+		*new_y -= (PLAYER_SPEED) * sin((game->player->angle * M_PI / 180.0) - M_PI
 				/ 2.0);
 	}
 }
+
+
 
 void	update_position(mlx_key_data_t key, t_game *game, int new_y, int new_x)
 {
@@ -124,8 +126,8 @@ void	ft_moove_player(mlx_key_data_t key, void *param)
 		color_img(game->player->line->img_line, 0,
 			game->player->line->img_line->width,
 			game->player->line->img_line->height);
-		color_img(game->img_view_3d, 0, game->img_view_3d->width,
-			game->img_view_3d->height);
+		// color_img(game->img_view_3d, 0, game->img_view_3d->width,
+		// 	game->img_view_3d->height);
 		game->player->line->img_line->instances[0].x = game->player->img_player->instances[0].x
 			- game->player->line->length + game->player->img_player->width / 2;
 		game->player->line->img_line->instances[0].y = game->player->img_player->instances[0].y

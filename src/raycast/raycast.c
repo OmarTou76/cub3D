@@ -17,8 +17,8 @@ void	get_wall_img(t_wall *wall, t_game *game)
 	player_y = game->player->img_player->instances[0].y / MAP_TILE_SIZE;
 	round_y = r(wall->collision_y);
 	round_x = r(wall->collision_x);
-	printf("P: %d %d -> W: [%d][%d] -> [%c]\n", player_y, player_x, round_y,
-		round_x, game->s_map.map[round_y][round_x]);
+	// printf("P: %d %d -> W: [%d][%d] -> [%c]\n", player_y, player_x, round_y,
+	// 	round_x, game->s_map.map[round_y][round_x]);
 	// -----------
 	wall->img = game->textures.south;
 }
@@ -37,8 +37,8 @@ void	compute_distance_and_select_wall(t_game *game, t_wall *wall)
 	y = line.start_y;
 	x = line.start_x;
 	theta = ((-wall->column_angle * M_PI) / 180.0);
-	step_y = sin(theta) * .1;
-	step_x = cos(theta) * .1;
+	step_y = sin(theta) * 0.2;
+	step_x = cos(theta) * 0.2;
 	while (true)
 	{
 		if (game->s_map.map[r(y) / TILE_SIZE][r(x) / TILE_SIZE] == '1')
@@ -75,7 +75,7 @@ uint32_t	get_pixel_from_texture(t_wall wall, int y)
 
 	fract_x = fmod(wall.collision_x, 1.0f);
 	fract_y = fmod(wall.collision_y, 1.0f);
-	if (fract_x < 0.98 || fract_y > 0.98)
+	if (fract_x < 0.95 || fract_y > 0.95)
 		texture_x = fract_x;
 	else
 		texture_x = fract_y;
