@@ -122,7 +122,7 @@ void	raycast(t_game *game)
 	t_wall	wall;
 
 	col_nb = game->img_view_3d->width;
-	index = 1;
+	index = 0;
 	left_angle = game->player->angle - (FOV / 2);
 	while (index < col_nb)
 	{

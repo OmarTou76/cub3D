@@ -6,7 +6,7 @@
 /*   By: ymeziane <ymeziane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 14:17:33 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/04/25 14:31:51 by ymeziane         ###   ########.fr       */
+/*   Updated: 2024/04/25 15:37:48 by ymeziane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,16 @@
 void	refresh_deltas(t_game **g)
 {
 	float	angle_radians;
-	int		dx;
-	int		dy;
+	float		dx;
+	float		dy;
 
+	// printf("prvious delta x: %f, delta y: %f\n", (*g)->player->delta_x, (*g)->player->delta_y);
 	angle_radians = (*g)->player->angle * M_PI / 180.0;
 	dx = PLAYER_SPEED * cos(-angle_radians);
 	dy = PLAYER_SPEED * sin(-angle_radians);
-	(*g)->player->delta_x = dx;
-	(*g)->player->delta_y = dy;
+	(*g)->player->delta_x = round(dx);
+	(*g)->player->delta_y = round(dy);
+	// printf("new delta x: %f, delta y: %f\n", (*g)->player->delta_x, (*g)->player->delta_y);
 }
 
 void	update_left_and_right(mlx_key_data_t key, t_game *game, int *new_y, int *new_x)
@@ -71,19 +73,19 @@ void	handle_moves(mlx_key_data_t key, t_game *game)
 	refresh_deltas(&game);
 	if (key.key == MLX_KEY_RIGHT)
 	{
-		game->player->angle -= 5;
+		game->player->angle -= ROTATE_SPEED;
 		if (game->player->angle < 0)
 			game->player->angle += (radian_to_degree(2 * M_PI));
-		game->player->delta_x = cos(game->player->angle) * 5;
-		game->player->delta_y = sin(game->player->angle) * 5;
+		game->player->delta_x = cos(game->player->angle) * (ROTATE_SPEED);
+		game->player->delta_y = sin(game->player->angle) * (ROTATE_SPEED);
 	}
 	else if (key.key == MLX_KEY_LEFT)
 	{
-		game->player->angle += 5;
+		game->player->angle += ROTATE_SPEED;
 		if (game->player->angle > radian_to_degree(2 * M_PI))
 			game->player->angle -= radian_to_degree(2 * M_PI);
-		game->player->delta_x = cos(game->player->angle) * 5;
-		game->player->delta_y = sin(game->player->angle) * 5;
+		game->player->delta_x = cos(game->player->angle) * (ROTATE_SPEED);
+		game->player->delta_y = sin(game->player->angle) * (ROTATE_SPEED);
 	}
 	else
 		update_position(key, game, game->player->img_player->instances[0].y,
@@ -94,7 +96,7 @@ void	handle_map_display(t_game *game)
 {
 	if (game->s_map.img_map->enabled)
 	{
-		game->s_map.img_map->enabled = false;
+		game->s_map.img_map->enabled = false;	
 		game->player->img_player->enabled = false;
 		game->player->line->img_line->enabled = false;
 	}

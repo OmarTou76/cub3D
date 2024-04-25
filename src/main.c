@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omar <omar@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: ymeziane <ymeziane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 15:22:57 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/04/21 20:22:01 by omar             ###   ########.fr       */
+/*   Updated: 2024/04/25 16:01:27 by ymeziane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,7 @@ int	main(int argc, char const *argv[])
 	if (!is_valid_data(node))
 		return (free_nodes(node), 1);
 	store_data(&game, node);
-	game->mlx = mlx_init((game->s_map.width * TILE_SIZE), game->s_map.height
-			* TILE_SIZE, "cub3D", true);
+	game->mlx = mlx_init(WINDOW_WIDTH, WINDOW_HEIGHT, "cub3D", false);
 	if (!game->mlx)
 		return (0);
 	txt = mlx_load_png("./textures/plank.png");

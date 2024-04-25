@@ -6,7 +6,7 @@
 /*   By: ymeziane <ymeziane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/07 21:53:03 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/04/25 11:12:28 by ymeziane         ###   ########.fr       */
+/*   Updated: 2024/04/25 15:55:08 by ymeziane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,7 @@ static void	init_line_length(t_game *game)
 
 static void	init_3d_view(mlx_t *mlx, t_game *game)
 {
-	game->img_view_3d = mlx_new_image(mlx, (game->s_map.width * TILE_SIZE),
-			game->s_map.height * TILE_SIZE);
+	game->img_view_3d = mlx_new_image(mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
 	mlx_image_to_window(mlx, game->img_view_3d, 0, 0);
 	game->img_view_3d->instances[0].z = 1;
 }
