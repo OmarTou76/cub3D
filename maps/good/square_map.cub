@@ -1,13 +1,13 @@
-   WE                            textures/hand_painted_wood.png
-NO      textures/wood.png
+   WE                            textures/bricks0.png
+NO      textures/bricks1.png
 
 
 
-SO textures/plank.png
+SO textures/bricks2.png
 
 F   69, 222, 199
 
-EA textures/grass.png
+EA textures/bricks.png
 
 
 

@@ -1,6 +1,6 @@
 #include "cub3D.h"
 
-int	r(double nb)
+int	r(float nb)
 {
 	return (int)round(nb);
 }
@@ -26,11 +26,11 @@ void	get_wall_img(t_wall *wall, t_game *game)
 void	compute_distance_and_select_wall(t_game *game, t_wall *wall)
 {
 	t_direction_line	line;
-	double				theta;
-	double				y;
-	double				x;
-	double				step_y;
-	double				step_x;
+	float				theta;
+	float				y;
+	float				x;
+	float				step_y;
+	float				step_x;
 
 	line.start_x = game->player->img_player->instances[0].x * TILE_FACTOR;
 	line.start_y = game->player->img_player->instances[0].y * TILE_FACTOR;
@@ -55,7 +55,7 @@ void	compute_distance_and_select_wall(t_game *game, t_wall *wall)
 	}
 }
 
-void	get_wall(t_game *game, t_wall *wall, double left_angle, int index)
+void	get_wall(t_game *game, t_wall *wall, float left_angle, int index)
 {
 	int	column_count;
 
@@ -67,11 +67,11 @@ void	get_wall(t_game *game, t_wall *wall, double left_angle, int index)
 
 uint32_t	get_pixel_from_texture(t_wall wall, int y)
 {
-	double	texture_x;
-	double	texture_y;
+	float	texture_x;
+	float	texture_y;
 	int		texture_index;
-	double	fract_x;
-	double	fract_y;
+	float	fract_x;
+	float	fract_y;
 
 	fract_x = fmod(wall.collision_x, 1.0f);
 	fract_y = fmod(wall.collision_y, 1.0f);
@@ -79,7 +79,7 @@ uint32_t	get_pixel_from_texture(t_wall wall, int y)
 		texture_x = fract_x;
 	else
 		texture_x = fract_y;
-	texture_y = (double)y / wall.height;
+	texture_y = (float)y / wall.height;
 	texture_index = ((int)(texture_y * wall.img->height) * wall.img->width)
 		+ (int)(texture_x * wall.img->width);
 	texture_index %= (wall.img->height * wall.img->width);
@@ -118,7 +118,7 @@ void	raycast(t_game *game)
 {
 	int		col_nb;
 	int		index;
-	double	left_angle;
+	float	left_angle;
 	t_wall	wall;
 
 	col_nb = game->img_view_3d->width;

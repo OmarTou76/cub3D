@@ -6,7 +6,7 @@
 /*   By: ymeziane <ymeziane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 15:25:15 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/04/25 12:37:09 by ymeziane         ###   ########.fr       */
+/*   Updated: 2024/04/25 14:34:59 by ymeziane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,9 +61,9 @@ t_player	*get_info_player(char **map)
 	player->delta_x = 0;
 	player->delta_y = 0;
 	if (player_direction == 'N')
-		player->angle = 270;
-	else if (player_direction == 'S')
 		player->angle = 90;
+	else if (player_direction == 'S')
+		player->angle = 270;
 	else if (player_direction == 'W')
 		player->angle = 180;
 	else if (player_direction == 'E')

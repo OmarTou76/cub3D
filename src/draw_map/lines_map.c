@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lines_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omar <omar@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: ymeziane <ymeziane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 09:56:00 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/04/22 14:17:56 by omar             ###   ########.fr       */
+/*   Updated: 2024/04/25 14:08:34 by ymeziane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	color_img(mlx_image_t *img, uint32_t color, int width, int height)
 	}
 }
 
-void	initialize_line_data(t_direction_line *line, double angle, t_game *game)
+void	initialize_line_data(t_direction_line *line, float angle, t_game *game)
 {
 	float	angle_radians;
 
@@ -55,7 +55,7 @@ void	initialize_line_data(t_direction_line *line, double angle, t_game *game)
 }
 
 static void	initialize_line(t_direction_line *line, mlx_image_t *img,
-		t_game *game, double angle)
+		t_game *game, float angle)
 {
 	initialize_line_data(line, angle, game);
 	img->instances[0].x = game->player->img_player->instances[0].x
@@ -79,7 +79,7 @@ void	update_line_position(t_direction_line *line)
 	}
 }
 
-void	draw_line_on_map(t_game *game, double angle)
+void	draw_line_on_map(t_game *game, float angle)
 {
 	int			x;
 	int			y;
@@ -94,8 +94,12 @@ void	draw_line_on_map(t_game *game, double angle)
 		if (game->s_map.map[y] && game->s_map.map[y][x]
 			&& game->s_map.map[y][x] == '1')
 			break ;
-		mlx_put_pixel(img, game->player->line->start_x,
-			game->player->line->start_y, ft_pixel(100, 255, 100, 0xFF));
+		if(round(angle) == game->player->angle || round(angle) == game->player->angle + 1 || round(angle) == game->player->angle - 1)
+			mlx_put_pixel(img, game->player->line->start_x,
+				game->player->line->start_y, ft_pixel(0, 0, 0, 0xFF));
+		else
+			mlx_put_pixel(img, game->player->line->start_x,
+				game->player->line->start_y, ft_pixel(100, 255, 100, 0xFF));
 		update_line_position(game->player->line);
 	}
 }

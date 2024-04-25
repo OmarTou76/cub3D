@@ -6,7 +6,7 @@
 /*   By: ymeziane <ymeziane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 16:11:28 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/04/25 11:27:11 by ymeziane         ###   ########.fr       */
+/*   Updated: 2024/04/25 14:08:34 by ymeziane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,9 +86,9 @@ typedef struct s_direction_line
 typedef struct s_player
 {
 	t_point				pos;
-	double				delta_x;
-	double				delta_y;
-	double				angle;
+	float				delta_x;
+	float				delta_y;
+	float				angle;
 	mlx_image_t			*img_player;
 	t_direction_line	*line;
 }						t_player;
@@ -128,12 +128,12 @@ typedef struct s_vec
 
 typedef struct s_wall
 {
-	double				column_angle;
-	double				distance;
-	double				height;
+	float				column_angle;
+	float				distance;
+	float				height;
 	mlx_image_t			*img;
-	double				collision_y;
-	double				collision_x;
+	float				collision_y;
+	float				collision_x;
 }						t_wall;
 
 ///////////////////////////////////////////
@@ -178,7 +178,7 @@ void					print_lines(t_lines *tmp);
 // COLOR
 void					color_img(mlx_image_t *img, uint32_t color, int width,
 							int height);
-void					draw_line_on_map(t_game *game, double angle);
+void					draw_line_on_map(t_game *game, float angle);
 // DRAW MAP 2D
 void					init_game(t_game *game);
 void					update_line_position(t_direction_line *line);
@@ -187,8 +187,8 @@ void					update_line_position(t_direction_line *line);
 void					compute_distance_and_select_wall(t_game *game,
 							t_wall *wall);
 uint32_t				convert_rgba_to_argb(uint32_t rgba);
-double					get_wall_height_and_draw_line(t_game *game,
-							double left_angle, int index);
+float					get_wall_height_and_draw_line(t_game *game,
+							float left_angle, int index);
 uint32_t				get_pixel_from_texture(t_wall wall, int y);
 void					draw_column(t_game *game, t_wall wall, int index);
 void					raycast(t_game *game);
