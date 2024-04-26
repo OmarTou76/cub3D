@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ymeziane <ymeziane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: omar <omar@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 15:22:57 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/04/26 16:04:34 by ymeziane         ###   ########.fr       */
+/*   Updated: 2024/04/26 19:31:37 by omar             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ int	main(int argc, char const *argv[])
 		mlx_loop(game->mlx);
 	}
 	free_nodes(node);
+	delete_images(game);
 	mlx_terminate(game->mlx);
 	free_game(game);
 	return (EXIT_SUCCESS);

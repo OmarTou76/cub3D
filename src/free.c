@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ymeziane <ymeziane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: omar <omar@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 14:19:31 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/04/09 19:27:15 by ymeziane         ###   ########.fr       */
+/*   Updated: 2024/04/26 19:32:13 by omar             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ void	free_game(t_game *game)
 		free(game->s_map.map);
 		free(game->colors);
 		free(game->paths);
+		free(game->player->line);
+		free(game->player);
 		free(game);
 	}
 }
@@ -46,4 +48,16 @@ void	free_vecs(t_vec *vecs)
 		free(vecs);
 		vecs = tmp;
 	}
+}
+
+void	delete_images(t_game *game)
+{
+	if (game->textures.east != NULL)
+		mlx_delete_image(game->mlx, game->textures.east);
+	if (game->textures.west != NULL)
+		mlx_delete_image(game->mlx, game->textures.west);
+	if (game->textures.south != NULL)
+		mlx_delete_image(game->mlx, game->textures.north);
+	if (game->textures.north != NULL)
+		mlx_delete_image(game->mlx, game->textures.north);
 }

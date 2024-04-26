@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_game.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ymeziane <ymeziane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: omar <omar@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/07 21:53:03 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/04/26 16:05:52 by ymeziane         ###   ########.fr       */
+/*   Updated: 2024/04/26 19:17:17 by omar             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ static void	init_and_draw_line(mlx_t *mlx, t_game *game)
 				- game->player->line->length + game->player->img_player->height
 				/ 2) == -1))
 		return (printf("Error\n"), (void)NULL);
-	game->player->line->img_line->instances[0].z = 2;
+	game->player->line->img_line->instances[0].z = 3;
 	game->player->line->img_line->enabled = false;
 }
 
@@ -105,7 +105,8 @@ static void	init_and_draw_map(t_game *game)
 
 bool	init_game(t_game *game)
 {
-	init_and_load_textures(game);
+	if (!init_and_load_textures(game))
+		return (false);
 	init_and_draw_map(game);
 	init_and_draw_player(game->mlx, game);
 	init_and_draw_line(game->mlx, game);

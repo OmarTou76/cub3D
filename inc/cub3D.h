@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ymeziane <ymeziane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: omar <omar@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 16:11:28 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/04/26 16:12:18 by ymeziane         ###   ########.fr       */
+/*   Updated: 2024/04/26 19:31:44 by omar             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -195,12 +195,12 @@ float					get_wall_height_and_draw_line(t_game *game,
 void					raycast(t_game *game);
 float					radian_to_degree(float angle);
 int32_t					ft_pixel(int32_t r, int32_t g, int32_t b, int32_t a);
-void					init_and_load_textures(t_game *game);
 ///////////////////////////////////////////
 //	FREE
 void					free_game(t_game *game);
 void					free_nodes(t_lines *node);
 void					free_vecs(t_vec *vecs);
+void					delete_images(t_game *game);
 ///////////////////////////////////////////
 //	HOOK FOLDER
 
@@ -218,7 +218,7 @@ void					update_position(mlx_key_data_t key, t_game *game,
 //	RAYCAST
 void					raycast(t_game *game);
 //	TEXTURE
-void					init_and_load_textures(t_game *game);
+bool					init_and_load_textures(t_game *game);
 //	WALL
 void					get_wall(t_game *game, t_wall *wall, float left_angle,
 							int index);

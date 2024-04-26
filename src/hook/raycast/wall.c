@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   wall.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ymeziane <ymeziane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: omar <omar@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 15:44:36 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/04/26 15:47:06 by ymeziane         ###   ########.fr       */
+/*   Updated: 2024/04/26 19:04:31 by omar             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,19 +19,6 @@ static int	r(float nb)
 
 static void	get_wall_img(t_wall *wall, t_game *game)
 {
-	int	round_y;
-	int	round_x;
-	int	player_x;
-	int	player_y;
-
-	// Trouver la bonne texture a afficher
-	player_x = game->player->img_player->instances[0].x / MAP_TILE_SIZE;
-	player_y = game->player->img_player->instances[0].y / MAP_TILE_SIZE;
-	round_y = r(wall->collision_y);
-	round_x = r(wall->collision_x);
-	// printf("P: %d %d -> W: [%d][%d] -> [%c]\n", player_y, player_x, round_y,
-	// 	round_x, game->s_map.map[round_y][round_x]);
-	// -----------
 	wall->img = game->textures.south;
 }
 
@@ -69,7 +56,7 @@ static void	compute_distance_and_select_wall(t_game *game, t_wall *wall)
 
 void	get_wall(t_game *game, t_wall *wall, float left_angle, int index)
 {
-	int	column_count;
+	int column_count;
 
 	column_count = game->img_view_3d->width;
 	wall->column_angle = left_angle + (index * FOV / column_count);
