@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omar <omar@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: ymeziane <ymeziane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 15:22:57 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/04/26 15:37:52 by omar             ###   ########.fr       */
+/*   Updated: 2024/04/26 16:04:34 by ymeziane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	main(int argc, char const *argv[])
 		return (0);
 	if (init_game(game))
 	{
-		mlx_key_hook(game->mlx, ft_moove_player, game);
+		mlx_key_hook(game->mlx, ft_move_player, game);
 		mlx_loop(game->mlx);
 	}
 	free_nodes(node);

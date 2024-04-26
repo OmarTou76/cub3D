@@ -15,12 +15,13 @@ INCLUDES = -I./inc -I./libft/inc -I$(MLX_DIR)
 SRC_DIR = src
 OBJ_DIR = obj
 
-SRC_FILES = main hook free \
-	utils/list utils/print \
+SRC_FILES = main free \
+	utils/list utils/print utils/color\
 	checker/checker checker/map checker/fields checker/spaces \
 	draw_map/init_game draw_map/lines_map \
+	hook/move hook/map hook/position \
+	hook/raycast/raycast hook/raycast/texture hook/raycast/wall\
 	parsing/map_player parsing/texture_color \
-	raycast/raycast raycast/utils
 
 SRC = $(addprefix $(SRC_DIR)/, $(addsuffix .c, $(SRC_FILES)))
 OBJ = $(addprefix $(OBJ_DIR)/, $(addsuffix .o, $(SRC_FILES)))

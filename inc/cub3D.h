@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omar <omar@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: ymeziane <ymeziane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 16:11:28 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/04/26 15:38:10 by omar             ###   ########.fr       */
+/*   Updated: 2024/04/26 16:12:18 by ymeziane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,50 +159,69 @@ int						is_spaces_outside(t_vec **vecs, char **m, int y, int x);
 ///////////////////////////////////////////
 //	PARSING FOLDER
 
-// MAP_PLAYER
+//	MAP_PLAYER
 void					store_data(t_game **game, t_lines *node);
-// TEXTURE_COLOR
+//	TEXTURE_COLOR
 void					get_colors(t_game **game, char *line);
 void					get_textures_paths(t_game **game, char *line);
 ///////////////////////////////////////////
-// UTILS FOLDER
+//	UTILS FOLDER
 
-// LIST
+//	LIST
 t_lines					*save_data(char const *filename);
 void					add_vec(t_vec **vecs, int y, int x);
 bool					has_vec(t_vec *vec, int y, int x);
-
-// PRINT
+float					radian_to_degree(float angle);
+//	PRINT
 void					print_data(t_game *game);
 void					print_lines(t_lines *tmp);
-///////////////////////////////////////////
-// DRAW_MAP FOLDER
-
-// COLOR
+//	COLOR
+uint32_t				convert_rgba_to_argb(uint32_t rgba);
+int32_t					ft_pixel(int32_t r, int32_t g, int32_t b, int32_t a);
 void					color_img(mlx_image_t *img, uint32_t color, int width,
 							int height);
+///////////////////////////////////////////
+//	DRAW_MAP FOLDER
+
+//	INIT GAME
 void					draw_line_on_map(t_game *game, float angle);
 // DRAW MAP 2D
 bool					init_game(t_game *game);
-void					update_line_position(t_direction_line *line);
 
 // RAYCAST
-void					compute_distance_and_select_wall(t_game *game,
-							t_wall *wall);
 uint32_t				convert_rgba_to_argb(uint32_t rgba);
-uint32_t				get_pixel_from_texture(t_wall wall, int y);
-void					draw_column(t_game *game, t_wall wall, int index);
+float					get_wall_height_and_draw_line(t_game *game,
+							float left_angle, int index);
 void					raycast(t_game *game);
 float					radian_to_degree(float angle);
 int32_t					ft_pixel(int32_t r, int32_t g, int32_t b, int32_t a);
-bool					init_and_load_textures(t_game *game);
+void					init_and_load_textures(t_game *game);
 ///////////////////////////////////////////
-// FREE
+//	FREE
 void					free_game(t_game *game);
 void					free_nodes(t_lines *node);
 void					free_vecs(t_vec *vecs);
 ///////////////////////////////////////////
-// HOOK
-void					ft_moove_player(mlx_key_data_t key, void *param);
+//	HOOK FOLDER
+
+//	MOVE
+void					ft_move_player(mlx_key_data_t key, void *param);
+//	MAP
+void					handle_moves(mlx_key_data_t key, t_game *game);
+void					refresh_pixels_line(mlx_image_t *img_line);
+void					handle_map_display(t_game *game);
+//	POSITION
+void					update_position(mlx_key_data_t key, t_game *game,
+							int new_y, int new_x);
+//	RAYCAST FOLDER
+
+//	RAYCAST
+void					raycast(t_game *game);
+//	TEXTURE
+void					init_and_load_textures(t_game *game);
+//	WALL
+void					get_wall(t_game *game, t_wall *wall, float left_angle,
+							int index);
+///////////////////////////////////////////
 
 #endif

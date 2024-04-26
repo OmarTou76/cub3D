@@ -3,34 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   lines_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omar <omar@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: ymeziane <ymeziane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 09:56:00 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/04/26 15:47:02 by omar             ###   ########.fr       */
+/*   Updated: 2024/04/26 16:02:12 by ymeziane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-void	color_img(mlx_image_t *img, uint32_t color, int width, int height)
-{
-	int	x;
-	int	y;
-
-	y = 0;
-	while (y < height)
-	{
-		x = 0;
-		while (x < width)
-		{
-			mlx_put_pixel(img, x, y, color);
-			x++;
-		}
-		y++;
-	}
-}
-
-void	initialize_line_data(t_direction_line *line, float angle, t_game *game)
+static void	initialize_line_data(t_direction_line *line, float angle, t_game *game)
 {
 	float	angle_radians;
 
@@ -64,7 +46,7 @@ static void	initialize_line(t_direction_line *line, mlx_image_t *img,
 		- line->length + game->player->img_player->height / 2;
 }
 
-void	update_line_position(t_direction_line *line)
+static void	update_line_position(t_direction_line *line)
 {
 	line->error2 = line->error * 2;
 	if (line->error2 > -line->delta_y)

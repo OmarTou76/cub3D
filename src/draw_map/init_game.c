@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   init_game.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omar <omar@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: ymeziane <ymeziane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/07 21:53:03 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/04/26 15:38:23 by omar             ###   ########.fr       */
+/*   Updated: 2024/04/26 16:05:52 by ymeziane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-void	init_and_draw_player(mlx_t *mlx, t_game *game)
+static void	init_and_draw_player(mlx_t *mlx, t_game *game)
 {
 	uint32_t	color;
 
@@ -42,7 +42,7 @@ static void	init_3d_view(mlx_t *mlx, t_game *game)
 	game->img_view_3d->instances[0].z = 1;
 }
 
-void	init_and_draw_line(mlx_t *mlx, t_game *game)
+static void	init_and_draw_line(mlx_t *mlx, t_game *game)
 {
 	init_line_length(game);
 	init_3d_view(mlx, game);
@@ -60,7 +60,7 @@ void	init_and_draw_line(mlx_t *mlx, t_game *game)
 	game->player->line->img_line->enabled = false;
 }
 
-void	fill_by_pixel(mlx_image_t *img, int posY, int posX, int32_t color)
+static void	fill_by_pixel(mlx_image_t *img, int posY, int posX, int32_t color)
 {
 	int	y;
 	int	x;
@@ -78,7 +78,7 @@ void	fill_by_pixel(mlx_image_t *img, int posY, int posX, int32_t color)
 	}
 }
 
-void	init_and_draw_map(t_game *game)
+static void	init_and_draw_map(t_game *game)
 {
 	unsigned int	y;
 	unsigned int	x;
@@ -105,8 +105,7 @@ void	init_and_draw_map(t_game *game)
 
 bool	init_game(t_game *game)
 {
-	if (!init_and_load_textures(game))
-		return (false);
+	init_and_load_textures(game);
 	init_and_draw_map(game);
 	init_and_draw_player(game->mlx, game);
 	init_and_draw_line(game->mlx, game);

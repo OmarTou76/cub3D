@@ -3,66 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   hook.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omar <omar@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: ymeziane <ymeziane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 14:17:33 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/04/26 14:50:47 by omar             ###   ########.fr       */
+/*   Updated: 2024/04/26 15:26:20 by ymeziane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-void	refresh_deltas(t_game **g)
+static void	refresh_deltas(t_game **g)
 {
 	float	angle_radians;
 	float	dx;
 	float	dy;
 
+	// printf("prvious delta x: %f, delta y: %f\n", (*g)->player->delta_x, (*g)->player->delta_y);
 	angle_radians = (*g)->player->angle * M_PI / 180.0;
 	dx = PLAYER_SPEED * cos(-angle_radians);
 	dy = PLAYER_SPEED * sin(-angle_radians);
 	(*g)->player->delta_x = round(dx);
 	(*g)->player->delta_y = round(dy);
-}
-
-void	update_left_and_right(mlx_key_data_t key, t_game *game, int *new_y,
-		int *new_x)
-{
-	float	radian_angle;
-
-	radian_angle = game->player->angle * M_PI / 180.0;
-	if (key.key == MLX_KEY_A)
-	{
-		*new_x += (int)round(PLAYER_SPEED * cos(radian_angle + M_PI / 2.0));
-		*new_y -= (int)round(PLAYER_SPEED * sin(radian_angle + M_PI / 2.0));
-	}
-	else if (key.key == MLX_KEY_D)
-	{
-		*new_x += (int)round(PLAYER_SPEED * cos(radian_angle - M_PI / 2.0));
-		*new_y -= (int)round(PLAYER_SPEED * sin(radian_angle - M_PI / 2.0));
-	}
-}
-
-void	update_position(mlx_key_data_t key, t_game *game, int new_y, int new_x)
-{
-	if (key.key == MLX_KEY_W)
-	{
-		new_x += game->player->delta_x;
-		new_y += game->player->delta_y;
-	}
-	else if (key.key == MLX_KEY_S)
-	{
-		new_x -= game->player->delta_x;
-		new_y -= game->player->delta_y;
-	}
-	update_left_and_right(key, game, &new_y, &new_x);
-	if ((game->s_map.map[new_y / MAP_TILE_SIZE][new_x / MAP_TILE_SIZE] != '1')
-		&& game->s_map.map[(new_y + PLAYER_SIZE) / MAP_TILE_SIZE][(new_x
-			+ PLAYER_SIZE) / MAP_TILE_SIZE] != '1')
-	{
-		game->player->img_player->instances[0].y = new_y;
-		game->player->img_player->instances[0].x = new_x;
-	}
+	// printf("new delta x: %f, delta y: %f\n", (*g)->player->delta_x, (*g)->player->delta_y);
 }
 
 void	handle_moves(mlx_key_data_t key, t_game *game)
@@ -89,23 +51,8 @@ void	handle_moves(mlx_key_data_t key, t_game *game)
 			game->player->img_player->instances[0].x);
 }
 
-void	handle_map_display(t_game *game)
-{
-	if (game->s_map.img_map->enabled)
-	{
-		game->s_map.img_map->enabled = false;
-		game->player->img_player->enabled = false;
-		game->player->line->img_line->enabled = false;
-	}
-	else
-	{
-		game->s_map.img_map->enabled = true;
-		game->player->img_player->enabled = true;
-		game->player->line->img_line->enabled = true;
-	}
-}
 
-void	ft_moove_player(mlx_key_data_t key, void *param)
+void	ft_move_player(mlx_key_data_t key, void *param)
 {
 	t_game	*game;
 
@@ -120,9 +67,11 @@ void	ft_moove_player(mlx_key_data_t key, void *param)
 			|| key.key == MLX_KEY_A || key.key == MLX_KEY_D
 			|| key.key == MLX_KEY_LEFT || key.key == MLX_KEY_RIGHT)
 			handle_moves(key, param);
-		color_img(game->player->line->img_line, 0,
-			game->player->line->img_line->width,
-			game->player->line->img_line->height);
+		refresh_pixels_line(game->player->line->img_line);
 		raycast(game);
+		// relocate_line_origin(game->player->line, game->player->img_player);
+		// color_img(game->player->line->img_line, ft_pixel(0, 0, 255, 0xff), game->player->line->img_line->width,  game->player->line->img_line->height);
+		// draw_line_on_map(game, game->player->angle - 90);
+		// draw_line_on_map(game, game->player->angle + 90);
 	}
 }
