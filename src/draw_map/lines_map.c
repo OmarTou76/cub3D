@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lines_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ymeziane <ymeziane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: omar <omar@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 09:56:00 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/04/25 14:08:34 by ymeziane         ###   ########.fr       */
+/*   Updated: 2024/04/26 15:47:02 by omar             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,16 +41,16 @@ void	initialize_line_data(t_direction_line *line, float angle, t_game *game)
 		* cos(angle_radians);
 	line->end_y = line->start_y - game->player->line->length
 		* sin(angle_radians);
-	line->delta_x = abs(line->end_x - line->start_x);
-	line->delta_y = abs(line->end_y - line->start_y);
+	line->delta_x = fabs(line->end_x - line->start_x);
+	line->delta_y = fabs(line->end_y - line->start_y);
 	if (line->start_x < line->end_x)
-		line->step_x = 1;
+		line->step_x = 0.2f;
 	else
-		line->step_x = -1;
+		line->step_x = -0.2f;
 	if (line->start_y < line->end_y)
-		line->step_y = 1;
+		line->step_y = 0.2f;
 	else
-		line->step_y = -1;
+		line->step_y = -0.2f;
 	line->error = line->delta_x - line->delta_y;
 }
 
@@ -94,7 +94,9 @@ void	draw_line_on_map(t_game *game, float angle)
 		if (game->s_map.map[y] && game->s_map.map[y][x]
 			&& game->s_map.map[y][x] == '1')
 			break ;
-		if(round(angle) == game->player->angle || round(angle) == game->player->angle + 1 || round(angle) == game->player->angle - 1)
+		if (round(angle) == game->player->angle
+			|| round(angle) == game->player->angle + 1
+			|| round(angle) == game->player->angle - 1)
 			mlx_put_pixel(img, game->player->line->start_x,
 				game->player->line->start_y, ft_pixel(0, 0, 0, 0xFF));
 		else

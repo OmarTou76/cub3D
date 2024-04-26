@@ -7,18 +7,17 @@ int	r(float nb)
 
 void	get_wall_img(t_wall *wall, t_game *game)
 {
-	int	round_y;
-	int	round_x;
-	int	player_x;
-	int	player_y;
-
+	// int	player_x;
+	// int	player_y;
+	// int	round_y;
+	// int	round_x;
 	// Trouver la bonne texture a afficher
-	player_x = game->player->img_player->instances[0].x / MAP_TILE_SIZE;
-	player_y = game->player->img_player->instances[0].y / MAP_TILE_SIZE;
-	round_y = r(wall->collision_y);
-	round_x = r(wall->collision_x);
-	// printf("P: %d %d -> W: [%d][%d] -> [%c]\n", player_y, player_x, round_y,
-	// 	round_x, game->s_map.map[round_y][round_x]);
+	// player_x = game->player->img_player->instances[0].x / MAP_TILE_SIZE;
+	// player_y = game->player->img_player->instances[0].y / MAP_TILE_SIZE;
+	// round_y = r(wall->collision_y);
+	// round_x = r(wall->collision_x);
+	/* printf("P: %d %d -> W: [%d][%d] -> [%c]\n", player_y, player_x, round_y,
+		round_x, game->s_map.map[round_y][round_x]); */
 	// -----------
 	wall->img = game->textures.south;
 }
@@ -62,7 +61,8 @@ void	get_wall(t_game *game, t_wall *wall, float left_angle, int index)
 	column_count = game->img_view_3d->width;
 	wall->column_angle = left_angle + (index * FOV / column_count);
 	compute_distance_and_select_wall(game, wall);
-	wall->height = (game->img_view_3d->height / wall->distance) * (TILE_SIZE);
+	wall->height = (game->img_view_3d->height / wall->distance) * (TILE_SIZE
+			/ 2);
 }
 
 uint32_t	get_pixel_from_texture(t_wall wall, int y)
@@ -127,8 +127,12 @@ void	raycast(t_game *game)
 	while (index < col_nb)
 	{
 		get_wall(game, &wall, left_angle, index);
-		draw_line_on_map(game, wall.column_angle);
+		/*  Ne dessine pas toute les lignes sur la mini map,seulement 10 suffisent pour la map. */
+		if (index % (col_nb / 10) == 0)
+			draw_line_on_map(game, wall.column_angle);
 		draw_column(game, wall, index);
 		index++;
 	}
+	draw_line_on_map(game, game->player->angle - 90);
+	draw_line_on_map(game, game->player->angle + 90);
 }

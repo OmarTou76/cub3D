@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hook.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ymeziane <ymeziane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: omar <omar@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 14:17:33 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/04/25 15:37:48 by ymeziane         ###   ########.fr       */
+/*   Updated: 2024/04/26 14:50:47 by omar             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,24 +15,22 @@
 void	refresh_deltas(t_game **g)
 {
 	float	angle_radians;
-	float		dx;
-	float		dy;
+	float	dx;
+	float	dy;
 
-	// printf("prvious delta x: %f, delta y: %f\n", (*g)->player->delta_x, (*g)->player->delta_y);
 	angle_radians = (*g)->player->angle * M_PI / 180.0;
 	dx = PLAYER_SPEED * cos(-angle_radians);
 	dy = PLAYER_SPEED * sin(-angle_radians);
 	(*g)->player->delta_x = round(dx);
 	(*g)->player->delta_y = round(dy);
-	// printf("new delta x: %f, delta y: %f\n", (*g)->player->delta_x, (*g)->player->delta_y);
 }
 
-void	update_left_and_right(mlx_key_data_t key, t_game *game, int *new_y, int *new_x)
+void	update_left_and_right(mlx_key_data_t key, t_game *game, int *new_y,
+		int *new_x)
 {
 	float	radian_angle;
 
 	radian_angle = game->player->angle * M_PI / 180.0;
-
 	if (key.key == MLX_KEY_A)
 	{
 		*new_x += (int)round(PLAYER_SPEED * cos(radian_angle + M_PI / 2.0));
@@ -44,7 +42,6 @@ void	update_left_and_right(mlx_key_data_t key, t_game *game, int *new_y, int *ne
 		*new_y -= (int)round(PLAYER_SPEED * sin(radian_angle - M_PI / 2.0));
 	}
 }
-
 
 void	update_position(mlx_key_data_t key, t_game *game, int new_y, int new_x)
 {
@@ -96,7 +93,7 @@ void	handle_map_display(t_game *game)
 {
 	if (game->s_map.img_map->enabled)
 	{
-		game->s_map.img_map->enabled = false;	
+		game->s_map.img_map->enabled = false;
 		game->player->img_player->enabled = false;
 		game->player->line->img_line->enabled = false;
 	}
@@ -126,14 +123,6 @@ void	ft_moove_player(mlx_key_data_t key, void *param)
 		color_img(game->player->line->img_line, 0,
 			game->player->line->img_line->width,
 			game->player->line->img_line->height);
-		// color_img(game->img_view_3d, 0, game->img_view_3d->width,
-		// 	game->img_view_3d->height);
-		game->player->line->img_line->instances[0].x = game->player->img_player->instances[0].x
-			- game->player->line->length + game->player->img_player->width / 2;
-		game->player->line->img_line->instances[0].y = game->player->img_player->instances[0].y
-			- game->player->line->length + game->player->img_player->height / 2;
 		raycast(game);
-		draw_line_on_map(game, game->player->angle - 90);
-		draw_line_on_map(game, game->player->angle + 90);
 	}
 }

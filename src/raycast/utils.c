@@ -17,17 +17,37 @@ int32_t	ft_pixel(int32_t r, int32_t g, int32_t b, int32_t a)
 mlx_image_t	*get_img_from_texture(mlx_t *mlx, char *path)
 {
 	mlx_texture_t	*texture;
-	mlx_image_t		*img;
 
 	texture = mlx_load_png(path);
-	img = mlx_texture_to_image(mlx, texture);
-	return (img);
+	if (texture)
+		return (mlx_texture_to_image(mlx, texture));
+	printf("ERROR: Incorrect path or extension (%s)\n", path);
+	return (NULL);
 }
 
-void	init_and_load_textures(t_game *game)
+bool	textures_are_valid(t_game *game)
+{
+	if (game->textures.east == NULL || game->textures.west == NULL
+		|| game->textures.south == NULL || game->textures.north == NULL)
+	{
+		if (game->textures.east != NULL)
+			mlx_delete_image(game->mlx, game->textures.east);
+		if (game->textures.west != NULL)
+			mlx_delete_image(game->mlx, game->textures.west);
+		if (game->textures.south != NULL)
+			mlx_delete_image(game->mlx, game->textures.north);
+		if (game->textures.north != NULL)
+			mlx_delete_image(game->mlx, game->textures.north);
+		return (false);
+	}
+	return (true);
+}
+
+bool	init_and_load_textures(t_game *game)
 {
 	game->textures.east = get_img_from_texture(game->mlx, game->paths->ea);
 	game->textures.south = get_img_from_texture(game->mlx, game->paths->so);
 	game->textures.west = get_img_from_texture(game->mlx, game->paths->we);
 	game->textures.north = get_img_from_texture(game->mlx, game->paths->no);
+	return (textures_are_valid(game));
 }
