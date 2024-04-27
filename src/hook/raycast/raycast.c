@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycast.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ymeziane <ymeziane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: omar <omar@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 16:10:28 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/04/26 16:10:30 by ymeziane         ###   ########.fr       */
+/*   Updated: 2024/04/27 12:50:40 by omar             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void	raycast(t_game *game)
 	t_wall	wall;
 
 	col_nb = game->img_view_3d->width;
-	index = 0;
+	index = 1;
 	left_angle = game->player->angle - (FOV / 2);
 	while (index < col_nb)
 	{

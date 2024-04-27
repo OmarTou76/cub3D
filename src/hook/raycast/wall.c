@@ -6,7 +6,7 @@
 /*   By: omar <omar@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 15:44:36 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/04/26 19:04:31 by omar             ###   ########.fr       */
+/*   Updated: 2024/04/28 01:37:42 by omar             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,23 @@ static int	r(float nb)
 
 static void	get_wall_img(t_wall *wall, t_game *game)
 {
-	wall->img = game->textures.south;
+	float	player_y;
+	float	player_x;
+	float	fract_x;
+	float	fract_y;
+
+	player_y = game->player->img_player->instances[0].y / MAP_TILE_SIZE;
+	player_x = game->player->img_player->instances[0].x / MAP_TILE_SIZE;
+	fract_x = fmod(wall->collision_x, 1.0f);
+	fract_y = fmod(wall->collision_y, 1.0f);
+	if (player_x > wall->collision_x && fract_x >= 0.97)
+		wall->img = game->textures.east;
+	else if (player_x < wall->collision_x && fract_x >= 0.97)
+		wall->img = game->textures.west;
+	else if (player_y > wall->collision_y && fract_y >= 0.97)
+		wall->img = game->textures.north;
+	else if (player_y < wall->collision_y && fract_y >= 0.97)
+		wall->img = game->textures.south;
 }
 
 static void	compute_distance_and_select_wall(t_game *game, t_wall *wall)
@@ -44,9 +60,9 @@ static void	compute_distance_and_select_wall(t_game *game, t_wall *wall)
 		{
 			wall->collision_y = y / TILE_SIZE;
 			wall->collision_x = x / TILE_SIZE;
-			get_wall_img(wall, game);
 			wall->distance = (sqrt(pow(x - line.start_x, 2) + pow(y
 							- line.start_y, 2)));
+			get_wall_img(wall, game);
 			return ;
 		}
 		x += step_x;

@@ -6,7 +6,7 @@
 /*   By: omar <omar@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 16:11:28 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/04/26 19:31:44 by omar             ###   ########.fr       */
+/*   Updated: 2024/04/26 21:09:36 by omar             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,6 @@ typedef struct s_game
 	t_map				s_map;
 	t_player			*player;
 	mlx_image_t			*img_view_3d;
-	mlx_image_t			*wall_image;
 	t_textures			textures;
 }						t_game;
 

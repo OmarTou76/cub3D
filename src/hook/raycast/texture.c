@@ -6,7 +6,7 @@
 /*   By: omar <omar@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 15:38:27 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/04/26 19:29:56 by omar             ###   ########.fr       */
+/*   Updated: 2024/04/26 21:02:59 by omar             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ static mlx_image_t	*get_img_from_texture(mlx_t *mlx, char *path)
 		mlx_delete_texture(texture);
 		return (img);
 	}
-	printf("[ERROR]: Impossible to load texture at %s\n", path);
 	return (NULL);
 }
 
@@ -41,6 +40,7 @@ static bool	textures_are_valid(t_game *game)
 			mlx_delete_image(game->mlx, game->textures.north);
 		if (game->textures.north != NULL)
 			mlx_delete_image(game->mlx, game->textures.north);
+		printf("[ERROR]: Please provide correct textures\n");
 		return (false);
 	}
 	return (true);

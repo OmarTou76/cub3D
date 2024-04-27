@@ -1,18 +1,18 @@
    WE                            textures/bricks0.png
-NO      textures/bricks1.png
+NO      textures/bricks.png
 
 
 
 SO textures/bricks2.png
 
-F   69, 222, 199
+F   50, 50, 100
 
-EA textures/bricks.png
-
-
+EA textures/bricks3.png
 
 
-C 235, 198, 52
+
+
+C 35, 98, 52
 
 111111111111111111111111
 100000000000000000000001
