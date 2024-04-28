@@ -6,7 +6,7 @@
 /*   By: ymeziane <ymeziane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 16:11:28 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/04/28 11:13:14 by ymeziane         ###   ########.fr       */
+/*   Updated: 2024/04/28 12:12:33 by ymeziane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,9 @@
 # define TILE_SIZE 24
 # define TILE_FACTOR 4
 # define MAP_TILE_SIZE (TILE_SIZE / TILE_FACTOR)
-# define PLAYER_SIZE (MAP_TILE_SIZE / 4)
-# define PLAYER_SPEED (MAP_TILE_SIZE / 5)
-# define ROTATE_SPEED (MAP_TILE_SIZE / 2)
+# define PLAYER_SIZE (MAP_TILE_SIZE) / 4
+# define PLAYER_SPEED (MAP_TILE_SIZE) / 5
+# define ROTATE_SPEED (MAP_TILE_SIZE) / 2
 
 typedef struct s_fields
 {

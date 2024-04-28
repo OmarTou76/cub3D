@@ -6,7 +6,7 @@
 /*   By: ymeziane <ymeziane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 14:17:33 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/04/28 11:04:59 by ymeziane         ###   ########.fr       */
+/*   Updated: 2024/04/28 13:33:24 by ymeziane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,13 @@ static void	refresh_deltas(t_game **g)
 	float	dx;
 	float	dy;
 
-	angle_radians = (*g)->player->angle * M_PI / 180.0;
+	angle_radians = (*g)->player->angle * M_PI / 180.0; // Ex 90 => Pi / 2
 	dx = PLAYER_SPEED * cos(-angle_radians);
+	// Ex (MAP_TILE_SIZE) / 5 * cos(-PI/2) = (TILE_SIZE / TILE_FACTOR) / 5 * cos(-PI/2) = (24 / 4) / 5 * cos(-PI/2) = 1 * cos(-PI/2) = 0
 	dy = PLAYER_SPEED * sin(-angle_radians);
-	(*g)->player->delta_x = round(dx);
-	(*g)->player->delta_y = round(dy);
+	// Ex (24 / 4) / 5 * sin(-PI/2) = 1 * sin(-PI/2) = -1
+	(*g)->player->delta_x = round(dx); // distance que le joueur doit se déplacer horizontalement Ex 0
+	(*g)->player->delta_y = round(dy); // distance que le joueur doit se déplacer verticalement Ex -1
 }
 
 void	handle_moves(mlx_key_data_t key, t_game *game)
@@ -30,17 +32,17 @@ void	handle_moves(mlx_key_data_t key, t_game *game)
 	refresh_deltas(&game);
 	if (key.key == MLX_KEY_RIGHT)
 	{
-		game->player->angle -= ROTATE_SPEED;
+		game->player->angle -= ROTATE_SPEED; // Ex -= 3
 		if (game->player->angle < 0)
-			game->player->angle += (radian_to_degree(2 * M_PI));
-		game->player->delta_x = cos(game->player->angle) * (ROTATE_SPEED);
-		game->player->delta_y = sin(game->player->angle) * (ROTATE_SPEED);
+			game->player->angle += 360;
+		game->player->delta_x = cos(game->player->angle) * (ROTATE_SPEED); // Ex dx passe de 0 à 3.000000 si je tourne jusqu' angle = 0(ou 360) car cos(0) = 1 et ROTATE_SPEED = 3
+		game->player->delta_y = sin(game->player->angle) * (ROTATE_SPEED); // Ex dx passe de -1 à 0 si je tourne jusqu' angle = 0(ou 360) car sin(0) = 0
 	}
-	else if (key.key == MLX_KEY_LEFT)
+	else if (key.key == MLX_KEY_LEFT) // Pareil de l'autre côté
 	{
 		game->player->angle += ROTATE_SPEED;
-		if (game->player->angle > radian_to_degree(2 * M_PI))
-			game->player->angle -= radian_to_degree(2 * M_PI);
+		if (game->player->angle > 360)
+			game->player->angle -= 360;
 		game->player->delta_x = cos(game->player->angle) * (ROTATE_SPEED);
 		game->player->delta_y = sin(game->player->angle) * (ROTATE_SPEED);
 	}

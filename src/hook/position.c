@@ -6,7 +6,7 @@
 /*   By: ymeziane <ymeziane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 15:23:32 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/04/26 15:24:07 by ymeziane         ###   ########.fr       */
+/*   Updated: 2024/04/28 13:05:18 by ymeziane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ static void	update_left_and_right(mlx_key_data_t key, t_game *game, int *new_y,
 
 void	update_position(mlx_key_data_t key, t_game *game, int new_y, int new_x)
 {
+	// delta x et y sont les vecteurs de déplacement basé sur l'orientation actuelle du joueur et la vitesse.
 	if (key.key == MLX_KEY_W)
 	{
 		new_x += game->player->delta_x;

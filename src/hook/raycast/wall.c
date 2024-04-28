@@ -6,7 +6,7 @@
 /*   By: ymeziane <ymeziane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 15:44:36 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/04/28 11:57:52 by ymeziane         ###   ########.fr       */
+/*   Updated: 2024/04/28 12:41:50 by ymeziane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,9 +55,9 @@ static void	compute_distance_and_select_wall(t_game *game, t_wall *wall)
 	x = line.start_x; // 108
 	y = line.start_y; // 156
 	col_angle_rad = wall->column_angle * M_PI / 180; // Ex Pour col angle allant de 60 à 120 => PI/3 à 2PI/3 = 1,047197 à 2,094395
-	theta = -col_angle_rad; // Ex de -1,047197 à -2,094395
-	step_y = sin(theta) * 0.2; // Ex de -0,018276 * 0.2 à -0,036545 * 0.2 => -0,003655 à -0,007309
-	step_x = cos(theta) * 0.2; // Ex de 0,999832 * 0.2 à 0,999331 * 0.2 => 0,199966 à 0,199866
+	theta = -col_angle_rad; // Ex de -PI/3 à -2PI/3
+	step_y = sin(theta) * 0.2; // Ex de 0,003655 à -0,007309
+	step_x = cos(theta) * 0.2; // Ex de 0,199966 à 0,199866
 	while (true)
 	{
 		if (game->s_map.map[r(y) / TILE_SIZE][r(x) / TILE_SIZE] == '1') // Ex [r(156) / 24][r(108) / 24] = [6][4]
