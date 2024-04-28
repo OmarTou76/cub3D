@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycast.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omar <omar@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: ymeziane <ymeziane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 16:10:28 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/04/27 12:50:40 by omar             ###   ########.fr       */
+/*   Updated: 2024/04/28 11:58:08 by ymeziane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ static void	draw_column(t_game *game, t_wall wall, int index)
 	y = 0;
 	while (y < (int)game->img_view_3d->height)
 	{
+	// printf("y = %d\n", y);
+	// printf("(int)game->img_view_3d->height = %d\n", (int)game->img_view_3d->height);
 		if (y < y_start)
 			mlx_put_pixel(game->img_view_3d, game->img_view_3d->width - index,
 				y, ft_pixel(game->colors->ceiling[0], game->colors->ceiling[1],
@@ -65,15 +67,15 @@ void	raycast(t_game *game)
 {
 	int		col_nb;
 	int		index;
-	float	left_angle;
+	float	right_angle;
 	t_wall	wall;
 
-	col_nb = game->img_view_3d->width;
-	index = 1;
-	left_angle = game->player->angle - (FOV / 2);
+	col_nb = game->img_view_3d->width; // Ex 645
+	index = 0;
+	right_angle = game->player->angle - (FOV / 2); // ex 90 - (60 / 2) = 90 -30 = 60
 	while (index < col_nb)
 	{
-		get_wall(game, &wall, left_angle, index);
+		get_wall(game, &wall, right_angle, index);
 		draw_line_on_map(game, wall.column_angle);
 		draw_column(game, wall, index);
 		index++;
