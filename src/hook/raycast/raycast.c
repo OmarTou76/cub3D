@@ -6,7 +6,7 @@
 /*   By: ymeziane <ymeziane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 16:10:28 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/04/28 11:58:08 by ymeziane         ###   ########.fr       */
+/*   Updated: 2024/04/29 14:20:04 by ymeziane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void	raycast(t_game *game)
 	t_wall	wall;
 
 	col_nb = game->img_view_3d->width; // Ex 645
-	index = 0;
+	index = 1;
 	right_angle = game->player->angle - (FOV / 2); // ex 90 - (60 / 2) = 90 -30 = 60
 	while (index < col_nb)
 	{

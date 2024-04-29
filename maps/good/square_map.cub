@@ -1,13 +1,13 @@
-   WE                            textures/bricks0.png
-NO      textures/bricks.png
+   WE                            textures/unis/blue.png
+NO      textures/unis/red.png
 
 
 
-SO textures/bricks2.png
+SO textures/unis/green.png
 
 F   50, 50, 100
 
-EA textures/bricks3.png
+EA textures/unis/black.png
 
 
 

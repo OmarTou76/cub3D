@@ -6,7 +6,7 @@
 /*   By: ymeziane <ymeziane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 15:44:36 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/04/28 12:41:50 by ymeziane         ###   ########.fr       */
+/*   Updated: 2024/04/29 16:19:46 by ymeziane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,12 @@ static void	get_wall_img(t_wall *wall, t_game *game)
 	player_x = game->player->img_player->instances[0].x / MAP_TILE_SIZE; // Ex 4
 	fract_x = fmod(wall->collision_x, 1.0f); //fmod = reste après la virgule (reste de la divisione entiere de x par y)
 	fract_y = fmod(wall->collision_y, 1.0f);
+	if(fract_x >= 0.97 && fract_y >= 0.97)
+	{
+		if(!wall->img)
+			wall->img = game->textures.east;
+		return;
+	}
 	if (player_x > wall->collision_x && fract_x >= 0.97)
 		wall->img = game->textures.east;
 	else if (player_x < wall->collision_x && fract_x >= 0.97)
@@ -36,6 +42,8 @@ static void	get_wall_img(t_wall *wall, t_game *game)
 		wall->img = game->textures.north;
 	else if (player_y < wall->collision_y && fract_y >= 0.97)
 		wall->img = game->textures.south;
+	else
+		printf("AUCUN CAS\n");
 }
 
 static void	compute_distance_and_select_wall(t_game *game, t_wall *wall)
@@ -66,6 +74,7 @@ static void	compute_distance_and_select_wall(t_game *game, t_wall *wall)
 			wall->collision_x = x / TILE_SIZE;
 			wall->distance = (sqrt(pow(x - line.start_x, 2) + pow(y
 							- line.start_y, 2)));
+			wall->height = (game->img_view_3d->height / wall->distance) * (TILE_SIZE);
 			// Ex x - line.start_x de 184,282883 - 108 à 31.715887 - 108 = 76.282883 à -76.284111
 			// 	  y - line.start_y de 23.372570 - 156 à 23.372570 - 156 = -132.627426 à -132.627426
 			//    de sqrt(pow(76,282883, 2) + pow(-132,627426, 2)) = sqrt(5 819,078238 + 17 590,034127) = 108,494036
@@ -88,5 +97,4 @@ void	get_wall(t_game *game, t_wall *wall, float right_angle, int index)
 	// ...
 	// Jusqu'à 60 + (644 * 60 / 645) = 199,906975
 	compute_distance_and_select_wall(game, wall);
-	wall->height = (game->img_view_3d->height / wall->distance) * (TILE_SIZE);
 }

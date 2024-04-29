@@ -6,7 +6,7 @@
 /*   By: ymeziane <ymeziane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 14:17:33 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/04/28 13:33:24 by ymeziane         ###   ########.fr       */
+/*   Updated: 2024/04/29 12:11:40 by ymeziane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,19 +32,25 @@ void	handle_moves(mlx_key_data_t key, t_game *game)
 	refresh_deltas(&game);
 	if (key.key == MLX_KEY_RIGHT)
 	{
+		printf("I pressed RIGHT\n");
 		game->player->angle -= ROTATE_SPEED; // Ex -= 3
 		if (game->player->angle < 0)
 			game->player->angle += 360;
+		printf("angle = %f\n", game->player->angle);
 		game->player->delta_x = cos(game->player->angle) * (ROTATE_SPEED); // Ex dx passe de 0 à 3.000000 si je tourne jusqu' angle = 0(ou 360) car cos(0) = 1 et ROTATE_SPEED = 3
 		game->player->delta_y = sin(game->player->angle) * (ROTATE_SPEED); // Ex dx passe de -1 à 0 si je tourne jusqu' angle = 0(ou 360) car sin(0) = 0
+		printf("dx = %f, dy = %f IN IF RIGHT\n", game->player->delta_x, game->player->delta_y);
 	}
 	else if (key.key == MLX_KEY_LEFT) // Pareil de l'autre côté
 	{
+		printf("I pressed LEFT\n");
 		game->player->angle += ROTATE_SPEED;
 		if (game->player->angle > 360)
 			game->player->angle -= 360;
+		printf("angle = %f\n", game->player->angle);
 		game->player->delta_x = cos(game->player->angle) * (ROTATE_SPEED);
 		game->player->delta_y = sin(game->player->angle) * (ROTATE_SPEED);
+		printf("dx = %f, dy = %f IN IF LEFT\n", game->player->delta_x, game->player->delta_y);
 	}
 	else
 		update_position(key, game, game->player->img_player->instances[0].y,

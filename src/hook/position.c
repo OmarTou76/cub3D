@@ -6,7 +6,7 @@
 /*   By: ymeziane <ymeziane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 15:23:32 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/04/28 13:05:18 by ymeziane         ###   ########.fr       */
+/*   Updated: 2024/04/29 11:28:26 by ymeziane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,13 +35,17 @@ void	update_position(mlx_key_data_t key, t_game *game, int new_y, int new_x)
 	// delta x et y sont les vecteurs de déplacement basé sur l'orientation actuelle du joueur et la vitesse.
 	if (key.key == MLX_KEY_W)
 	{
+		printf("I pressed W\n");
 		new_x += game->player->delta_x;
 		new_y += game->player->delta_y;
+		printf("new_x = %d, new_y = %d IN PRESS W\n", new_x, new_y);
 	}
 	else if (key.key == MLX_KEY_S)
 	{
+		printf("I pressed S\n");
 		new_x -= game->player->delta_x;
 		new_y -= game->player->delta_y;
+		printf("new_x = %d, new_y = %d IN PRESS S\n", new_x, new_y);
 	}
 	update_left_and_right(key, game, &new_y, &new_x);
 	if ((game->s_map.map[new_y / MAP_TILE_SIZE][new_x / MAP_TILE_SIZE] != '1')
