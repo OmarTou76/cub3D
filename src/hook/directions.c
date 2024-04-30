@@ -6,7 +6,7 @@
 /*   By: omar <omar@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 14:17:33 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/04/30 20:49:09 by omar             ###   ########.fr       */
+/*   Updated: 2024/04/30 21:18:30 by omar             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,14 @@ void refresh_deltas(t_game **g)
 	(*g)->player->delta_y = round(dy);
 }
 
+void listen_mouse_event(t_game *game)
+{
+	int y;
+	int x;
+	mlx_get_mouse_pos(game->mlx, &x, &y);
+	printf("window size: [%d] [%d] | mouse:[%d] [%d]\n", WINDOW_HEIGHT, WINDOW_WIDTH, y, x);
+}
+
 void hook_moves(void *param)
 {
 	t_game *game = (t_game *)param;
@@ -60,6 +68,7 @@ void hook_moves(void *param)
 		go_left(game);
 	if (mlx_is_key_down(game->mlx, MLX_KEY_D))
 		go_right(game);
+	listen_mouse_event(game);
 	refresh_pixels_line(game->player->line->img_line);
 	raycast(game);
 }
