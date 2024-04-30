@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_game.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ymeziane <ymeziane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: omar <omar@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/07 21:53:03 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/04/28 08:40:31 by ymeziane         ###   ########.fr       */
+/*   Updated: 2024/04/30 13:15:57 by omar             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,12 +94,15 @@ static void	init_and_draw_map(t_game *game)
 			if (game->s_map.map[y][x] == '1')
 				fill_by_pixel(game->s_map.img_map, (y * MAP_TILE_SIZE), (x
 						* MAP_TILE_SIZE), ft_pixel(0, 0, 0, 0xFF));
+			else
+				fill_by_pixel(game->s_map.img_map, (y * MAP_TILE_SIZE), (x
+						* MAP_TILE_SIZE), ft_pixel(150, 150, 150, 0xFF));
 			x++;
 		}
 		y++;
 	}
 	mlx_image_to_window(game->mlx, game->s_map.img_map, 0, 0);
-	game->s_map.img_map->instances[0].z = 4;
+	game->s_map.img_map->instances[0].z = 1;
 	game->s_map.img_map->enabled = false;
 }
 
