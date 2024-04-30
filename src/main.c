@@ -6,16 +6,16 @@
 /*   By: omar <omar@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 15:22:57 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/04/26 19:31:37 by omar             ###   ########.fr       */
+/*   Updated: 2024/04/30 19:58:40 by omar             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-int	main(int argc, char const *argv[])
+int main(int argc, char const *argv[])
 {
-	t_lines	*node;
-	t_game	*game;
+	t_lines *node;
+	t_game *game;
 
 	if (!check_input(argv[0], argv[1], argc))
 		return (1);
@@ -28,7 +28,8 @@ int	main(int argc, char const *argv[])
 		return (0);
 	if (init_game(game))
 	{
-		mlx_key_hook(game->mlx, ft_move_player, game);
+		mlx_key_hook(game->mlx, display_map, game);
+		mlx_loop_hook(game->mlx, &hook_moves, game);
 		mlx_loop(game->mlx);
 	}
 	free_nodes(node);

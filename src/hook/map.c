@@ -1,34 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   map.c                                              :+:      :+:    :+:   */
+/*   hook_handler.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ymeziane <ymeziane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: omar <omar@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 15:12:49 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/04/26 15:26:08 by ymeziane         ###   ########.fr       */
+/*   Updated: 2024/04/30 20:39:35 by omar             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-void	refresh_pixels_line(mlx_image_t *img_line)
+void refresh_pixels_line(mlx_image_t *img_line)
 {
 	color_img(img_line, 0, img_line->width, img_line->height);
 }
 
-void	handle_map_display(t_game *game)
+void display_map(mlx_key_data_t key, void *param)
 {
-	if (game->s_map.img_map->enabled)
+	t_game *game;
+
+	game = (t_game *)param;
+	if ((key.action == MLX_PRESS || key.action == MLX_REPEAT) && key.key == MLX_KEY_H)
 	{
-		game->s_map.img_map->enabled = false;
-		game->player->img_player->enabled = false;
-		game->player->line->img_line->enabled = false;
-	}
-	else
-	{
-		game->s_map.img_map->enabled = true;
-		game->player->img_player->enabled = true;
-		game->player->line->img_line->enabled = true;
+		if (game->s_map.img_map->enabled)
+		{
+			game->s_map.img_map->enabled = false;
+			game->player->img_player->enabled = false;
+			game->player->line->img_line->enabled = false;
+		}
+		else
+		{
+			game->s_map.img_map->enabled = true;
+			game->player->img_player->enabled = true;
+			game->player->line->img_line->enabled = true;
+		}
+		refresh_pixels_line(game->player->line->img_line);
 	}
 }

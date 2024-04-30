@@ -19,8 +19,8 @@ SRC_FILES = main free \
 	utils/list utils/print utils/color\
 	checker/checker checker/map checker/fields checker/spaces \
 	draw_map/init_game draw_map/lines_map \
-	hook/move hook/map hook/position \
-	hook/raycast/raycast hook/raycast/texture hook/raycast/wall\
+	hook/directions hook/map hook/moves \
+	raycast/raycast raycast/texture raycast/wall\
 	parsing/map_player parsing/texture_color \
 
 SRC = $(addprefix $(SRC_DIR)/, $(addsuffix .c, $(SRC_FILES)))
