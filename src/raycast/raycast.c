@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycast.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omar <omar@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: ymeziane <ymeziane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 16:10:28 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/05/02 15:48:50 by omar             ###   ########.fr       */
+/*   Updated: 2024/05/02 16:26:04 by ymeziane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,5 +76,5 @@ void raycast(t_game *game)
 		draw_column(game, wall, index);
 		index++;
 	}
-	color_img(game->player->line->img_line, ft_pixel(game->colors->floor[0], game->colors->floor[1], game->colors->floor[2], 0x90), game->player->line->img_line->width, game->player->line->img_line->height);
+	// color_img(game->player->line->img_line, ft_pixel(game->colors->floor[0], game->colors->floor[1], game->colors->floor[2], 0x90), game->player->line->img_line->width, game->player->line->img_line->height);
 }
