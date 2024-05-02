@@ -6,7 +6,7 @@
 /*   By: omar <omar@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 14:17:33 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/05/01 12:37:44 by omar             ###   ########.fr       */
+/*   Updated: 2024/05/02 13:42:00 by omar             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void refresh_deltas(t_game **g)
 
 void listen_mouse_event(t_game *game)
 {
-	int x;
+	/* int x;
 	int y;
 	mlx_get_mouse_pos(game->mlx, &x, &y);
 	if (x < (WINDOW_WIDTH / 2) && x > 0 && y > 0 && y < WINDOW_HEIGHT)
@@ -53,7 +53,8 @@ void listen_mouse_event(t_game *game)
 	else if (x > (WINDOW_WIDTH / 2) && x < WINDOW_WIDTH && y > 0 && y < WINDOW_HEIGHT)
 		rotate_right(game);
 	if (x < WINDOW_WIDTH / 2 || x > WINDOW_WIDTH / 2)
-		mlx_set_mouse_pos(game->mlx, WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2);
+		mlx_set_mouse_pos(game->mlx, WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2); */
+	(void)game;
 }
 
 void hook_moves(void *param)

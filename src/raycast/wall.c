@@ -6,7 +6,7 @@
 /*   By: omar <omar@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 15:44:36 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/04/30 20:34:33 by omar             ###   ########.fr       */
+/*   Updated: 2024/05/02 15:22:56 by omar             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ static void get_wall_img(t_wall *wall, t_game *game)
 	float fract_x;
 	float fract_y;
 
-	player_y = game->player->img_player->instances[0].y / MAP_TILE_SIZE; // Ex 6
-	player_x = game->player->img_player->instances[0].x / MAP_TILE_SIZE; // Ex 4
+	player_y = game->player->img_player->instances[0].y / game->s_map.tile_size; // Ex 6
+	player_x = game->player->img_player->instances[0].x / game->s_map.tile_size; // Ex 4
 	fract_x = fmod(wall->collision_x, 1.0f);
 	// fmod = reste après la virgule (reste de la divisione entiere de x par y)
 	fract_y = fmod(wall->collision_y, 1.0f);
@@ -73,15 +73,15 @@ static void compute_distance_and_select_wall(t_game *game, t_wall *wall)
 	// Ex de 0,199966 à 0,199866
 	while (true)
 	{
-		if (game->s_map.map[r(y) / TILE_SIZE][r(x) / TILE_SIZE] == '1')
+		if (game->s_map.map[r(y) / game->s_map.tile_size][r(x) / game->s_map.tile_size] == '1')
 		// Ex [r(156) / 24][r(108) / 24] = [6][4]
 		{
-			wall->collision_y = y / TILE_SIZE;
-			wall->collision_x = x / TILE_SIZE;
+			wall->collision_y = y / game->s_map.tile_size;
+			wall->collision_x = x / game->s_map.tile_size;
 			wall->distance = (sqrt(pow(x - line.start_x, 2) + pow(y - line.start_y, 2)));
 			dist_wall = (game->player->angle * M_PI / 180) - (wall->column_angle * M_PI / 180);
 			// Permet de faire des murs droit. (Normalisation)
-			wall->height = (game->img_view_3d->height / (wall->distance * cos(dist_wall))) * (TILE_SIZE);
+			wall->height = (game->img_view_3d->height / (wall->distance * cos(dist_wall))) * (game->s_map.tile_size);
 			// Ex x - line.start_x de 184,282883 - 108 à 31.715887
 			//- 108 = 76.282883 à -76.284111
 			// 		y - line.start_y de 23.372570 - 156 à 23.372570 - 156 =

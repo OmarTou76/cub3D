@@ -6,7 +6,7 @@
 /*   By: omar <omar@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 15:23:32 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/05/01 12:24:02 by omar             ###   ########.fr       */
+/*   Updated: 2024/05/02 15:22:24 by omar             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static void update_player_position(t_game *game, int new_y, int new_x)
 {
-	if ((game->s_map.map[new_y / MAP_TILE_SIZE][new_x / MAP_TILE_SIZE] != '1') && game->s_map.map[(new_y + PLAYER_SIZE) / MAP_TILE_SIZE][(new_x + PLAYER_SIZE) / MAP_TILE_SIZE] != '1')
+	if ((game->s_map.map[new_y / game->s_map.tile_size][new_x / game->s_map.tile_size] != '1') && game->s_map.map[(new_y + game->s_map.player_size) / game->s_map.tile_size][(new_x + game->s_map.player_size) / game->s_map.tile_size] != '1')
 	{
 		game->player->img_player->instances[0].y = new_y;
 		game->player->img_player->instances[0].x = new_x;

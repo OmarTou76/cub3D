@@ -6,7 +6,7 @@
 /*   By: omar <omar@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 16:11:28 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/05/01 12:37:23 by omar             ###   ########.fr       */
+/*   Updated: 2024/05/02 15:24:27 by omar             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,15 +21,15 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-#define WINDOW_HEIGHT 485
-#define WINDOW_WIDTH 645
+#define WINDOW_HEIGHT 800
+#define WINDOW_WIDTH 1000
 #define FOV 60.0
-#define TILE_SIZE 24
-#define TILE_FACTOR 2
+#define TILE_SIZE 30
+#define TILE_FACTOR 1
 #define MAP_TILE_SIZE (TILE_SIZE / TILE_FACTOR)
-#define PLAYER_SIZE (MAP_TILE_SIZE) / 2
-#define PLAYER_SPEED 1
-#define ROTATE_SPEED 2
+#define PLAYER_SIZE (MAP_TILE_SIZE) / 3
+#define PLAYER_SPEED 3.5
+#define ROTATE_SPEED 3
 
 typedef struct s_fields
 {
@@ -67,6 +67,8 @@ typedef struct s_map
 	char **map;
 	unsigned int height;
 	unsigned int width;
+	int tile_size;
+	int player_size;
 	mlx_image_t *img_map;
 } t_map;
 

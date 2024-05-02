@@ -6,7 +6,7 @@
 /*   By: omar <omar@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 09:56:00 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/04/30 19:41:17 by omar             ###   ########.fr       */
+/*   Updated: 2024/05/02 15:21:40 by omar             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,17 +67,17 @@ void draw_line_on_map(t_game *game, float angle)
 	initialize_line(game->player->line, img, game, angle);
 	while (1)
 	{
-		y = (img->instances[0].y + game->player->line->start_y) / MAP_TILE_SIZE;
-		x = (img->instances[0].x + game->player->line->start_x) / MAP_TILE_SIZE;
+		y = (img->instances[0].y + game->player->line->start_y) / game->s_map.tile_size;
+		x = (img->instances[0].x + game->player->line->start_x) / game->s_map.tile_size;
 		if (game->s_map.map[y] && game->s_map.map[y][x] && game->s_map.map[y][x] == '1')
 			break;
 		float a = roundf(angle);
 		if (a > game->player->angle - 3 && a < game->player->angle + 3)
 			mlx_put_pixel(img, game->player->line->start_x,
-						  game->player->line->start_y, ft_pixel(0, 0, 0, 0xFF));
+						  game->player->line->start_y, ft_pixel(245, 40, 100, 0xFF));
 		else
 			mlx_put_pixel(img, game->player->line->start_x,
-						  game->player->line->start_y, ft_pixel(100, 255, 100, 0xFF));
+						  game->player->line->start_y, ft_pixel(0, 255, 0, 0xFF));
 		update_line_position(game->player->line);
 	}
 }

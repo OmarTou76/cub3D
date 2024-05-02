@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   map_player.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ymeziane <ymeziane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: omar <omar@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 15:25:15 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/04/25 14:34:59 by ymeziane         ###   ########.fr       */
+/*   Updated: 2024/05/02 15:19:20 by omar             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-size_t	get_map_height(char **map)
+size_t get_map_height(char **map)
 {
-	int	height;
+	int height;
 
 	height = 0;
 	while (map[height])
@@ -22,10 +22,10 @@ size_t	get_map_height(char **map)
 	return (height);
 }
 
-static int	find_player_position(char **map, int *x, int *y)
+static int find_player_position(char **map, int *x, int *y)
 {
-	int	i;
-	int	j;
+	int i;
+	int j;
 
 	i = 0;
 	while (map[i])
@@ -46,10 +46,10 @@ static int	find_player_position(char **map, int *x, int *y)
 	return (0);
 }
 
-t_player	*get_info_player(char **map)
+t_player *get_info_player(char **map)
 {
-	t_player	*player;
-	char		player_direction;
+	t_player *player;
+	char player_direction;
 
 	player = malloc(sizeof(t_player));
 	player->line = malloc(sizeof(t_direction_line));
@@ -73,23 +73,23 @@ t_player	*get_info_player(char **map)
 
 int get_max_width(char **map)
 {
-	size_t	i;
-	size_t	max_width;
+	size_t i;
+	size_t max_width;
 
 	i = 0;
 	max_width = 0;
 	while (map[i])
 	{
-		if(ft_strlen(map[i]) > max_width)
+		if (ft_strlen(map[i]) > max_width)
 			max_width = ft_strlen(map[i]);
 		i++;
 	}
 	return (max_width);
 }
 
-void	store_data(t_game **game, t_lines *node)
+void store_data(t_game **game, t_lines *node)
 {
-	t_lines	*tmp;
+	t_lines *tmp;
 
 	tmp = node;
 	(*game) = malloc(sizeof(t_game));
@@ -102,11 +102,16 @@ void	store_data(t_game **game, t_lines *node)
 		if (ft_strlen(tmp->line) && is_map_start(tmp->line))
 		{
 			(*game)->s_map.map = node_to_map(&tmp);
-			break ;
+			break;
 		}
 		tmp = tmp->next;
 	}
 	(*game)->s_map.width = get_max_width((*game)->s_map.map);
 	(*game)->s_map.height = get_map_height((*game)->s_map.map);
+	if ((*game)->s_map.height > (*game)->s_map.width)
+		(*game)->s_map.tile_size = (int)round(WINDOW_HEIGHT / (*game)->s_map.height);
+	else
+		(*game)->s_map.tile_size = (int)round(WINDOW_WIDTH / (*game)->s_map.width);
+	(*game)->s_map.player_size = (int)round((*game)->s_map.tile_size / 3);
 	(*game)->player = get_info_player((*game)->s_map.map);
 }
