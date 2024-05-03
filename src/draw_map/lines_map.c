@@ -6,7 +6,7 @@
 /*   By: omar <omar@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 09:56:00 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/05/03 16:45:55 by omar             ###   ########.fr       */
+/*   Updated: 2024/05/03 17:42:55 by omar             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void draw_line_on_map(t_game *game, float angle)
 	int paddingY = (WINDOW_HEIGHT - game->s_map.img_map->height) / 2;
 	int paddingX = (WINDOW_WIDTH - game->s_map.img_map->width) / 2;
 	initialize_line(game->player->line, img, game, angle);
-	while (1)
+	while (true)
 	{
 		y = (img->instances[0].y - paddingY + game->player->line->start_y) / game->s_map.tile_size;
 		x = (img->instances[0].x - paddingX + game->player->line->start_x) / game->s_map.tile_size;

@@ -1,7 +1,5 @@
-maps/bad/forbidden.cub
-maps/bad/textures_dir.cub
-maps/bad/textures_forbidden.cub
-maps/bad/textures_not_xpm.cub
-
-redimenionnement map direction done
-separer hook press et repeat
+- Derniere colonne de la texture de mauvaise couleur
+- Trait qui traverse en diagonal.
+- Porte qui peuvent être ouvertes/fermées.
+    - Animations (des sprites animés).
+- Norme / leaks

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   hook_handler.c                                     :+:      :+:    :+:   */
+/*   map.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: omar <omar@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 15:12:49 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/04/30 20:39:35 by omar             ###   ########.fr       */
+/*   Updated: 2024/05/03 16:56:36 by omar             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,5 @@ void display_map(mlx_key_data_t key, void *param)
 			game->player->img_player->enabled = true;
 			game->player->line->img_line->enabled = true;
 		}
-		refresh_pixels_line(game->player->line->img_line);
 	}
 }
