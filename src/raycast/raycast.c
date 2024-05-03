@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycast.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ymeziane <ymeziane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: omar <omar@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 16:10:28 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/05/02 16:26:04 by ymeziane         ###   ########.fr       */
+/*   Updated: 2024/05/03 16:47:53 by omar             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,10 +65,10 @@ void raycast(t_game *game)
 	float right_angle;
 	t_wall wall;
 
-	col_nb = game->img_view_3d->width; // Ex 645
+	col_nb = game->img_view_3d->width;
 	index = 1;
-	right_angle = game->player->angle - (FOV / 2); // ex 90 - (60 / 2) = 90
-	wall.img = NULL;							   //-30 = 60
+	right_angle = game->player->angle - (FOV / 2);
+	wall.img = NULL;
 	while (index < col_nb)
 	{
 		get_wall(game, &wall, right_angle, index);
@@ -76,5 +76,4 @@ void raycast(t_game *game)
 		draw_column(game, wall, index);
 		index++;
 	}
-	// color_img(game->player->line->img_line, ft_pixel(game->colors->floor[0], game->colors->floor[1], game->colors->floor[2], 0x90), game->player->line->img_line->width, game->player->line->img_line->height);
 }

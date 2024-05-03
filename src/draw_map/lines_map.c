@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lines_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ymeziane <ymeziane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: omar <omar@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 09:56:00 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/05/02 16:34:43 by ymeziane         ###   ########.fr       */
+/*   Updated: 2024/05/03 16:45:55 by omar             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,11 @@ static void initialize_line_data(t_direction_line *line, float angle, t_game *ga
 static void initialize_line(t_direction_line *line, mlx_image_t *img,
 							t_game *game, float angle)
 {
-	initialize_line_data(line, angle, game);
+	// int paddingY = (WINDOW_HEIGHT - game->s_map.img_map->height) / 2;
+	// int paddingX = (WINDOW_WIDTH - game->s_map.img_map->width) / 2;
 	img->instances[0].x = game->player->img_player->instances[0].x - line->length + game->player->img_player->width / 2;
 	img->instances[0].y = game->player->img_player->instances[0].y - line->length + game->player->img_player->height / 2;
+	initialize_line_data(line, angle, game);
 }
 
 static void update_line_position(t_direction_line *line)
@@ -70,11 +72,11 @@ void draw_line_on_map(t_game *game, float angle)
 	while (1)
 	{
 		y = (img->instances[0].y - paddingY + game->player->line->start_y) / game->s_map.tile_size;
-		x = (img->instances[0].x - paddingX +game->player->line->start_x) / game->s_map.tile_size;
+		x = (img->instances[0].x - paddingX + game->player->line->start_x) / game->s_map.tile_size;
 		if (game->s_map.map[y] && game->s_map.map[y][x] && game->s_map.map[y][x] == '1')
 			break;
-		float a = roundf(angle);
-		if (a > game->player->angle - 3 && a < game->player->angle + 3)
+
+		if (angle > game->player->angle - 3 && angle < game->player->angle + 3)
 			mlx_put_pixel(img, game->player->line->start_x,
 						  game->player->line->start_y, ft_pixel(245, 40, 100, 0xFF));
 		else

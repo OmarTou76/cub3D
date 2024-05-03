@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_game.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ymeziane <ymeziane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: omar <omar@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/07 21:53:03 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/05/02 16:27:35 by ymeziane         ###   ########.fr       */
+/*   Updated: 2024/05/03 16:46:01 by omar             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,14 +46,10 @@ static void init_and_draw_line(mlx_t *mlx, t_game *game)
 {
 	init_line_length(game);
 	game->player->line->img_line = mlx_new_image(mlx, game->player->line->length * 2, game->player->line->length * 2);
-	// game->player->img_player->instances[0].x - game->player->line->length + game->player->img_player->width / 2
-	int paddingY = (WINDOW_HEIGHT - game->s_map.img_map->height) / 2;
-	int paddingX = (WINDOW_WIDTH - game->s_map.img_map->width) / 2;
-	if (!game->player->line->img_line || (mlx_image_to_window(mlx,
-															  game->player->line->img_line,
-															  game->player->img_player->instances[0].x - game->player->line->length + game->player->img_player->width / 2 + paddingX,
-															  game->player->img_player->instances[0].y - game->player->line->length + game->player->img_player->height / 2 + paddingY) == -1))
-		return (printf("Error\n"), (void)NULL);
+
+	mlx_image_to_window(mlx,
+						game->player->line->img_line,
+						0, 0);
 	mlx_set_instance_depth(game->player->line->img_line->instances, 3);
 	game->player->line->img_line->enabled = false;
 }

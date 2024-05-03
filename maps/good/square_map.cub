@@ -1,5 +1,5 @@
    WE                            textures/unis/blue.png
-NO      textures/unis/red.png
+NO textures/unis/black.png     
 
 
 
@@ -7,7 +7,7 @@ SO textures/unis/green.png
 
 F   50, 50, 100
 
-EA textures/unis/black.png
+EA textures/unis/red.png 
 
 
 

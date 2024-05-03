@@ -6,7 +6,7 @@
 /*   By: omar <omar@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 14:17:33 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/05/02 13:42:00 by omar             ###   ########.fr       */
+/*   Updated: 2024/05/03 16:43:35 by omar             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,9 @@ void listen_mouse_event(t_game *game)
 void hook_moves(void *param)
 {
 	t_game *game = (t_game *)param;
+	int prev_x = game->player->img_player->instances[0].x;
+	int prev_y = game->player->img_player->instances[0].y;
+	float prev_angle = game->player->angle;
 	if (mlx_is_key_down(game->mlx, MLX_KEY_ESCAPE))
 		return (void)mlx_close_window(game->mlx);
 	if (mlx_is_key_down(game->mlx, MLX_KEY_LEFT))
@@ -77,6 +80,10 @@ void hook_moves(void *param)
 	else if (mlx_is_key_down(game->mlx, MLX_KEY_D))
 		go_right(game);
 	listen_mouse_event(game);
+	if (prev_x == game->player->img_player->instances[0].x &&
+		game->player->img_player->instances[0].y == prev_y &&
+		game->player->angle == prev_angle)
+		return;
 	refresh_pixels_line(game->player->line->img_line);
 	raycast(game);
 }

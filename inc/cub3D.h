@@ -6,7 +6,7 @@
 /*   By: omar <omar@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 16:11:28 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/05/02 15:24:27 by omar             ###   ########.fr       */
+/*   Updated: 2024/05/03 12:29:55 by omar             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@
 #define TILE_FACTOR 1
 #define MAP_TILE_SIZE (TILE_SIZE / TILE_FACTOR)
 #define PLAYER_SIZE (MAP_TILE_SIZE) / 3
-#define PLAYER_SPEED 3.5
+#define PLAYER_SPEED 4
 #define ROTATE_SPEED 3
 
 typedef struct s_fields
