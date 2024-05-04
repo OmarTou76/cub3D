@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   texture.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omar <omar@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: ymeziane <ymeziane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 15:38:27 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/04/26 21:02:59 by omar             ###   ########.fr       */
+/*   Updated: 2024/05/04 02:26:27 by ymeziane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,5 +52,8 @@ bool	init_and_load_textures(t_game *game)
 	game->textures.south = get_img_from_texture(game->mlx, game->paths->so);
 	game->textures.west = get_img_from_texture(game->mlx, game->paths->we);
 	game->textures.north = get_img_from_texture(game->mlx, game->paths->no);
+	game->textures.door = get_img_from_texture(game->mlx, "./textures/damaged_wall.png");
+	game->textures.gun = get_img_from_texture(game->mlx, "./textures/gun.png");
+	game->textures.reticle = get_img_from_texture(game->mlx, "./textures/reticle.png");
 	return (textures_are_valid(game));
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omar <omar@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: ymeziane <ymeziane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 16:11:28 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/05/03 17:04:37 by omar             ###   ########.fr       */
+/*   Updated: 2024/05/04 02:26:04 by ymeziane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,9 @@ typedef struct s_textures
 	mlx_image_t *south;
 	mlx_image_t *east;
 	mlx_image_t *west;
+	mlx_image_t *door;
+	mlx_image_t *gun;
+	mlx_image_t *reticle;
 } t_textures;
 
 typedef struct s_game

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   map_checker.c                                      :+:      :+:    :+:   */
+/*   map.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ymeziane <ymeziane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 15:24:25 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/04/09 14:28:45 by ymeziane         ###   ########.fr       */
+/*   Updated: 2024/05/04 01:06:17 by ymeziane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ static int	check_start_pos(char **map)
 			c = map[y][x];
 			if (ft_strchr("NSWE", c))
 				count++;
-			if (count > 1 || !ft_strchr("NSWE10 ", c))
+			if (count > 1 || !ft_strchr("NSWE10D ", c))
 				return (0);
 			x++;
 		}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lines_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omar <omar@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: ymeziane <ymeziane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 09:56:00 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/05/03 17:42:55 by omar             ###   ########.fr       */
+/*   Updated: 2024/05/04 01:08:14 by ymeziane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ void draw_line_on_map(t_game *game, float angle)
 	{
 		y = (img->instances[0].y - paddingY + game->player->line->start_y) / game->s_map.tile_size;
 		x = (img->instances[0].x - paddingX + game->player->line->start_x) / game->s_map.tile_size;
-		if (game->s_map.map[y] && game->s_map.map[y][x] && game->s_map.map[y][x] == '1')
+		if (game->s_map.map[y] && game->s_map.map[y][x] && (game->s_map.map[y][x] == '1' || game->s_map.map[y][x] == 'D'))
 			break;
 
 		if (angle > game->player->angle - 3 && angle < game->player->angle + 3)

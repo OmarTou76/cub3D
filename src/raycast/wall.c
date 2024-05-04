@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   wall.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omar <omar@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: ymeziane <ymeziane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 15:44:36 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/05/03 12:24:37 by omar             ###   ########.fr       */
+/*   Updated: 2024/05/04 02:04:43 by ymeziane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,12 @@ static void get_wall_img(t_wall *wall, t_game *game)
 
 	player_y = game->player->img_player->instances[0].y / game->s_map.tile_size; //
 	player_x = game->player->img_player->instances[0].x / game->s_map.tile_size;
+
+	if(game->s_map.map[(int)r(wall->collision_y)][(int)r(wall->collision_x)] == 'D' || game->s_map.map[(int)floor(wall->collision_y)][(int)floor(wall->collision_x)] == 'D')
+	{
+		wall->img = game->textures.door;
+		return;
+	}
 	fract_x = fmod(wall->collision_x, 1.0f);
 
 	fract_y = fmod(wall->collision_y, 1.0f);
@@ -74,11 +80,11 @@ static void compute_distance_and_select_wall(t_game *game, t_wall *wall)
 
 	while (true)
 	{
-		if (game->s_map.map[r(y) / game->s_map.tile_size - paddingY / game->s_map.tile_size][r(x) / game->s_map.tile_size - paddingX / game->s_map.tile_size] == '1')
+		if ((game->s_map.map[r(y) / game->s_map.tile_size - paddingY / game->s_map.tile_size][r(x) / game->s_map.tile_size - paddingX / game->s_map.tile_size] == '1') || (game->s_map.map[r(y) / game->s_map.tile_size - paddingY / game->s_map.tile_size][r(x) / game->s_map.tile_size - paddingX / game->s_map.tile_size] == 'D'))
 
 		{
-			wall->collision_y = y / game->s_map.tile_size;
-			wall->collision_x = x / game->s_map.tile_size;
+			wall->collision_y = y / game->s_map.tile_size - paddingY / game->s_map.tile_size;
+			wall->collision_x = x / game->s_map.tile_size - paddingX / game->s_map.tile_size;
 			wall->distance = (sqrt(pow(x - line.start_x, 2) + pow(y - line.start_y, 2)));
 			dist_wall = (game->player->angle * M_PI / 180) - (wall->column_angle * M_PI / 180);
 

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   spaces_checker.c                                   :+:      :+:    :+:   */
+/*   spaces.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ymeziane <ymeziane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 14:24:02 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/04/09 14:28:29 by ymeziane         ###   ########.fr       */
+/*   Updated: 2024/05/04 01:10:16 by ymeziane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	add_vec(t_vec **vecs, int y, int x)
 
 int	is_valid_direction(char **m, int dy, int dx)
 {
-	if (m[dy] && m[dy][dx] && m[dy][dx] == '1')
+	if (m[dy] && m[dy][dx] && (m[dy][dx] == '1' || m[dy][dx] == 'D'))
 		return (0);
 	return (1);
 }
