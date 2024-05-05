@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omar <omar@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: ymeziane <ymeziane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 15:22:57 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/05/02 15:26:41 by omar             ###   ########.fr       */
+/*   Updated: 2024/05/05 03:01:31 by ymeziane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ int main(int argc, char const *argv[])
 	if (init_game(game))
 	{
 		mlx_key_hook(game->mlx, display_map, game);
+		mlx_key_hook(game->mlx, shoot, game);
+		mlx_loop_hook(game->mlx, &shoot_animation, game);
 		mlx_loop_hook(game->mlx, &hook_moves, game);
 		mlx_loop(game->mlx);
 	}

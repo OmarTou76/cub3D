@@ -6,7 +6,7 @@
 /*   By: ymeziane <ymeziane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/07 21:53:03 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/05/04 03:07:15 by ymeziane         ###   ########.fr       */
+/*   Updated: 2024/05/05 02:38:47 by ymeziane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,21 @@ static void init_3d_view(mlx_t *mlx, t_game *game)
 	game->img_view_3d = mlx_new_image(mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
 	mlx_image_to_window(mlx, game->img_view_3d, 0, 0);
 	mlx_set_instance_depth(game->img_view_3d->instances, 1);
-	mlx_resize_image(game->textures.gun, game->img_view_3d->width / 2, game->img_view_3d->height / 2);
-	mlx_image_to_window(mlx, game->textures.gun, game->img_view_3d->width / 2, game->img_view_3d->height / 2);
+	mlx_resize_image(game->textures.pistol[0], game->img_view_3d->width / 2, game->img_view_3d->height / 2);
+	mlx_resize_image(game->textures.pistol[1], game->img_view_3d->width / 2, game->img_view_3d->height / 2);
+	mlx_resize_image(game->textures.pistol[2], game->img_view_3d->width / 2, game->img_view_3d->height / 2);
+	mlx_resize_image(game->textures.pistol[3], game->img_view_3d->width / 2, game->img_view_3d->height / 2);
+	mlx_image_to_window(mlx, game->textures.pistol[0], game->img_view_3d->width / 2, game->img_view_3d->height / 2);
+	mlx_image_to_window(mlx, game->textures.pistol[1], game->img_view_3d->width / 2, game->img_view_3d->height / 2);
+	mlx_image_to_window(mlx, game->textures.pistol[2], game->img_view_3d->width / 2, game->img_view_3d->height / 2);
+	mlx_image_to_window(mlx, game->textures.pistol[3], game->img_view_3d->width / 2, game->img_view_3d->height / 2);
+	game->textures.pistol[1]->enabled = false;
+	game->textures.pistol[2]->enabled = false;
+	game->textures.pistol[3]->enabled = false;
+
 	mlx_resize_image(game->textures.reticle, game->img_view_3d->width / 15, game->img_view_3d->height / 15);
 	mlx_image_to_window(mlx, game->textures.reticle, game->img_view_3d->width / 2 - game->textures.reticle->width / 2, game->img_view_3d->height / 2  - game->textures.reticle->height / 2);
-	mlx_set_instance_depth(game->textures.gun->instances, 2);
+	mlx_set_instance_depth(game->textures.pistol[0]->instances, 2);
 	mlx_set_instance_depth(game->textures.reticle->instances, 3);
 }
 

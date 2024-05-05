@@ -6,7 +6,7 @@
 /*   By: ymeziane <ymeziane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 15:44:36 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/05/04 02:04:43 by ymeziane         ###   ########.fr       */
+/*   Updated: 2024/05/04 22:46:10 by ymeziane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,6 @@ static void get_wall_img(t_wall *wall, t_game *game)
 	player_y = game->player->img_player->instances[0].y / game->s_map.tile_size; //
 	player_x = game->player->img_player->instances[0].x / game->s_map.tile_size;
 
-	if(game->s_map.map[(int)r(wall->collision_y)][(int)r(wall->collision_x)] == 'D' || game->s_map.map[(int)floor(wall->collision_y)][(int)floor(wall->collision_x)] == 'D')
-	{
-		wall->img = game->textures.door;
-		return;
-	}
 	fract_x = fmod(wall->collision_x, 1.0f);
 
 	fract_y = fmod(wall->collision_y, 1.0f);
@@ -41,6 +36,8 @@ static void get_wall_img(t_wall *wall, t_game *game)
 			wall->img = game->textures.east;
 		return;
 	}
+	if(game->s_map.map[(int)r(wall->collision_y)][(int)r(wall->collision_x)] == 'D' || game->s_map.map[(int)floor(wall->collision_y)][(int)floor(wall->collision_x)] == 'D')
+		wall->crack = true;
 	if (player_x > wall->collision_x && fract_x >= 0.97)
 		wall->img = game->textures.east;
 	else if (player_x < wall->collision_x && fract_x >= 0.97)
@@ -51,6 +48,7 @@ static void get_wall_img(t_wall *wall, t_game *game)
 		wall->img = game->textures.south;
 	else
 		printf("AUCUN CAS\n");
+
 }
 
 static void compute_distance_and_select_wall(t_game *game, t_wall *wall)

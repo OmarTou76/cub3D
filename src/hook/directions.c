@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   directions.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omar <omar@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: ymeziane <ymeziane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 14:17:33 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/05/03 16:43:35 by omar             ###   ########.fr       */
+/*   Updated: 2024/05/05 03:05:10 by ymeziane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,43 @@ void listen_mouse_event(t_game *game)
 	if (x < WINDOW_WIDTH / 2 || x > WINDOW_WIDTH / 2)
 		mlx_set_mouse_pos(game->mlx, WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2); */
 	(void)game;
+}
+
+void shoot_animation(void *param)
+{
+	t_game	*game;
+
+	game = (t_game *)param;
+	if(game->shoot)
+	{
+		game->gun_delay++;
+		if(game->gun_delay >= 5)
+		{
+			game->gun_frame = (game->gun_frame + 1) % 4;
+			game->gun_delay = 0;
+			game->textures.pistol[0]->enabled = false;
+			game->textures.pistol[1]->enabled = false;
+			game->textures.pistol[2]->enabled = false;
+			game->textures.pistol[3]->enabled = false;
+			game->textures.pistol[game->gun_frame]->enabled = true;
+			if(game->gun_frame == 0)
+				game->shoot = false;
+		}
+	}
+}
+
+void shoot(mlx_key_data_t key, void *param)
+{
+	t_game	*game;
+
+	game = (t_game *)param;
+
+	if ((key.action == MLX_PRESS) && key.key == MLX_KEY_F)
+	{
+		game->gun_delay = 0;
+		game->gun_frame = 0;
+		game->shoot = true;
+	}
 }
 
 void hook_moves(void *param)

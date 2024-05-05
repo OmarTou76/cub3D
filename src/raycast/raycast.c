@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycast.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omar <omar@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: ymeziane <ymeziane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 16:10:28 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/05/03 16:54:17 by omar             ###   ########.fr       */
+/*   Updated: 2024/05/04 23:52:59 by ymeziane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,10 @@ static void draw_column(t_game *game, t_wall wall, int index)
 		else
 		{
 			color = get_pixel_from_texture(wall, y - y_start);
-			mlx_put_pixel(game->img_view_3d, game->img_view_3d->width - index,
+			if(!(wall.crack && (int)color == -256))
+				mlx_put_pixel(game->img_view_3d, game->img_view_3d->width - index,
 						  y, color);
+			
 		}
 		y++;
 	}
@@ -74,6 +76,12 @@ void raycast(t_game *game)
 		get_wall(game, &wall, right_angle, index);
 		draw_line_on_map(game, wall.column_angle);
 		draw_column(game, wall, index);
+		if(wall.crack)
+		{
+			wall.img = game->textures.crack;
+			draw_column(game, wall, index);
+			wall.crack = false;
+		}
 		index++;
 	}
 }

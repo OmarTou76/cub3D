@@ -6,7 +6,7 @@
 /*   By: ymeziane <ymeziane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 16:11:28 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/05/04 02:26:04 by ymeziane         ###   ########.fr       */
+/*   Updated: 2024/05/05 03:01:49 by ymeziane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,8 +104,8 @@ typedef struct s_textures
 	mlx_image_t *south;
 	mlx_image_t *east;
 	mlx_image_t *west;
-	mlx_image_t *door;
-	mlx_image_t *gun;
+	mlx_image_t *crack;
+	mlx_image_t *pistol[4];
 	mlx_image_t *reticle;
 } t_textures;
 
@@ -118,6 +118,9 @@ typedef struct s_game
 	t_player *player;
 	mlx_image_t *img_view_3d;
 	t_textures textures;
+	unsigned int gun_delay;
+	unsigned int gun_frame;
+	bool		shoot;
 } t_game;
 
 typedef struct s_lines
@@ -141,6 +144,7 @@ typedef struct s_wall
 	mlx_image_t *img;
 	float collision_y;
 	float collision_x;
+	bool crack;
 } t_wall;
 
 ///////////////////////////////////////////
@@ -214,6 +218,8 @@ void refresh_pixels_line(mlx_image_t *img_line);
 //	DIRECTIONS
 void hook_moves(void *param);
 void refresh_deltas(t_game **g);
+void shoot(mlx_key_data_t key, void *param);
+void shoot_animation(void *param);
 // MOVES
 void go_forward(t_game *game);
 void go_backward(t_game *game);
