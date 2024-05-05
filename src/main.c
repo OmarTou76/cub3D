@@ -6,11 +6,30 @@
 /*   By: ymeziane <ymeziane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 15:22:57 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/05/05 03:01:31 by ymeziane         ###   ########.fr       */
+/*   Updated: 2024/05/05 23:54:38 by ymeziane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
+
+void key_hook(mlx_key_data_t key, void *param)
+{
+	t_game *game;
+
+	game = (t_game *)param;
+	if ((key.action == MLX_PRESS || key.action == MLX_REPEAT) && key.key == MLX_KEY_H)
+		display_map(game);
+	if ((key.action == MLX_PRESS) && key.key == MLX_KEY_F)
+		shoot(game);
+}
+
+void loop_hook(void *param)
+{
+	t_game *game = (t_game *)param;
+	listen_mouse_event(game);
+	shoot_animation(game);
+	hook_moves(game);
+}
 
 int main(int argc, char const *argv[])
 {
@@ -28,10 +47,8 @@ int main(int argc, char const *argv[])
 		return (0);
 	if (init_game(game))
 	{
-		mlx_key_hook(game->mlx, display_map, game);
-		mlx_key_hook(game->mlx, shoot, game);
-		mlx_loop_hook(game->mlx, &shoot_animation, game);
-		mlx_loop_hook(game->mlx, &hook_moves, game);
+		mlx_key_hook(game->mlx, key_hook, game);
+		mlx_loop_hook(game->mlx, &loop_hook, game);
 		mlx_loop(game->mlx);
 	}
 	free_nodes(node);

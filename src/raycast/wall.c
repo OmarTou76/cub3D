@@ -6,7 +6,7 @@
 /*   By: ymeziane <ymeziane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 15:44:36 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/05/04 22:46:10 by ymeziane         ###   ########.fr       */
+/*   Updated: 2024/05/06 00:49:30 by ymeziane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ static void get_wall_img(t_wall *wall, t_game *game)
 
 }
 
-static void compute_distance_and_select_wall(t_game *game, t_wall *wall)
+static void compute_distance_and_select_wall(t_game *game, t_wall *wall, bool center_texture)
 {
 	t_direction_line line;
 	float theta;
@@ -89,6 +89,8 @@ static void compute_distance_and_select_wall(t_game *game, t_wall *wall)
 			wall->height = (game->img_view_3d->height / (wall->distance * cos(dist_wall))) * (game->s_map.tile_size);
 
 			get_wall_img(wall, game);
+			if(center_texture)
+				game->textures.center_texture = (t_point){wall->collision_x, wall->collision_y};
 			return;
 		}
 		x += step_x;
@@ -99,8 +101,13 @@ static void compute_distance_and_select_wall(t_game *game, t_wall *wall)
 void get_wall(t_game *game, t_wall *wall, float right_angle, int index)
 {
 	int col_nb;
+	bool center_texture;
 
 	col_nb = game->img_view_3d->width;
 	wall->column_angle = right_angle + (index * FOV / col_nb);
-	compute_distance_and_select_wall(game, wall);
+	if(index == col_nb / 2)
+		center_texture = true;
+	else
+		center_texture = false;
+	compute_distance_and_select_wall(game, wall, center_texture);
 }
