@@ -6,7 +6,7 @@
 /*   By: ymeziane <ymeziane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 15:44:36 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/05/06 00:49:30 by ymeziane         ###   ########.fr       */
+/*   Updated: 2024/05/06 05:23:18 by ymeziane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,11 @@ static void get_wall_img(t_wall *wall, t_game *game)
 	float player_x;
 	float fract_x;
 	float fract_y;
+	int paddingY = (WINDOW_HEIGHT - game->s_map.img_map->height) / 2;
+	int paddingX = (WINDOW_WIDTH - game->s_map.img_map->width) / 2;
 
-	player_y = game->player->img_player->instances[0].y / game->s_map.tile_size; //
-	player_x = game->player->img_player->instances[0].x / game->s_map.tile_size;
+	player_y = game->player->img_player->instances[0].y / game->s_map.tile_size - paddingY / game->s_map.tile_size;
+	player_x = game->player->img_player->instances[0].x / game->s_map.tile_size - paddingX / game->s_map.tile_size;
 
 	fract_x = fmod(wall->collision_x, 1.0f);
 
@@ -90,7 +92,22 @@ static void compute_distance_and_select_wall(t_game *game, t_wall *wall, bool ce
 
 			get_wall_img(wall, game);
 			if(center_texture)
-				game->textures.center_texture = (t_point){wall->collision_x, wall->collision_y};
+			{
+				int x_perso = game->player->img_player->instances[0].x / game->s_map.tile_size - paddingX / game->s_map.tile_size;
+				int y_perso = game->player->img_player->instances[0].y / game->s_map.tile_size - paddingY / game->s_map.tile_size;
+				int x_center_texture = 0;
+				int y_center_texture = 0;
+				if(x_perso > wall->collision_x)
+					x_center_texture = (int)wall->collision_x;
+				else
+					x_center_texture = (int)round(wall->collision_x);
+				if(y_perso > wall->collision_y)
+					y_center_texture = (int)wall->collision_y;
+				else
+					y_center_texture = (int)round(wall->collision_y);
+				game->textures.center_texture = (t_point){x_center_texture, y_center_texture};
+			}
+			
 			return;
 		}
 		x += step_x;

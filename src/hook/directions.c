@@ -6,7 +6,7 @@
 /*   By: ymeziane <ymeziane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 14:17:33 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/05/06 00:59:28 by ymeziane         ###   ########.fr       */
+/*   Updated: 2024/05/06 04:54:17 by ymeziane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,10 +77,11 @@ void	shoot_animation(void *param)
 	game = (t_game *)param;
 	if (game->shoot)
 	{
-		break_wall(game);
 		game->gun_delay++;
 		if (game->gun_delay >= 5)
 		{
+			if(game->gun_frame == 1)
+				break_wall(game);
 			game->gun_frame = (game->gun_frame + 1) % 4;
 			game->gun_delay = 0;
 			game->textures.pistol[0]->enabled = false;
