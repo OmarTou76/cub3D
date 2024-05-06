@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_game.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ymeziane <ymeziane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: otourabi <otourabi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/07 21:53:03 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/05/06 08:05:25 by ymeziane         ###   ########.fr       */
+/*   Updated: 2024/05/06 15:01:40 by otourabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,8 +104,10 @@ static void init_and_draw_map(t_game *game)
 		while (x < game->s_map.width && ft_strlen(game->s_map.map[y]) > x)
 		{
 
-			if (game->s_map.map[y][x] == '1' || game->s_map.map[y][x] == 'D')
+			if (game->s_map.map[y][x] == '1')
 				fill_by_pixel(game->s_map, (y * game->s_map.tile_size), (x * game->s_map.tile_size), ft_pixel(0, 0, 0, 0xFF));
+			else if (game->s_map.map[y][x] == 'D')
+				fill_by_pixel(game->s_map, (y * game->s_map.tile_size), (x * game->s_map.tile_size), ft_pixel(0, 200, 200, 0xFF));
 			else
 				fill_by_pixel(game->s_map, (y * game->s_map.tile_size), (x * game->s_map.tile_size), ft_pixel(150, 150, 150, 0x90));
 			x++;

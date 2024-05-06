@@ -3,41 +3,55 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ymeziane <ymeziane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: otourabi <otourabi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 15:22:57 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/05/06 08:42:09 by ymeziane         ###   ########.fr       */
+/*   Updated: 2024/05/06 17:02:11 by otourabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-
-void key_hook(mlx_key_data_t key, void *param)
+void	key_hook(mlx_key_data_t key, void *param)
 {
-	t_game *game;
+	t_game	*game;
 
 	game = (t_game *)param;
-	if ((key.action == MLX_PRESS || key.action == MLX_REPEAT) && key.key == MLX_KEY_H)
+	if ((key.action == MLX_PRESS || key.action == MLX_REPEAT)
+		&& key.key == MLX_KEY_H)
 		display_map(game);
-	if (key.action == MLX_PRESS && key.key == MLX_KEY_F)
-		shoot(game);
 }
 
-void loop_hook(void *param)
+void	loop_hook(void *param)
 {
-	t_game *game = (t_game *)param;
-	if(mlx_is_mouse_down(game->mlx, MLX_MOUSE_BUTTON_LEFT))
+	t_game	*game;
+	int		prev_x;
+	int		prev_y;
+	float	prev_angle;
+
+	game = (t_game *)param;
+	prev_x = game->player->img_player->instances[0].x;
+	prev_y = game->player->img_player->instances[0].y;
+	prev_angle = game->player->angle;
+	if (mlx_is_key_down(game->mlx, MLX_KEY_ESCAPE))
+		return (void)mlx_close_window(game->mlx);
+	if (!game->shoot && (mlx_is_mouse_down(game->mlx, MLX_MOUSE_BUTTON_LEFT) || mlx_is_key_down(game->mlx, MLX_KEY_F)))
 		shoot(game);
-	listen_mouse_event(game);
+	// listen_mouse_event(game);
 	shoot_animation(game);
 	hook_moves(game);
+	if (prev_x == game->player->img_player->instances[0].x
+		&& game->player->img_player->instances[0].y == prev_y
+		&& game->player->angle == prev_angle)
+		return ;
+	refresh_pixels_line(game->player->line->img_line);
+	raycast(game);
 }
 
-int main(int argc, char const *argv[])
+int	main(int argc, char const *argv[])
 {
-	t_lines *node;
-	t_game *game;
+	t_lines	*node;
+	t_game	*game;
 
 	if (!check_input(argv[0], argv[1], argc))
 		return (1);
@@ -50,6 +64,7 @@ int main(int argc, char const *argv[])
 		return (0);
 	if (init_game(game))
 	{
+		// mlx_set_cursor_mode(game->mlx, MLX_MOUSE_HIDDEN);
 		mlx_key_hook(game->mlx, key_hook, game);
 		mlx_loop_hook(game->mlx, &loop_hook, game);
 		mlx_loop(game->mlx);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ymeziane <ymeziane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: otourabi <otourabi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 16:11:28 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/05/06 00:55:59 by ymeziane         ###   ########.fr       */
+/*   Updated: 2024/05/06 16:18:39 by otourabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -235,6 +235,8 @@ void					raycast(t_game *game);
 //	TEXTURE
 bool					init_and_load_textures(t_game *game);
 //	WALL
+void					compute_distance_and_select_wall(t_game *game,
+							t_wall *wall, bool center_texture);
 void					get_wall(t_game *game, t_wall *wall, float left_angle,
 							int index);
 ///////////////////////////////////////////
