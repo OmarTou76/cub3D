@@ -6,7 +6,7 @@
 /*   By: ymeziane <ymeziane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 14:17:33 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/05/06 04:54:17 by ymeziane         ###   ########.fr       */
+/*   Updated: 2024/05/06 08:27:35 by ymeziane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,10 @@ void	calcul_deltas(t_game **g)
 
 void	listen_mouse_event(t_game *game)
 {
-	// int	y;
-
-	/* int x;
+	int	y;
+	int x;
+	
+	mlx_set_cursor_mode(game->mlx, MLX_MOUSE_HIDDEN);
 	mlx_get_mouse_pos(game->mlx, &x, &y);
 	if (x < (WINDOW_WIDTH / 2) && x > 0 && y > 0 && y < WINDOW_HEIGHT)
 		rotate_left(game);
@@ -51,8 +52,8 @@ void	listen_mouse_event(t_game *game)
 		&& y < WINDOW_HEIGHT)
 		rotate_right(game);
 	if (x < WINDOW_WIDTH / 2 || x > WINDOW_WIDTH / 2)
-		mlx_set_mouse_pos(game->mlx, WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2); */
-	(void)game;
+		mlx_set_mouse_pos(game->mlx, WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2);
+	raycast(game);
 }
 
 void	break_wall(t_game *game)

@@ -6,11 +6,12 @@
 /*   By: ymeziane <ymeziane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 15:22:57 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/05/05 23:54:38 by ymeziane         ###   ########.fr       */
+/*   Updated: 2024/05/06 08:42:09 by ymeziane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
+
 
 void key_hook(mlx_key_data_t key, void *param)
 {
@@ -19,13 +20,15 @@ void key_hook(mlx_key_data_t key, void *param)
 	game = (t_game *)param;
 	if ((key.action == MLX_PRESS || key.action == MLX_REPEAT) && key.key == MLX_KEY_H)
 		display_map(game);
-	if ((key.action == MLX_PRESS) && key.key == MLX_KEY_F)
+	if (key.action == MLX_PRESS && key.key == MLX_KEY_F)
 		shoot(game);
 }
 
 void loop_hook(void *param)
 {
 	t_game *game = (t_game *)param;
+	if(mlx_is_mouse_down(game->mlx, MLX_MOUSE_BUTTON_LEFT))
+		shoot(game);
 	listen_mouse_event(game);
 	shoot_animation(game);
 	hook_moves(game);
