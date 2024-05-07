@@ -3,78 +3,83 @@
 /*                                                        :::      ::::::::   */
 /*   wall.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: otourabi <otourabi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: omar <omar@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 15:44:36 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/05/06 17:42:17 by otourabi         ###   ########.fr       */
+/*   Updated: 2024/05/07 08:43:33 by omar             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-static int	r(float nb)
+static int r(float nb)
 {
 	return (int)round(nb);
 }
 
-static void	get_wall_img(t_wall *wall, t_game *game)
+static void get_wall_img(t_wall *wall, t_game *game)
 {
-	float	player_y;
-	float	player_x;
-	float	fract_x;
-	float	fract_y;
-	int		paddingY;
-	int		paddingX;
+	float player_y;
+	float player_x;
+	float fract_x;
+	float fract_y;
+	int paddingY;
+	int paddingX;
 
 	paddingY = (WINDOW_HEIGHT - game->s_map.img_map->height) / 2;
 	paddingX = (WINDOW_WIDTH - game->s_map.img_map->width) / 2;
-	player_y = game->player->img_player->instances[0].y / game->s_map.tile_size
-		- paddingY / game->s_map.tile_size;
-	player_x = game->player->img_player->instances[0].x / game->s_map.tile_size
-		- paddingX / game->s_map.tile_size;
+	player_y = game->player->img_player->instances[0].y / game->s_map.tile_size - paddingY / game->s_map.tile_size;
+	player_x = game->player->img_player->instances[0].x / game->s_map.tile_size - paddingX / game->s_map.tile_size;
 	fract_x = fmod(wall->collision_x, 1.0f);
 	fract_y = fmod(wall->collision_y, 1.0f);
 	if (fract_x >= 0.97 && fract_y >= 0.97)
 	{
 		if (!wall->img)
 			wall->img = game->textures.east;
-		return ;
+		return;
 	}
-	if (game->s_map.map[(int)(wall->collision_y)][(int)(wall->collision_x)] == 'D')
-		wall->crack = true;
-	if (player_x > wall->collision_x && fract_x >= 0.97)
-		wall->img = game->textures.west;
-	else if (player_x < wall->collision_x && fract_x >= 0.97)
+	if (player_x > wall->collision_x && fract_x >= 0.97 && game->s_map.map[(int)(wall->collision_y)][(int)(wall->collision_x)] != '0')
 	{
 		wall->img = game->textures.east;
+		/*  printf("%c: %d %d -> %f %f\n", game->s_map.map[(int)(wall->collision_y)][(int)(wall->collision_x)], (int)(wall->collision_y), (int)(wall->collision_x), wall->collision_y, wall->collision_x); */
+		if (game->s_map.map[(int)(wall->collision_y)][(int)(wall->collision_x)] == 'D')
+			wall->crack = true;
+	}
+	else if (player_y > wall->collision_y && fract_y >= 0.97 && game->s_map.map[(int)(wall->collision_y)][(int)(wall->collision_x)] != '0')
+	{
+		wall->img = game->textures.north;
+		if (game->s_map.map[(int)(wall->collision_y)][(int)(wall->collision_x)] == 'D')
+			wall->crack = true;
+	}
+	else if (player_x < wall->collision_x && fract_x >= 0.97 && game->s_map.map[(int)(wall->collision_y)][(int)ceil(wall->collision_x)] != '0')
+	{
+		wall->img = game->textures.west;
 		if (game->s_map.map[(int)(wall->collision_y)][(int)ceil(wall->collision_x)] == 'D')
 			wall->crack = true;
 	}
-	else if (player_y > wall->collision_y && fract_y >= 0.97)
-		wall->img = game->textures.north;
-	else if (player_y < wall->collision_y && fract_y >= 0.97)
+	else if (player_y < wall->collision_y && fract_y >= 0.97 && game->s_map.map[(int)ceil(wall->collision_y)][(int)(wall->collision_x)] != '0')
 	{
-		wall->img = game->textures.south;
 		if (game->s_map.map[(int)ceil(wall->collision_y)][(int)(wall->collision_x)] == 'D')
 			wall->crack = true;
+		wall->img = game->textures.south;
 	}
-	else
-		printf("AUCUN CAS\n");
+	else if (!wall->img)
+		wall->img = game->textures.east;
 }
 
-void	compute_distance_and_select_wall(t_game *game, t_wall *wall,
-		bool center_texture)
+void compute_distance_and_select_wall(t_game *game, t_wall *wall,
+									  bool center_texture)
 {
-	t_direction_line	line;
-	float				theta;
-	float				y;
-	float				x;
-	float				step_y;
-	float				step_x;
-	float				col_angle_rad;
-	float				dist_wall;
-	int					paddingY;
-	int					paddingX;
+	t_direction_line line;
+	float theta;
+	float y;
+	float x;
+	float step_y;
+	float step_x;
+	float col_angle_rad;
+	float dist_wall;
+	int paddingY;
+	int paddingX;
 
 	paddingY = (WINDOW_HEIGHT - game->s_map.img_map->height) / 2;
 	paddingX = (WINDOW_WIDTH - game->s_map.img_map->width) / 2;
@@ -89,32 +94,22 @@ void	compute_distance_and_select_wall(t_game *game, t_wall *wall,
 	(void)center_texture;
 	while (true)
 	{
-		if ((game->s_map.map[r(y) / game->s_map.tile_size - paddingY
-				/ game->s_map.tile_size][r(x) / game->s_map.tile_size - paddingX
-				/ game->s_map.tile_size] == '1') || (game->s_map.map[r(y)
-				/ game->s_map.tile_size - paddingY / game->s_map.tile_size][r(x)
-				/ game->s_map.tile_size - paddingX
-				/ game->s_map.tile_size] == 'D'))
+		if ((game->s_map.map[r(y) / game->s_map.tile_size - paddingY / game->s_map.tile_size][r(x) / game->s_map.tile_size - paddingX / game->s_map.tile_size] == '1') || (game->s_map.map[r(y) / game->s_map.tile_size - paddingY / game->s_map.tile_size][r(x) / game->s_map.tile_size - paddingX / game->s_map.tile_size] == 'D'))
 		{
-			wall->collision_y = y / game->s_map.tile_size - paddingY
-				/ game->s_map.tile_size;
-			wall->collision_x = x / game->s_map.tile_size - paddingX
-				/ game->s_map.tile_size;
-			wall->distance = (sqrt(pow(x - line.start_x, 2) + pow(y
-							- line.start_y, 2)));
-			dist_wall = (game->player->angle * M_PI / 180) - (wall->column_angle
-					* M_PI / 180);
-			wall->height = (game->img_view_3d->height / (wall->distance
-						* cos(dist_wall))) * (game->s_map.tile_size);
+			wall->collision_y = y / game->s_map.tile_size - paddingY / game->s_map.tile_size;
+			wall->collision_x = x / game->s_map.tile_size - paddingX / game->s_map.tile_size;
+			wall->distance = (sqrt(pow(x - line.start_x, 2) + pow(y - line.start_y, 2)));
+			dist_wall = (game->player->angle * M_PI / 180) - (wall->column_angle * M_PI / 180);
+			wall->height = (game->img_view_3d->height / (wall->distance * cos(dist_wall))) * (game->s_map.tile_size);
 			get_wall_img(wall, game);
-			return ;
+			return;
 		}
 		x += step_x;
 		y += step_y;
 	}
 }
 
-void	get_wall(t_game *game, t_wall *wall, float right_angle, int index)
+void get_wall(t_game *game, t_wall *wall, float right_angle, int index)
 {
 	int col_nb;
 	bool center_texture;
