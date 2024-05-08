@@ -37,11 +37,29 @@ static int	is_valid_number(char *nb)
 	i = 0;
 	while (nb[i] && nb[i] == ' ')
 		i++;
-	while (nb[i] && ft_isdigit(nb[i]))
+    while (nb[i] && (ft_isdigit(nb[i]) || (nb[i] == '+' || nb[i] == 'i')))
+		i++;
+	while (nb[i] && nb[i] == ' ')
 		i++;
 	if (nb[i] || (ft_atoi(nb) > 255 || ft_atoi(nb) < 0))
 		return (0);
 	return (1);
+}
+
+static int char_occ(char *line, char set)
+{
+    int i;
+    int count;
+
+    i = 0;
+    count = 0;
+    while (line[i])
+    {
+        if (line[i] == set)
+            count++;
+        i++;
+    }
+    return count;
 }
 
 static int	is_valid_rgb_data(char *line)
@@ -52,9 +70,9 @@ static int	is_valid_rgb_data(char *line)
 
 	i = 0;
 	valid_data = 1;
-	while (*line && !ft_isdigit(*line))
+	while (*line && (!ft_isdigit(*line) && !(*line == '+' || *line == '-')))
 		line++;
-	if (!*line)
+	if (!*line || char_occ(line, ',') != 2)
 		return (0);
 	data = ft_split(line, ',');
 	while (data[i])
