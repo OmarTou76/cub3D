@@ -6,7 +6,7 @@
 /*   By: omar <omar@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 16:10:28 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/05/06 21:51:14 by omar             ###   ########.fr       */
+/*   Updated: 2024/05/09 04:00:41 by omar             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,8 @@ void raycast(t_game *game)
 	right_angle = game->player->angle - (FOV / 2);
 	wall.img = NULL;
 	door.img = game->textures.crack;
-	while (index)
+	wall.last_collision_y = 0;
+	while (index > 0)
 	{
 		get_wall(game, &wall, right_angle, index);
 		draw_line_on_map(game, wall.column_angle);

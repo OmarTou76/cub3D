@@ -6,7 +6,7 @@
 /*   By: omar <omar@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 15:44:36 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/05/07 08:43:33 by omar             ###   ########.fr       */
+/*   Updated: 2024/05/09 04:04:16 by omar             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,52 +19,65 @@ static int r(float nb)
 
 static void get_wall_img(t_wall *wall, t_game *game)
 {
-	float player_y;
-	float player_x;
-	float fract_x;
-	float fract_y;
 	int paddingY;
 	int paddingX;
 
 	paddingY = (WINDOW_HEIGHT - game->s_map.img_map->height) / 2;
 	paddingX = (WINDOW_WIDTH - game->s_map.img_map->width) / 2;
-	player_y = game->player->img_player->instances[0].y / game->s_map.tile_size - paddingY / game->s_map.tile_size;
-	player_x = game->player->img_player->instances[0].x / game->s_map.tile_size - paddingX / game->s_map.tile_size;
-	fract_x = fmod(wall->collision_x, 1.0f);
-	fract_y = fmod(wall->collision_y, 1.0f);
+	float player_y = game->player->img_player->instances[0].y / game->s_map.tile_size - paddingY / game->s_map.tile_size;
+	float player_x = game->player->img_player->instances[0].x / game->s_map.tile_size - paddingX / game->s_map.tile_size;
+	float fract_x = fmodf(wall->collision_x, 1.0f);
+	float fract_y = fmodf(wall->collision_y, 1.0f);
+	float dist_wall_max = 0.2;
+	int texture_index = -1;
+
 	if (fract_x >= 0.97 && fract_y >= 0.97)
 	{
-		if (!wall->img)
-			wall->img = game->textures.east;
-		return;
+		if (player_y < wall->collision_y && player_x < wall->collision_x && fabs(wall->collision_y - wall->last_collision_y) >= dist_wall_max)
+			texture_index = 1;
+		else if (player_y < wall->collision_y && player_x > wall->collision_x && fabs(wall->collision_y - wall->last_collision_y) >= dist_wall_max)
+			texture_index = 3;
+		else if (player_y > wall->collision_y && player_x > wall->collision_x && fabs(wall->collision_y - wall->last_collision_y) >= dist_wall_max)
+			texture_index = 0;
+		else if (player_y > wall->collision_y && player_x < wall->collision_x && fabs(wall->collision_y - wall->last_collision_y) >= dist_wall_max)
+			texture_index = 2;
 	}
-	if (player_x > wall->collision_x && fract_x >= 0.97 && game->s_map.map[(int)(wall->collision_y)][(int)(wall->collision_x)] != '0')
+	else if (player_x > wall->collision_x && fract_x >= 0.97)
+		texture_index = 3;
+	else if (player_y > wall->collision_y && fract_y >= 0.97)
+		texture_index = 0;
+	else if (player_x < wall->collision_x && fract_x >= 0.97)
+		texture_index = 2;
+	else if (player_y < wall->collision_y && fract_y >= 0.97)
+		texture_index = 1;
+	if (texture_index == 0)
 	{
-		wall->img = game->textures.east;
-		/*  printf("%c: %d %d -> %f %f\n", game->s_map.map[(int)(wall->collision_y)][(int)(wall->collision_x)], (int)(wall->collision_y), (int)(wall->collision_x), wall->collision_y, wall->collision_x); */
 		if (game->s_map.map[(int)(wall->collision_y)][(int)(wall->collision_x)] == 'D')
 			wall->crack = true;
-	}
-	else if (player_y > wall->collision_y && fract_y >= 0.97 && game->s_map.map[(int)(wall->collision_y)][(int)(wall->collision_x)] != '0')
-	{
 		wall->img = game->textures.north;
-		if (game->s_map.map[(int)(wall->collision_y)][(int)(wall->collision_x)] == 'D')
-			wall->crack = true;
 	}
-	else if (player_x < wall->collision_x && fract_x >= 0.97 && game->s_map.map[(int)(wall->collision_y)][(int)ceil(wall->collision_x)] != '0')
-	{
-		wall->img = game->textures.west;
-		if (game->s_map.map[(int)(wall->collision_y)][(int)ceil(wall->collision_x)] == 'D')
-			wall->crack = true;
-	}
-	else if (player_y < wall->collision_y && fract_y >= 0.97 && game->s_map.map[(int)ceil(wall->collision_y)][(int)(wall->collision_x)] != '0')
+	else if (texture_index == 1)
 	{
 		if (game->s_map.map[(int)ceil(wall->collision_y)][(int)(wall->collision_x)] == 'D')
 			wall->crack = true;
 		wall->img = game->textures.south;
 	}
-	else if (!wall->img)
+	else if (texture_index == 2)
+	{
+		if (game->s_map.map[(int)(wall->collision_y)][(int)ceil(wall->collision_x)] == 'D')
+			wall->crack = true;
+		wall->img = game->textures.west;
+	}
+	else if (texture_index == 3)
+	{
+		if (game->s_map.map[(int)(wall->collision_y)][(int)(wall->collision_x)] == 'D')
+			wall->crack = true;
 		wall->img = game->textures.east;
+	}
+	else if (texture_index == -1 && !wall->img)
+		wall->img = game->textures.north; // Par defaut
+	wall->last_collision_x = wall->collision_x;
+	wall->last_collision_y = wall->collision_y;
 }
 
 void compute_distance_and_select_wall(t_game *game, t_wall *wall,

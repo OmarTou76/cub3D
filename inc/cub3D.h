@@ -6,7 +6,7 @@
 /*   By: omar <omar@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 16:11:28 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/05/06 21:43:48 by omar             ###   ########.fr       */
+/*   Updated: 2024/05/09 03:51:01 by omar             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,6 +145,8 @@ typedef struct s_wall
 	mlx_image_t *img;
 	float collision_y;
 	float collision_x;
+	float last_collision_y;
+	float last_collision_x;
 	bool crack;
 } t_wall;
 
