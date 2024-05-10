@@ -6,7 +6,7 @@
 /*   By: omar <omar@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 14:19:31 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/04/26 19:32:13 by omar             ###   ########.fr       */
+/*   Updated: 2024/05/11 00:39:40 by omar             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,9 @@ void	free_game(t_game *game)
 {
 	if (game != NULL)
 	{
-		free(game->s_map.map);
+		free(game->map.map);
 		free(game->colors);
 		free(game->paths);
-		free(game->player->line);
 		free(game->player);
 		free(game);
 	}
@@ -60,4 +59,12 @@ void	delete_images(t_game *game)
 		mlx_delete_image(game->mlx, game->textures.north);
 	if (game->textures.north != NULL)
 		mlx_delete_image(game->mlx, game->textures.north);
+	if (game->img_view_3d != NULL)
+		mlx_delete_image(game->mlx, game->img_view_3d);
+	if (game->map.rays.img_line != NULL)
+		mlx_delete_image(game->mlx, game->map.rays.img_line);
+	if (game->player->img_player != NULL)
+		mlx_delete_image(game->mlx, game->player->img_player);
+	if (game->map.img_map != NULL)
+		mlx_delete_image(game->mlx, game->map.img_map);
 }

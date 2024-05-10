@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   print_utils.c                                      :+:      :+:    :+:   */
+/*   print.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ymeziane <ymeziane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: omar <omar@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 14:18:57 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/04/09 14:29:04 by ymeziane         ###   ########.fr       */
+/*   Updated: 2024/05/11 00:39:48 by omar             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,9 @@ void	print_data(t_game *game)
 	printf("\n");
 	printf("\nMAP:\n\n");
 	i = 0;
-	while (game->s_map.map[i])
+	while (game->map.map[i])
 	{
-		printf("\t%s\n", game->s_map.map[i]);
+		printf("\t%s\n", game->map.map[i]);
 		i++;
 	}
 	printf("\n");

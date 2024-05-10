@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   texture.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ymeziane <ymeziane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: omar <omar@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 15:38:27 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/05/05 01:28:35 by ymeziane         ###   ########.fr       */
+/*   Updated: 2024/05/11 00:51:20 by omar             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,16 +29,16 @@ static mlx_image_t	*get_img_from_texture(mlx_t *mlx, char *path)
 
 static bool	textures_are_valid(t_game *game)
 {
-	if (game->textures.east == NULL || game->textures.west == NULL
-		|| game->textures.south == NULL || game->textures.north == NULL)
+	if (!game->textures.east || !game->textures.west || !game->textures.south
+		|| !game->textures.north)
 	{
-		if (game->textures.east != NULL)
+		if (game->textures.east)
 			mlx_delete_image(game->mlx, game->textures.east);
-		if (game->textures.west != NULL)
+		if (game->textures.west)
 			mlx_delete_image(game->mlx, game->textures.west);
-		if (game->textures.south != NULL)
-			mlx_delete_image(game->mlx, game->textures.north);
-		if (game->textures.north != NULL)
+		if (game->textures.south)
+			mlx_delete_image(game->mlx, game->textures.south);
+		if (game->textures.north)
 			mlx_delete_image(game->mlx, game->textures.north);
 		printf("[ERROR]: Please provide correct textures\n");
 		return (false);
@@ -46,17 +46,54 @@ static bool	textures_are_valid(t_game *game)
 	return (true);
 }
 
+bool	tex_animation_are_valid(t_game *game)
+{
+	if (!game->animation.crack || !game->animation.pistol[0]
+		|| !game->animation.pistol[1] || !game->animation.pistol[2]
+		|| !game->animation.pistol[3] || !game->animation.reticle)
+	{
+		if (game->animation.crack)
+			mlx_delete_image(game->mlx, game->animation.crack);
+		if (game->animation.pistol[0])
+			mlx_delete_image(game->mlx, game->animation.pistol[0]);
+		if (game->animation.pistol[1])
+			mlx_delete_image(game->mlx, game->animation.pistol[1]);
+		if (game->animation.pistol[2])
+			mlx_delete_image(game->mlx, game->animation.pistol[2]);
+		if (game->animation.pistol[3])
+			mlx_delete_image(game->mlx, game->animation.pistol[3]);
+		if (game->animation.reticle)
+			mlx_delete_image(game->mlx, game->animation.reticle);
+		printf("[ERROR]: Please provide correct animation textures\n");
+		return (false);
+	}
+	return (true);
+}
+
+bool	init_and_load_animation(t_game *game)
+{
+	game->animation.crack = get_img_from_texture(game->mlx,
+			"./textures/animation/crack_wall.png");
+	game->animation.pistol[0] = get_img_from_texture(game->mlx,
+			"./textures/animation/pistol.png");
+	game->animation.pistol[1] = get_img_from_texture(game->mlx,
+			"./textures/animation/pistol2.png");
+	game->animation.pistol[2] = get_img_from_texture(game->mlx,
+			"./textures/animation/pistol3.png");
+	game->animation.pistol[3] = get_img_from_texture(game->mlx,
+			"./textures/animation/pistol4.png");
+	game->animation.reticle = get_img_from_texture(game->mlx,
+			"./textures/animation/reticle.png");
+	return (tex_animation_are_valid(game));
+}
+
 bool	init_and_load_textures(t_game *game)
-{	
+{
+	if (!init_and_load_animation(game))
+		return (false);
 	game->textures.east = get_img_from_texture(game->mlx, game->paths->ea);
 	game->textures.south = get_img_from_texture(game->mlx, game->paths->so);
 	game->textures.west = get_img_from_texture(game->mlx, game->paths->we);
 	game->textures.north = get_img_from_texture(game->mlx, game->paths->no);
-	game->textures.crack = get_img_from_texture(game->mlx, "./textures/crack_wall.png");
-	game->textures.pistol[0] = get_img_from_texture(game->mlx, "./textures/pistol.png");
-	game->textures.pistol[1] = get_img_from_texture(game->mlx, "./textures/pistol2.png");
-	game->textures.pistol[2] = get_img_from_texture(game->mlx, "./textures/pistol3.png");
-	game->textures.pistol[3] = get_img_from_texture(game->mlx, "./textures/pistol4.png");
-	game->textures.reticle = get_img_from_texture(game->mlx, "./textures/reticle.png");
 	return (textures_are_valid(game));
 }

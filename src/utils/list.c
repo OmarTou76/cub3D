@@ -6,16 +6,11 @@
 /*   By: omar <omar@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 15:27:15 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/04/22 12:34:06 by omar             ###   ########.fr       */
+/*   Updated: 2024/05/11 00:27:55 by omar             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
-
-float	radian_to_degree(float angle)
-{
-	return (angle * (180 / M_PI));
-}
 
 static void	save_line(t_lines **node, char *line)
 {

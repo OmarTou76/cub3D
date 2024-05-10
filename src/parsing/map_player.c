@@ -6,15 +6,15 @@
 /*   By: omar <omar@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 15:25:15 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/05/03 16:42:43 by omar             ###   ########.fr       */
+/*   Updated: 2024/05/11 00:40:58 by omar             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-size_t get_map_height(char **map)
+size_t	get_map_height(char **map)
 {
-	int height;
+	int	height;
 
 	height = 0;
 	while (map[height])
@@ -22,10 +22,10 @@ size_t get_map_height(char **map)
 	return (height);
 }
 
-static int find_player_position(char **map, int *x, int *y)
+static int	find_player_position(char **map, int *x, int *y)
 {
-	int i;
-	int j;
+	int	i;
+	int	j;
 
 	i = 0;
 	while (map[i])
@@ -46,14 +46,14 @@ static int find_player_position(char **map, int *x, int *y)
 	return (0);
 }
 
-t_player *get_info_player(char **map)
+t_player	*get_info_player(char **map)
 {
-	t_player *player;
-	char player_direction;
+	t_player	*player;
+	char		player_direction;
 
 	player = malloc(sizeof(t_player));
-	player->line = malloc(sizeof(t_direction_line));
-	if (player == NULL || player->line == NULL)
+	player->pos.next = NULL;
+	if (player == NULL)
 		return (NULL);
 	if (!find_player_position(map, &player->pos.x, &player->pos.y))
 		return (free(player), NULL);
@@ -71,10 +71,10 @@ t_player *get_info_player(char **map)
 	return (player);
 }
 
-int get_max_width(char **map)
+int	get_max_width(char **map)
 {
-	size_t i;
-	size_t max_width;
+	size_t	i;
+	size_t	max_width;
 
 	i = 0;
 	max_width = 0;
@@ -87,9 +87,25 @@ int get_max_width(char **map)
 	return (max_width);
 }
 
-void store_data(t_game **game, t_lines *node)
+void	store_map_data(t_game **game)
 {
-	t_lines *tmp;
+	(*game)->map.width = get_max_width((*game)->map.map);
+	(*game)->map.height = get_map_height((*game)->map.map);
+	if ((*game)->map.height > (*game)->map.width)
+		(*game)->map.tile_size = (int)round(WINDOW_HEIGHT
+				/ (*game)->map.height);
+	else
+		(*game)->map.tile_size = (int)round(WINDOW_WIDTH / (*game)->map.width);
+	(*game)->map.padding_y = (WINDOW_HEIGHT - ((*game)->map.height
+				* (*game)->map.tile_size)) / 2;
+	(*game)->map.padding_x = (WINDOW_WIDTH - ((*game)->map.width
+				* (*game)->map.tile_size)) / 2;
+	(*game)->map.player_size = (int)round((*game)->map.tile_size / 3);
+}
+
+void	store_data(t_game **game, t_lines *node)
+{
+	t_lines	*tmp;
 
 	tmp = node;
 	(*game) = malloc(sizeof(t_game));
@@ -101,17 +117,11 @@ void store_data(t_game **game, t_lines *node)
 		get_colors(game, tmp->line);
 		if (ft_strlen(tmp->line) && is_map_start(tmp->line))
 		{
-			(*game)->s_map.map = node_to_map(&tmp);
-			break;
+			(*game)->map.map = node_to_map(&tmp);
+			break ;
 		}
 		tmp = tmp->next;
 	}
-	(*game)->s_map.width = get_max_width((*game)->s_map.map);
-	(*game)->s_map.height = get_map_height((*game)->s_map.map);
-	if ((*game)->s_map.height > (*game)->s_map.width)
-		(*game)->s_map.tile_size = (int)round(WINDOW_HEIGHT / (*game)->s_map.height);
-	else
-		(*game)->s_map.tile_size = (int)round(WINDOW_WIDTH / (*game)->s_map.width);
-	(*game)->s_map.player_size = (int)round((*game)->s_map.tile_size / 3);
-	(*game)->player = get_info_player((*game)->s_map.map);
+	(*game)->player = get_info_player((*game)->map.map);
+	store_map_data(game);
 }
