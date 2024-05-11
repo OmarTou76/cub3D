@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   moves.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omar <omar@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: ymeziane <ymeziane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 15:23:32 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/05/11 00:38:57 by omar             ###   ########.fr       */
+/*   Updated: 2024/05/11 13:03:19 by ymeziane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ static void	update_player_position(t_game *game, int new_y, int new_x)
 	{
 		game->player->img_player->instances[0].y = new_y;
 		game->player->img_player->instances[0].x = new_x;
+		game->player->moves = true;
 	}
 }
 

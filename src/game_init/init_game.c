@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_game.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omar <omar@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: ymeziane <ymeziane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/07 21:53:03 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/05/11 00:53:47 by omar             ###   ########.fr       */
+/*   Updated: 2024/05/11 12:54:11 by ymeziane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ static void	init_and_draw_player(mlx_t *mlx, t_game *game)
 		game->map.player_size);
 	mlx_set_instance_depth(game->player->img_player->instances, 1);
 	game->player->img_player->enabled = false;
+	game->player->moves = false;
 }
 
 static void	resize_animation_textures(mlx_t *mlx, t_game *game)

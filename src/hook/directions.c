@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   directions.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omar <omar@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: ymeziane <ymeziane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 14:17:33 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/05/11 00:44:31 by omar             ###   ########.fr       */
+/*   Updated: 2024/05/11 13:07:26 by ymeziane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ static void	rotate_right(t_game *game, bool is_mouse_event)
 	game->player->angle -= rotate;
 	if (game->player->angle < 0)
 		game->player->angle += 360;
+	game->player->moves = true;
 }
 
 static void	rotate_left(t_game *game, bool is_mouse_event)
@@ -36,6 +37,7 @@ static void	rotate_left(t_game *game, bool is_mouse_event)
 	game->player->angle += rotate;
 	if (game->player->angle > 360)
 		game->player->angle -= 360;
+	game->player->moves = true;
 }
 
 void	calcul_deltas(t_game **g)
@@ -122,10 +124,16 @@ void	shoot_animation(void *param)
 	t_game	*game;
 
 	game = (t_game *)param;
+	unsigned int delay;
+
+	if(game->player->moves)
+		delay = 1;
+	else
+		delay = 10;
 	if (game->animation.start)
 	{
 		game->animation.gun_delay++;
-		if (game->animation.gun_delay >= 5)
+		if (game->animation.gun_delay >= delay)
 		{
 			if (game->animation.gun_frame == 1)
 				break_wall(game);
@@ -154,6 +162,7 @@ void	hook_moves(void *param)
 	t_game	*game;
 
 	game = (t_game *)param;
+	game->player->moves = false;
 	if (mlx_is_key_down(game->mlx, MLX_KEY_LEFT))
 		rotate_left(game, false);
 	else if (mlx_is_key_down(game->mlx, MLX_KEY_RIGHT))
