@@ -6,7 +6,7 @@
 /*   By: ymeziane <ymeziane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 14:17:33 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/05/11 13:07:26 by ymeziane         ###   ########.fr       */
+/*   Updated: 2024/05/11 19:25:32 by ymeziane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,12 +121,11 @@ void	break_wall(t_game *game)
 
 void	shoot_animation(void *param)
 {
-	t_game	*game;
+	t_game			*game;
+	unsigned int	delay;
 
 	game = (t_game *)param;
-	unsigned int delay;
-
-	if(game->player->moves)
+	if (game->player->moves)
 		delay = 1;
 	else
 		delay = 10;

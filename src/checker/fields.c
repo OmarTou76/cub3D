@@ -1,92 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fields_checker.c                                   :+:      :+:    :+:   */
+/*   fields.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ymeziane <ymeziane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 15:23:08 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/04/09 14:25:37 by ymeziane         ###   ########.fr       */
+/*   Updated: 2024/05/11 20:39:17 by ymeziane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
-
-void	init_fields(t_fields *f)
-{
-	f->c = 0;
-	f->f = 0;
-	f->no = 0;
-	f->so = 0;
-	f->ea = 0;
-	f->we = 0;
-	f->is_ok = 0;
-}
-
-int	trim_compare(char *base, char *to_compare, size_t size)
-{
-	while (*base && *base == ' ')
-		base++;
-	return (ft_strncmp(base, to_compare, size));
-}
-
-static int	is_valid_number(char *nb)
-{
-	int	i;
-
-	i = 0;
-	while (nb[i] && nb[i] == ' ')
-		i++;
-    while (nb[i] && (ft_isdigit(nb[i]) || (nb[i] == '+' || nb[i] == 'i')))
-		i++;
-	while (nb[i] && nb[i] == ' ')
-		i++;
-	if (nb[i] || (ft_atoi(nb) > 255 || ft_atoi(nb) < 0))
-		return (0);
-	return (1);
-}
-
-static int char_occ(char *line, char set)
-{
-    int i;
-    int count;
-
-    i = 0;
-    count = 0;
-    while (line[i])
-    {
-        if (line[i] == set)
-            count++;
-        i++;
-    }
-    return count;
-}
-
-static int	is_valid_rgb_data(char *line)
-{
-	char	**data;
-	int		i;
-	int		valid_data;
-
-	i = 0;
-	valid_data = 1;
-	while (*line && (!ft_isdigit(*line) && !(*line == '+' || *line == '-')))
-		line++;
-	if (!*line || char_occ(line, ',') != 2)
-		return (0);
-	data = ft_split(line, ',');
-	while (data[i])
-	{
-		if (!is_valid_number(data[i]))
-			valid_data = 0;
-		free(data[i]);
-		i++;
-	}
-	if (i != 3)
-		valid_data = 0;
-	free(data);
-	return (valid_data);
-}
 
 bool	valid_texture_path(char *line)
 {
@@ -109,6 +33,13 @@ bool	valid_texture_path(char *line)
 		return (0);
 	close(fd);
 	return (1);
+}
+
+int	trim_compare(char *base, char *to_compare, size_t size)
+{
+	while (*base && *base == ' ')
+		base++;
+	return (ft_strncmp(base, to_compare, size));
 }
 
 int	check_fields(char *line, t_fields *fields)

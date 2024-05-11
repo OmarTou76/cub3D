@@ -6,7 +6,7 @@
 /*   By: ymeziane <ymeziane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 15:23:32 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/05/11 13:03:19 by ymeziane         ###   ########.fr       */
+/*   Updated: 2024/05/11 19:26:22 by ymeziane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,13 @@ static void	update_player_position(t_game *game, int new_y, int new_x)
 	index_x = (int)floor(((float)new_x / (float)game->map.tile_size
 				- (float)game->map.padding_x / (float)game->map.tile_size));
 	if ((game->map.map[index_y][index_x] != '1'
-			&& game->map.map[index_y][index_x] != 'D')
+		&& game->map.map[index_y][index_x] != 'D')
 		&& (game->map.map[(int)start_player_y][(int)start_player_x] != '1'
-			&& game->map.map[(int)start_player_y][(int)start_player_x] != 'D')
+		&& game->map.map[(int)start_player_y][(int)start_player_x] != 'D')
 		&& (game->map.map[index_y][(int)start_player_x] != '1'
-			&& game->map.map[index_y][(int)start_player_x] != 'D')
+		&& game->map.map[index_y][(int)start_player_x] != 'D')
 		&& (game->map.map[(int)start_player_y][index_x] != '1'
-			&& game->map.map[(int)start_player_y][index_x] != 'D'))
+		&& game->map.map[(int)start_player_y][index_x] != 'D'))
 	{
 		game->player->img_player->instances[0].y = new_y;
 		game->player->img_player->instances[0].x = new_x;

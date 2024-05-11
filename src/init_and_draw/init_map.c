@@ -1,43 +1,47 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   map.c                                              :+:      :+:    :+:   */
+/*   init_map.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ymeziane <ymeziane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/03 15:24:25 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/05/11 20:42:12 by ymeziane         ###   ########.fr       */
+/*   Created: 2024/05/11 20:13:08 by ymeziane          #+#    #+#             */
+/*   Updated: 2024/05/11 20:14:16 by ymeziane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-bool	only_isspace(char *line)
+static int	get_map_height(t_lines *node)
 {
-	while (*line)
+	int		i;
+	t_lines	*tmp;
+
+	i = 0;
+	tmp = node;
+	while (tmp && ft_strlen(tmp->line))
 	{
-		if (ft_isspace(*line) == 0)
-			return (false);
-		line++;
+		tmp = tmp->next;
+		i++;
 	}
-	return (true);
+	return (i);
 }
 
-int	is_valid_map(t_lines **node)
+char	**node_to_map(t_lines **node)
 {
+	int		i;
+	int		map_height;
 	char	**map;
-	t_lines	*n;
 
-	n = (*node);
-	map = node_to_map(&n);
-	while (n)
+	map_height = get_map_height(*node);
+	map = malloc((map_height + 1) * sizeof(char *));
+	i = 0;
+	while ((*node) && ft_strlen((*node)->line))
 	{
-		if (ft_strlen(n->line) && !only_isspace(n->line))
-			return (free(map), 0);
-		n = n->next;
+		map[i] = (*node)->line;
+		i++;
+		(*node) = (*node)->next;
 	}
-	if (!check_columns(map) || !check_lines(map) || !check_start_pos(map))
-		return (free(map), 0);
-	free(map);
-	return (1);
+	map[i] = NULL;
+	return (map);
 }

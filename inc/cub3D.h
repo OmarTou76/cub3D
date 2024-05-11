@@ -6,7 +6,7 @@
 /*   By: ymeziane <ymeziane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 16:11:28 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/05/11 12:51:37 by ymeziane         ###   ########.fr       */
+/*   Updated: 2024/05/11 20:40:02 by ymeziane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,6 +171,11 @@ int					trim_compare(char *base, char *to_compare, size_t size);
 int					check_fields(char *line, t_fields *fields);
 //	MAP
 int					is_valid_map(t_lines **node);
+int					check_lines(char **m);
+int					check_columns(char **m);
+int					check_start_pos(char **map);
+//	RGB DATA
+int					is_valid_rgb_data(char *line);
 //	SPACES
 int					is_spaces_outside(t_vec **vecs, char **m, int y, int x);
 ///////////////////////////////////////////
@@ -202,7 +207,7 @@ void				color_img(mlx_image_t *img, uint32_t color, int width,
 //	INIT GAME
 void				fill_by_pixel(t_map map, int posY, int posX, int32_t color);
 // DRAW MAP 2D
-bool				init_game(t_game *game);
+bool				init_and_draw_game(t_game *game);
 
 ///////////////////////////////////////////
 //	FREE
@@ -218,6 +223,9 @@ void				init_and_draw_line(mlx_t *mlx, t_game *game);
 void				init_and_draw_map(t_game *game);
 void				display_map(t_game *game);
 void				refresh_pixels_line(mlx_image_t *img_line);
+// MLX HOOK
+void				key_hook(mlx_key_data_t key, void *param);
+void				loop_hook(void *param);
 //	DIRECTIONS
 void				hook_moves(void *param);
 void				calcul_deltas(t_game **g);

@@ -6,7 +6,7 @@
 /*   By: ymeziane <ymeziane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 15:41:08 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/04/26 15:51:50 by ymeziane         ###   ########.fr       */
+/*   Updated: 2024/05/11 19:28:45 by ymeziane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,15 @@
 
 uint32_t	convert_rgba_to_argb(uint32_t rgba)
 {
-	uint8_t red = (rgba >> 24) & 0xFF;   // Extract red
-	uint8_t green = (rgba >> 16) & 0xFF; // Extract green
-	uint8_t blue = (rgba >> 8) & 0xFF;   // Extract blue
-	uint8_t alpha = rgba & 0xFF;         // Extract alpha
+	uint8_t	red;
+	uint8_t	green;
+	uint8_t	blue;
+	uint8_t	alpha;
+
+	red = (rgba >> 24) & 0xFF;
+	green = (rgba >> 16) & 0xFF;
+	blue = (rgba >> 8) & 0xFF;
+	alpha = rgba & 0xFF;
 	return ((alpha << 24) | (blue << 16) | (green << 8) | red);
 }
 

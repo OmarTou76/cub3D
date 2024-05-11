@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_game.c                                        :+:      :+:    :+:   */
+/*   init_and_draw_game.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ymeziane <ymeziane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/07 21:53:03 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/05/11 12:54:11 by ymeziane         ###   ########.fr       */
+/*   Updated: 2024/05/11 19:42:43 by ymeziane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,38 +29,30 @@ static void	init_and_draw_player(mlx_t *mlx, t_game *game)
 	game->player->moves = false;
 }
 
-static void	resize_animation_textures(mlx_t *mlx, t_game *game)
+static void	resize_textures(mlx_t *mlx, t_game *game)
 {
-	mlx_resize_image(game->animation.pistol[0], game->img_view_3d->width / 2,
-		game->img_view_3d->height / 2);
-	mlx_resize_image(game->animation.pistol[1], game->img_view_3d->width / 2,
-		game->img_view_3d->height / 2);
-	mlx_resize_image(game->animation.pistol[2], game->img_view_3d->width / 2,
-		game->img_view_3d->height / 2);
-	mlx_resize_image(game->animation.pistol[3], game->img_view_3d->width / 2,
-		game->img_view_3d->height / 2);
-	mlx_image_to_window(mlx, game->animation.pistol[0], game->img_view_3d->width
-		/ 2, game->img_view_3d->height / 2);
-	mlx_image_to_window(mlx, game->animation.pistol[1], game->img_view_3d->width
-		/ 2, game->img_view_3d->height / 2);
-	mlx_image_to_window(mlx, game->animation.pistol[2], game->img_view_3d->width
-		/ 2, game->img_view_3d->height / 2);
-	mlx_image_to_window(mlx, game->animation.pistol[3], game->img_view_3d->width
-		/ 2, game->img_view_3d->height / 2);
-	game->animation.pistol[1]->enabled = false;
-	game->animation.pistol[2]->enabled = false;
-	game->animation.pistol[3]->enabled = false;
+	size_t	i;
+
+	i = 0;
+	while (i < 4)
+	{
+		mlx_resize_image(game->animation.pistol[i], game->img_view_3d->width
+			/ 2, game->img_view_3d->height / 2);
+		mlx_image_to_window(mlx, game->animation.pistol[i],
+			game->img_view_3d->width / 2, game->img_view_3d->height / 2);
+		mlx_set_instance_depth(game->animation.pistol[i]->instances, 2);
+		if (i != 0)
+			game->animation.pistol[i]->enabled = false;
+		i++;
+	}
 	mlx_resize_image(game->animation.reticle, game->img_view_3d->width / 15,
 		game->img_view_3d->height / 15);
 	mlx_image_to_window(mlx, game->animation.reticle, game->img_view_3d->width
 		/ 2 - game->animation.reticle->width / 2, game->img_view_3d->height / 2
 		- game->animation.reticle->height / 2);
-	mlx_set_instance_depth(game->animation.pistol[0]->instances, 2);
-	mlx_set_instance_depth(game->animation.pistol[1]->instances, 2);
-	mlx_set_instance_depth(game->animation.pistol[2]->instances, 2);
-	mlx_set_instance_depth(game->animation.pistol[3]->instances, 2);
 	mlx_set_instance_depth(game->animation.reticle->instances, 3);
 }
+
 static void	init_3d_view(mlx_t *mlx, t_game *game)
 {
 	game->img_view_3d = mlx_new_image(mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
@@ -68,33 +60,15 @@ static void	init_3d_view(mlx_t *mlx, t_game *game)
 	mlx_set_instance_depth(game->img_view_3d->instances, 1);
 }
 
-void	fill_by_pixel(t_map map, int posY, int posX, int32_t color)
-{
-	int	y;
-	int	x;
-
-	y = posY;
-	while (y < posY + map.tile_size)
-	{
-		x = posX;
-		while (x < posX + map.tile_size)
-		{
-			mlx_put_pixel(map.img_map, x, y, color);
-			x++;
-		}
-		y++;
-	}
-}
-
-bool	init_game(t_game *game)
+bool	init_and_draw_game(t_game *game)
 {
 	if (!init_and_load_textures(game))
 		return (false);
 	init_and_draw_map(game);
-	init_and_draw_player(game->mlx, game);
 	init_and_draw_line(game->mlx, game);
+	init_and_draw_player(game->mlx, game);
 	init_3d_view(game->mlx, game);
-	resize_animation_textures(game->mlx, game);
+	resize_textures(game->mlx, game);
 	raycast(game);
 	return (true);
 }
