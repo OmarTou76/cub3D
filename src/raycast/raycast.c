@@ -6,7 +6,7 @@
 /*   By: ymeziane <ymeziane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 16:10:28 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/05/11 12:57:34 by ymeziane         ###   ########.fr       */
+/*   Updated: 2024/05/11 14:09:40 by ymeziane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ static void	draw_column(t_game *game, t_wall wall, int index)
 		else
 		{
 			color = get_pixel_from_texture(wall, y - y_start);
-			if (!(wall.crack && (int)color == -256))
+			if (!(wall.crack && (int)color == 0))
 				mlx_put_pixel(game->img_view_3d, game->img_view_3d->width
 					- index, y, color);
 		}

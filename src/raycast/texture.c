@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   texture.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omar <omar@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: ymeziane <ymeziane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 15:38:27 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/05/11 00:51:20 by omar             ###   ########.fr       */
+/*   Updated: 2024/05/11 14:05:45 by ymeziane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ bool	tex_animation_are_valid(t_game *game)
 bool	init_and_load_animation(t_game *game)
 {
 	game->animation.crack = get_img_from_texture(game->mlx,
-			"./textures/animation/crack_wall.png");
+			"./textures/animation/target.png");
 	game->animation.pistol[0] = get_img_from_texture(game->mlx,
 			"./textures/animation/pistol.png");
 	game->animation.pistol[1] = get_img_from_texture(game->mlx,
