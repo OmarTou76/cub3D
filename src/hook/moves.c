@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   moves.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ymeziane <ymeziane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: omar <omar@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 15:23:32 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/05/12 20:29:54 by ymeziane         ###   ########.fr       */
+/*   Updated: 2024/05/13 01:10:09 by omar             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,27 +35,25 @@ static void	move_instance(mlx_instance_t *instance, int x, int y)
 
 void	update_player_position(t_game *game, int new_y, int new_x)
 {
-	int	start_py;
-	int	start_px;
-	int	index_y;
-	int	index_x;
+	int	start_y;
+	int	start_x;
+	int	end_y;
+	int	end_x;
 
-	start_py = (int)round(((float)new_y / (float)game->map.tile_size
-				- (float)game->map.padding_y / (float)game->map.tile_size));
-	start_px = (int)round(((float)new_x / (float)game->map.tile_size
-				- (float)game->map.padding_x / (float)game->map.tile_size));
-	index_y = (int)floor(((float)new_y / (float)game->map.tile_size
-				- (float)game->map.padding_y / (float)game->map.tile_size));
-	index_x = (int)floor(((float)new_x / (float)game->map.tile_size
-				- (float)game->map.padding_x / (float)game->map.tile_size));
-	if ((game->map.map[index_y][index_x] != '1'
-		&& game->map.map[index_y][index_x] != 'D')
-		&& (game->map.map[(int)start_py][(int)start_px] != '1'
-		&& game->map.map[(int)start_py][(int)start_px] != 'D')
-		&& (game->map.map[index_y][(int)start_px] != '1'
-		&& game->map.map[index_y][(int)start_px] != 'D')
-		&& (game->map.map[(int)start_py][index_x] != '1'
-		&& game->map.map[(int)start_py][index_x] != 'D'))
+	start_y = (int)((float)new_y / (float)game->map.tile_size
+			- (float)game->map.padding_y / (float)game->map.tile_size);
+	start_x = (int)((float)new_x / (float)game->map.tile_size
+			- (float)game->map.padding_x / (float)game->map.tile_size);
+	end_y = (float)(((float)new_y + (float)game->map.player_size)
+			/ (float)game->map.tile_size - (float)game->map.padding_y
+			/ (float)game->map.tile_size);
+	end_x = (float)(((float)new_x + (float)game->map.player_size)
+			/ (float)game->map.tile_size - (float)game->map.padding_x
+			/ (float)game->map.tile_size);
+	if (!ft_strchr("1D", game->map.map[start_y][start_x]) && !ft_strchr("1D",
+			game->map.map[end_y][end_x]) && !ft_strchr("1D",
+			game->map.map[end_y][start_x]) && !ft_strchr("1D",
+			game->map.map[start_y][end_x]))
 	{
 		move_instance(game->player->img_player->instances, new_x, new_y);
 		game->player->moves = true;

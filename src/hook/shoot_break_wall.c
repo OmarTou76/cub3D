@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   shoot_break_wall.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ymeziane <ymeziane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: omar <omar@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 18:47:58 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/05/12 20:46:17 by ymeziane         ###   ########.fr       */
+/*   Updated: 2024/05/13 01:21:51 by omar             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-static void	calculate_player_coordinates(t_game *game, int *player_x, int *player_y)
+static void	calculate_player_coordinates(t_game *game, int *player_x,
+		int *player_y)
 {
 	*player_x = game->player->img_player->instances[0].x / game->map.tile_size
 		- game->map.padding_x / game->map.tile_size;
@@ -35,21 +36,20 @@ static void	get_collision_point(t_vec *door, t_wall wall, t_game *game)
 	float	fract_y;
 
 	calculate_player_coordinates(game, &player_x, &player_y);
-	calculate_fractions(wall.collision_x, wall.collision_y, &fract_x,
-		&fract_y);
+	calculate_fractions(wall.collision_x, wall.collision_y, &fract_x, &fract_y);
 	if (game->map.map[(int)(wall.collision_y)][(int)(wall.collision_x)] == 'D')
 	{
 		door->y = (int)(wall.collision_y);
 		door->x = (int)(wall.collision_x);
 	}
-	else if (player_x < wall.collision_x && fract_x >= 0.97 && game->map.map
-		[(int)(wall.collision_y)][(int)ceil(wall.collision_x)] == 'D')
+	else if (player_x < wall.collision_x && fract_x >= 0.97
+		&& game->map.map[(int)(wall.collision_y)][(int)ceil(wall.collision_x)] == 'D')
 	{
 		door->y = (int)(wall.collision_y);
 		door->x = (int)ceil(wall.collision_x);
 	}
-	else if (player_y < wall.collision_y && fract_y >= 0.97 && game->map.map
-		[(int)ceil(wall.collision_y)][(int)(wall.collision_x)] == 'D')
+	else if (player_y < wall.collision_y && fract_y >= 0.97
+		&& game->map.map[(int)ceil(wall.collision_y)][(int)(wall.collision_x)] == 'D')
 	{
 		door->y = (int)ceil(wall.collision_y);
 		door->x = (int)(wall.collision_x);

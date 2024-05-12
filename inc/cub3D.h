@@ -6,7 +6,7 @@
 /*   By: omar <omar@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 16:11:28 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/05/12 21:38:04 by omar             ###   ########.fr       */
+/*   Updated: 2024/05/13 00:31:08 by omar             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@
 # include <stdlib.h>
 # include <unistd.h>
 
-# define WINDOW_HEIGHT 800
-# define WINDOW_WIDTH 1000
+# define WINDOW_HEIGHT 900
+# define WINDOW_WIDTH 900
 # define FOV 60.0
 # define PLAYER_SPEED 4
 # define ROTATE_SPEED 4

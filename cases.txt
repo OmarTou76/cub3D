@@ -1,5 +1,6 @@
-- proximité latérale perso/mur
+- proximité latérale perso/mur -> OK | a checker par Yanis.
 - Norme / leaks
+
 
 - ./cub3D maps/bad/textures_dir.cub => pas précédé par Error\n
 - ./cub3D maps/bad/textures_forbidden.cub => pas précédé par Error\n
@@ -9,3 +10,11 @@
 - ./cub3D maps/good/creepy.cub => chargement infini (lldb/gdb -> [cub3D`compute_distance_and_select_wall + 136])
 - ./cub3D maps/good/matrix.cub => chargement infini
 - ./cub3D maps/good/sad_face.cub => chargement infini
+
+
+OK pour les maps du dessus, probleme régle en mettant WINDOW_HEIGHT et WNDOW_WIDTH a la meme valeur (900, a voir si il faut ajuster).
+
+AUTRE PROBLEM
+
+
+- ./cub3D maps/good/works.cub => Ne doit pas passer.

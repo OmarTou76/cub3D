@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   game.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ymeziane <ymeziane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: omar <omar@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 19:55:43 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/05/12 19:55:45 by ymeziane         ###   ########.fr       */
+/*   Updated: 2024/05/13 00:40:49 by omar             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,16 @@
 static void	init_and_draw_player(mlx_t *mlx, t_game *game)
 {
 	uint32_t	color;
+	int			center;
 
 	color = ft_pixel(255, 0, 0, 0xFF);
+	center = (int)round(game->map.tile_size / 3);
 	game->player->img_player = mlx_new_image(mlx, game->map.player_size,
 			game->map.player_size);
-	mlx_image_to_window(mlx, game->player->img_player, ((game->player->pos.x
-				* game->map.tile_size) + game->map.padding_x),
-		(game->player->pos.y * game->map.tile_size) + game->map.padding_y);
+	mlx_image_to_window(mlx, game->player->img_player, (game->player->pos.x
+			* game->map.tile_size + game->map.padding_x) + center,
+		(game->player->pos.y * game->map.tile_size + game->map.padding_y)
+		+ center);
 	color_img(game->player->img_player, color, game->map.player_size,
 		game->map.player_size);
 	mlx_set_instance_depth(game->player->img_player->instances, 1);
