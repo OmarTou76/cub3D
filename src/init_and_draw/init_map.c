@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_map.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ymeziane <ymeziane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: omar <omar@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 20:13:08 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/05/12 20:43:42 by ymeziane         ###   ########.fr       */
+/*   Updated: 2024/05/12 22:22:25 by omar             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,16 @@ int	get_map_height_node(t_lines *node)
 	return (i);
 }
 
+void	trim_end(char *line)
+{
+	int	i;
+
+	i = ft_strlen(line);
+	while (i > 0 && line[i - 1] == ' ')
+		i--;
+	line[i] = 0;
+}
+
 char	**node_to_map(t_lines **node)
 {
 	int		i;
@@ -38,6 +48,7 @@ char	**node_to_map(t_lines **node)
 	i = 0;
 	while ((*node) && ft_strlen((*node)->line))
 	{
+		trim_end((*node)->line);
 		map[i] = (*node)->line;
 		i++;
 		(*node) = (*node)->next;

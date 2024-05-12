@@ -1,4 +1,3 @@
-- Utilité de PLAYER_SIZE ? Besoin de modification pour la norme car "Preprocessor statement must only contain constant defines"
 - proximité latérale perso/mur
 - Norme / leaks
 
@@ -7,44 +6,6 @@
 - ./cub3D maps/bad/textures_not_xpm.cub => pas précédé par Error\n
 
 - ./cub3D maps/good/cheese_maze.cub => Seg fault
-- ./cub3D maps/good/creepy.cub => chargement infini
-- ./cub3D maps/good/dungeon.cub => map valide mais message d'erreur "Error\nInvalid fields input"
-- ./cub3D maps/good/library.cub => map valide mais message d'erreur "Error\nInvalid fields input"
-- ./cub3D maps/good/matrix.cub => map valide mais message d'erreur "
-                                    MLX42: LodePNG: incorrect PNG signature, it's no PNG or corrupted
-                                    MLX42: LodePNG: incorrect PNG signature, it's no PNG or corrupted
-                                    MLX42: LodePNG: incorrect PNG signature, it's no PNG or corrupted
-                                    MLX42: LodePNG: incorrect PNG signature, it's no PNG or corrupted
-                                    [ERROR]: Please provide correct textures"
-- ./cub3D maps/good/sad_face.cub => map valide mais message d'erreur "Error\nInvalid fields input"
-- ./cub3D maps/good/test_pos_left.cub => map valide mais message d'erreur "
-                                    MLX42: LodePNG: incorrect PNG signature, it's no PNG or corrupted
-                                    MLX42: LodePNG: incorrect PNG signature, it's no PNG or corrupted
-                                    MLX42: LodePNG: incorrect PNG signature, it's no PNG or corrupted
-                                    MLX42: LodePNG: incorrect PNG signature, it's no PNG or corrupted
-                                    [ERROR]: Please provide correct textures"
-./cub3D maps/good/test_pos_right.cub => map valide mais message d'erreur "
-                                    MLX42: LodePNG: incorrect PNG signature, it's no PNG or corrupted
-                                    MLX42: LodePNG: incorrect PNG signature, it's no PNG or corrupted
-                                    MLX42: LodePNG: incorrect PNG signature, it's no PNG or corrupted
-                                    MLX42: LodePNG: incorrect PNG signature, it's no PNG or corrupted
-                                    [ERROR]: Please provide correct textures"
-./cub3D maps/good/test_pos_top.cub => map valide mais message d'erreur "
-                                    MLX42: LodePNG: incorrect PNG signature, it's no PNG or corrupted
-                                    MLX42: LodePNG: incorrect PNG signature, it's no PNG or corrupted
-                                    MLX42: LodePNG: incorrect PNG signature, it's no PNG or corrupted
-                                    MLX42: LodePNG: incorrect PNG signature, it's no PNG or corrupted
-                                    [ERROR]: Please provide correct textures"
-./cub3D maps/good/test_textures.cub => map valide mais message d'erreur "
-                                    MLX42: LodePNG: incorrect PNG signature, it's no PNG or corrupted
-                                    MLX42: LodePNG: incorrect PNG signature, it's no PNG or corrupted
-                                    MLX42: LodePNG: incorrect PNG signature, it's no PNG or corrupted
-                                    MLX42: LodePNG: incorrect PNG signature, it's no PNG or corrupted
-                                    [ERROR]: Please provide correct textures"
-./cub3D maps/good/test_whitespaces.cub => map valide mais message d'erreur "
-                                    MLX42: LodePNG: incorrect PNG signature, it's no PNG or corrupted
-                                    MLX42: LodePNG: incorrect PNG signature, it's no PNG or corrupted
-                                    MLX42: LodePNG: incorrect PNG signature, it's no PNG or corrupted
-                                    MLX42: LodePNG: incorrect PNG signature, it's no PNG or corrupted
-                                    [ERROR]: Please provide correct textures"
-./cub3D maps/good/works.cub => map valide mais message d'erreur "Error\nInvalid fields input"
+- ./cub3D maps/good/creepy.cub => chargement infini (lldb/gdb -> [cub3D`compute_distance_and_select_wall + 136])
+- ./cub3D maps/good/matrix.cub => chargement infini
+- ./cub3D maps/good/sad_face.cub => chargement infini

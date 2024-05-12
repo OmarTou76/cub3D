@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ymeziane <ymeziane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: omar <omar@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 16:11:28 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/05/12 20:52:51 by ymeziane         ###   ########.fr       */
+/*   Updated: 2024/05/12 21:38:04 by omar             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@
 # define WINDOW_HEIGHT 800
 # define WINDOW_WIDTH 1000
 # define FOV 60.0
-# define PLAYER_SIZE WINDOW_HEIGHT * 0.05
 # define PLAYER_SPEED 4
 # define ROTATE_SPEED 4
 
