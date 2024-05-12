@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ymeziane <ymeziane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: omar <omar@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 14:19:31 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/05/11 19:28:00 by ymeziane         ###   ########.fr       */
+/*   Updated: 2024/05/12 16:38:59 by omar             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,20 @@ void	free_vecs(t_vec *vecs)
 	}
 }
 
+void	delete_animated_image(t_game *game)
+{
+	int	i;
+
+	i = -1;
+	if (game->animation.crack != NULL)
+		mlx_delete_image(game->mlx, game->animation.crack);
+	if (game->animation.reticle != NULL)
+		mlx_delete_image(game->mlx, game->animation.reticle);
+	while (++i < 4)
+		if (game->animation.pistol[i] != NULL)
+			mlx_delete_image(game->mlx, game->animation.pistol[i]);
+}
+
 void	delete_images(t_game *game)
 {
 	if (game->textures.east != NULL)
@@ -67,4 +81,5 @@ void	delete_images(t_game *game)
 		mlx_delete_image(game->mlx, game->player->img_player);
 	if (game->map.img_map != NULL)
 		mlx_delete_image(game->mlx, game->map.img_map);
+	delete_animated_image(game);
 }

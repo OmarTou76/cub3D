@@ -3,23 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   map_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ymeziane <ymeziane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: omar <omar@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 20:20:01 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/05/11 20:42:42 by ymeziane         ###   ########.fr       */
+/*   Updated: 2024/05/12 17:20:50 by omar             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-static int	validate_initial_line_or_column(char *line)
+static bool	check_neighbors(char **m, int y, int x, t_vec **vecs)
 {
-	int	i;
-
-	i = 0;
-	while (line[i] && line[i] == ' ')
-		i++;
-	return (line[i] == '1');
+	if ((!m[y][x + 1] || m[y][x + 1] == ' ') && m[y][x] == '0')
+		return (false);
+	else if ((m[y][x] == ' ' && (m[y][x + 1] && m[y][x + 1] == '0')))
+		return (false);
+	else if (m[y][x] == ' ' && !has_vec(*vecs, y, x) && !is_spaces_outside(vecs,
+			m, y, x))
+		return (false);
+	return (true);
 }
 
 int	check_lines(char **m)
@@ -32,17 +34,14 @@ int	check_lines(char **m)
 	vecs = NULL;
 	while (m[y])
 	{
-		if (!validate_initial_line_or_column(m[y]))
-			return (free_vecs(vecs), 0);
 		x = 0;
+		while (m[y][x] && m[y][x] == ' ')
+			x++;
+		if (m[y][x] != '1')
+			return (0);
 		while (m[y][x])
 		{
-			if ((!m[y][x + 1] || m[y][x + 1] == ' ') && m[y][x] == '0')
-				return (free_vecs(vecs), 0);
-			else if ((m[y][x] == ' ' && (m[y][x + 1] && m[y][x + 1] == '0')))
-				return (free_vecs(vecs), 0);
-			else if (m[y][x] == ' ' && !has_vec(vecs, y, x)
-				&& !is_spaces_outside(&vecs, m, y, x))
+			if (!check_neighbors(m, y, x, &vecs))
 				return (free_vecs(vecs), 0);
 			x++;
 		}
@@ -60,13 +59,15 @@ int	check_columns(char **m)
 	while (m[0][x])
 	{
 		y = 0;
-		if (!validate_initial_line_or_column(m[y]))
+		while (m[y][x] && m[y][x] == ' ')
+			y++;
+		if (m[y][x] != '1')
 			return (0);
 		while (m[y])
 		{
-			if ((!m[y + 1]
-					|| (int)ft_strlen(m[y + 1]) <= x || m[y + 1][x] == ' ')
-					&& ((int)ft_strlen(m[y]) > x && m[y][x] == '0'))
+			if ((!m[y + 1] || (int)ft_strlen(m[y + 1]) <= x || m[y
+					+ 1][x] == ' ') && ((int)ft_strlen(m[y]) > x
+					&& m[y][x] == '0'))
 				return (0);
 			y++;
 		}

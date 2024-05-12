@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycast.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ymeziane <ymeziane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: omar <omar@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 16:10:28 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/05/11 14:09:40 by ymeziane         ###   ########.fr       */
+/*   Updated: 2024/05/12 17:52:00 by omar             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,8 @@ void	duplicate_wall(t_wall wall, t_wall *door)
 {
 	door->collision_x = wall.collision_x;
 	door->collision_y = wall.collision_y;
+	door->collision_x = wall.last_collision_x;
+	door->collision_y = wall.last_collision_y;
 	door->column_angle = wall.column_angle;
 	door->height = wall.height;
 	door->crack = true;

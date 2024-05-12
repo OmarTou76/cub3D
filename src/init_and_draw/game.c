@@ -19,9 +19,11 @@ static void	init_and_draw_player(mlx_t *mlx, t_game *game)
 	color = ft_pixel(255, 0, 0, 0xFF);
 	game->player->img_player = mlx_new_image(mlx, game->map.player_size,
 			game->map.player_size);
-	mlx_image_to_window(mlx, game->player->img_player, ((game->player->pos.x
-				* game->map.tile_size) + game->map.padding_x),
-		(game->player->pos.y * game->map.tile_size) + game->map.padding_y);
+	mlx_image_to_window(mlx, game->player->img_player,
+		(((float)game->player->pos.x * (float)game->map.tile_size)
+			+ (float)game->map.padding_x + (game->map.player_size / 2)),
+		((float)game->player->pos.y * (float)game->map.tile_size)
+		+ (float)game->map.padding_y + (game->map.player_size / 2));
 	color_img(game->player->img_player, color, game->map.player_size,
 		game->map.player_size);
 	mlx_set_instance_depth(game->player->img_player->instances, 1);

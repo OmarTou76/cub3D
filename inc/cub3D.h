@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ymeziane <ymeziane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: omar <omar@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 16:11:28 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/05/11 20:40:02 by ymeziane         ###   ########.fr       */
+/*   Updated: 2024/05/12 18:06:45 by omar             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,6 @@
 # define WINDOW_HEIGHT 800
 # define WINDOW_WIDTH 1000
 # define FOV 60.0
-# define TILE_SIZE 30
-# define TILE_FACTOR 1
-# define MAP_TILE_SIZE (TILE_SIZE / TILE_FACTOR)
 # define PLAYER_SIZE (MAP_TILE_SIZE) / 3
 # define PLAYER_SPEED 4
 # define ROTATE_SPEED 4
@@ -78,7 +75,7 @@ typedef struct s_map
 typedef struct s_ray_direction
 {
 	float			angle_radian;
-	float			final_collision_dist;
+	float			normalize_dist;
 	float			start_x;
 	float			start_y;
 	float			end_x;
@@ -252,6 +249,11 @@ bool				is_cracked_wall(t_wall *wall, t_game *game,
 //	TEXTURE
 bool				init_and_load_textures(t_game *game);
 //	WALL
+int					get_border_wall_index(t_wall *wall, float player_y,
+						float player_x);
+int					has_texture_conflict(float fract_y, float fract_x);
+void				save_wall_properties(t_game *game, t_wall *wall,
+						t_ray_direction *ray);
 void				compute_distance_and_select_wall(t_game *game,
 						t_wall *wall);
 void				get_wall(t_game *game, t_wall *wall, float left_angle,
