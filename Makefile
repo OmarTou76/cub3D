@@ -17,9 +17,9 @@ OBJ_DIR = obj
 
 SRC_FILES = main \
 	utils/list utils/print utils/color utils/free \
-	checker/checker checker/map checker/fields checker/spaces \
-	 game_init/init_game  game_init/init_map \
-	hook/directions hook/map hook/moves \
+	checker/data checker/map checker/map_utils checker/rgb_data checker/fields checker/spaces \
+	 init_and_draw/game  init_and_draw/draw_map init_and_draw/init_map \
+	hook/directions hook/map hook/mlx_hook hook/moves hook/shoot\
 	raycast/raycast raycast/raycast_utils raycast/texture raycast/wall\
 	parsing/map_player parsing/texture_color \
 
