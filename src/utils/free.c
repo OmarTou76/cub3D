@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omar <omar@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: ymeziane <ymeziane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 14:19:31 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/05/12 16:38:59 by omar             ###   ########.fr       */
+/*   Updated: 2024/05/12 20:40:46 by ymeziane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	free_vecs(t_vec *vecs)
 	}
 }
 
-void	delete_animated_image(t_game *game)
+static void	delete_animated_image(t_game *game)
 {
 	int	i;
 

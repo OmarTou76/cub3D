@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycast.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omar <omar@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: ymeziane <ymeziane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 16:10:28 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/05/12 17:52:00 by omar             ###   ########.fr       */
+/*   Updated: 2024/05/12 20:36:52 by ymeziane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,8 @@ static uint32_t	get_pixel_from_texture(t_wall wall, int y)
 	texture_index = ((int)(texture_y * wall.img->height) * wall.img->width)
 		+ (int)(texture_x * wall.img->width);
 	texture_index %= (wall.img->height * wall.img->width);
-	return (convert_rgba_to_argb(((uint32_t *)wall.img->pixels)[texture_index]));
+	return (convert_rgba_to_argb(((uint32_t *)wall.img->pixels)
+			[texture_index]));
 }
 
 static void	draw_column(t_game *game, t_wall wall, int index)
@@ -62,7 +63,7 @@ static void	draw_column(t_game *game, t_wall wall, int index)
 	}
 }
 
-void	duplicate_wall(t_wall wall, t_wall *door)
+static void	duplicate_wall(t_wall wall, t_wall *door)
 {
 	door->collision_x = wall.collision_x;
 	door->collision_y = wall.collision_y;

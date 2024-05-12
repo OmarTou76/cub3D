@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw_map.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omar <omar@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: ymeziane <ymeziane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 19:23:36 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/05/12 17:56:02 by omar             ###   ########.fr       */
+/*   Updated: 2024/05/12 20:33:04 by ymeziane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	init_and_draw_line(mlx_t *mlx, t_game *game)
 	game->map.rays.img_line->enabled = false;
 }
 
-void	create_map(t_game *game)
+static void	create_map(t_game *game)
 {
 	game->map.img_map = mlx_new_image(game->mlx, (game->map.width
 				* game->map.tile_size), game->map.height * game->map.tile_size);

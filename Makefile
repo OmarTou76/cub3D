@@ -16,12 +16,12 @@ SRC_DIR = src
 OBJ_DIR = obj
 
 SRC_FILES = main \
-	utils/list utils/print utils/color utils/free \
+	utils/list utils/color utils/free \
 	checker/data checker/map checker/map_utils checker/rgb_data checker/fields checker/spaces \
 	 init_and_draw/game  init_and_draw/draw_map init_and_draw/init_map \
-	hook/directions hook/map hook/mlx_hook hook/moves hook/shoot\
+	hook/directions hook/map hook/mlx_hook hook/moves hook/rotate hook/shoot_animation hook/shoot_break_wall\
 	raycast/raycast raycast/raycast_utils raycast/texture raycast/wall raycast/wall_utils\
-	parsing/map_player parsing/texture_color \
+	parsing/data parsing/map parsing/player parsing/texture_color \
 
 SRC = $(addprefix $(SRC_DIR)/, $(addsuffix .c, $(SRC_FILES)))
 OBJ = $(addprefix $(OBJ_DIR)/, $(addsuffix .o, $(SRC_FILES)))

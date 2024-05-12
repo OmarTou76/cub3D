@@ -1,47 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_map.c                                         :+:      :+:    :+:   */
+/*   data.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ymeziane <ymeziane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/11 20:13:08 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/05/12 20:43:42 by ymeziane         ###   ########.fr       */
+/*   Created: 2024/05/12 19:58:39 by ymeziane          #+#    #+#             */
+/*   Updated: 2024/05/12 19:58:50 by ymeziane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-int	get_map_height_node(t_lines *node)
+void	store_data(t_game **game, t_lines *node)
 {
-	int		i;
 	t_lines	*tmp;
 
-	i = 0;
 	tmp = node;
-	while (tmp && ft_strlen(tmp->line))
+	(*game) = malloc(sizeof(t_game));
+	(*game)->paths = malloc(sizeof(t_texture_paths));
+	(*game)->colors = malloc(sizeof(t_colors));
+	while (tmp)
 	{
+		get_textures_paths(game, tmp->line);
+		get_colors(game, tmp->line);
+		if (ft_strlen(tmp->line) && is_map_start(tmp->line))
+		{
+			(*game)->map.map = node_to_map(&tmp);
+			break ;
+		}
 		tmp = tmp->next;
-		i++;
 	}
-	return (i);
-}
-
-char	**node_to_map(t_lines **node)
-{
-	int		i;
-	int		map_height;
-	char	**map;
-
-	map_height = get_map_height_node(*node);
-	map = malloc((map_height + 1) * sizeof(char *));
-	i = 0;
-	while ((*node) && ft_strlen((*node)->line))
-	{
-		map[i] = (*node)->line;
-		i++;
-		(*node) = (*node)->next;
-	}
-	map[i] = NULL;
-	return (map);
+	(*game)->player = get_info_player((*game)->map.map);
+	store_map_data(game);
 }

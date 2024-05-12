@@ -6,13 +6,13 @@
 /*   By: ymeziane <ymeziane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 15:23:08 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/05/11 20:39:17 by ymeziane         ###   ########.fr       */
+/*   Updated: 2024/05/12 20:06:26 by ymeziane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-bool	valid_texture_path(char *line)
+static bool	valid_texture_path(char *line)
 {
 	int	i;
 	int	fd;

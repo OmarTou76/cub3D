@@ -6,7 +6,7 @@
 /*   By: ymeziane <ymeziane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 15:38:27 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/05/11 14:05:45 by ymeziane         ###   ########.fr       */
+/*   Updated: 2024/05/12 20:37:40 by ymeziane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static bool	textures_are_valid(t_game *game)
 	return (true);
 }
 
-bool	tex_animation_are_valid(t_game *game)
+static bool	tex_animation_are_valid(t_game *game)
 {
 	if (!game->animation.crack || !game->animation.pistol[0]
 		|| !game->animation.pistol[1] || !game->animation.pistol[2]
@@ -70,7 +70,7 @@ bool	tex_animation_are_valid(t_game *game)
 	return (true);
 }
 
-bool	init_and_load_animation(t_game *game)
+static bool	init_and_load_animation(t_game *game)
 {
 	game->animation.crack = get_img_from_texture(game->mlx,
 			"./textures/animation/target.png");

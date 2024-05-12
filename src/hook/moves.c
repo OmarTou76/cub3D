@@ -6,22 +6,43 @@
 /*   By: ymeziane <ymeziane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 15:23:32 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/05/12 13:18:35 by ymeziane         ###   ########.fr       */
+/*   Updated: 2024/05/12 20:29:54 by ymeziane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-static void	update_player_position(t_game *game, int new_y, int new_x)
+void	listen_mouse_event(t_game *game)
 {
-	int	start_player_y;
-	int	start_player_x;
+	int	y;
+	int	x;
+
+	mlx_get_mouse_pos(game->mlx, &x, &y);
+	if (x < (WINDOW_WIDTH / 2) && x > 0 && y > 0 && y < WINDOW_HEIGHT)
+		rotate_left(game, true);
+	else if (x > (WINDOW_WIDTH / 2) && x < WINDOW_WIDTH && y > 0
+		&& y < WINDOW_HEIGHT)
+		rotate_right(game, true);
+	if (x < WINDOW_WIDTH / 2 || x > WINDOW_WIDTH / 2)
+		mlx_set_mouse_pos(game->mlx, WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2);
+}
+
+static void	move_instance(mlx_instance_t *instance, int x, int y)
+{
+	instance->x = x;
+	instance->y = y;
+}
+
+void	update_player_position(t_game *game, int new_y, int new_x)
+{
+	int	start_py;
+	int	start_px;
 	int	index_y;
 	int	index_x;
 
-	start_player_y = (int)round(((float)new_y / (float)game->map.tile_size
+	start_py = (int)round(((float)new_y / (float)game->map.tile_size
 				- (float)game->map.padding_y / (float)game->map.tile_size));
-	start_player_x = (int)round(((float)new_x / (float)game->map.tile_size
+	start_px = (int)round(((float)new_x / (float)game->map.tile_size
 				- (float)game->map.padding_x / (float)game->map.tile_size));
 	index_y = (int)floor(((float)new_y / (float)game->map.tile_size
 				- (float)game->map.padding_y / (float)game->map.tile_size));
@@ -29,63 +50,48 @@ static void	update_player_position(t_game *game, int new_y, int new_x)
 				- (float)game->map.padding_x / (float)game->map.tile_size));
 	if ((game->map.map[index_y][index_x] != '1'
 		&& game->map.map[index_y][index_x] != 'D')
-		&& (game->map.map[(int)start_player_y][(int)start_player_x] != '1'
-		&& game->map.map[(int)start_player_y][(int)start_player_x] != 'D')
-		&& (game->map.map[index_y][(int)start_player_x] != '1'
-		&& game->map.map[index_y][(int)start_player_x] != 'D')
-		&& (game->map.map[(int)start_player_y][index_x] != '1'
-		&& game->map.map[(int)start_player_y][index_x] != 'D'))
+		&& (game->map.map[(int)start_py][(int)start_px] != '1'
+		&& game->map.map[(int)start_py][(int)start_px] != 'D')
+		&& (game->map.map[index_y][(int)start_px] != '1'
+		&& game->map.map[index_y][(int)start_px] != 'D')
+		&& (game->map.map[(int)start_py][index_x] != '1'
+		&& game->map.map[(int)start_py][index_x] != 'D'))
 	{
-		game->player->img_player->instances[0].y = new_y;
-		game->player->img_player->instances[0].x = new_x;
+		move_instance(game->player->img_player->instances, new_x, new_y);
 		game->player->moves = true;
 	}
 }
 
-void	go_forward(t_game *game)
+static void	calcul_deltas(t_game **g)
 {
-	int	new_x;
-	int	new_y;
+	float	angle_radians;
+	float	dx;
+	float	dy;
 
-	new_x = game->player->img_player->instances[0].x + game->player->delta_x;
-	new_y = game->player->img_player->instances[0].y + game->player->delta_y;
-	update_player_position(game, new_y, new_x);
+	angle_radians = (*g)->player->angle * (M_PI) / 180.0;
+	dx = cos(-angle_radians) * (PLAYER_SPEED);
+	dy = sin(-angle_radians) * (PLAYER_SPEED);
+	(*g)->player->delta_x = round(dx);
+	(*g)->player->delta_y = round(dy);
 }
 
-void	go_backward(t_game *game)
+void	hook_moves(void *param)
 {
-	int	new_x;
-	int	new_y;
+	t_game	*game;
 
-	new_x = game->player->img_player->instances[0].x - game->player->delta_x;
-	new_y = game->player->img_player->instances[0].y - game->player->delta_y;
-	update_player_position(game, new_y, new_x);
-}
-
-void	go_left(t_game *game)
-{
-	float	radian_angle;
-	int		new_x;
-	int		new_y;
-
-	radian_angle = game->player->angle * M_PI / 180.0;
-	new_x = game->player->img_player->instances[0].x;
-	new_y = game->player->img_player->instances[0].y;
-	new_x += (int)round(PLAYER_SPEED * cos(radian_angle + M_PI / 2.0));
-	new_y -= (int)round(PLAYER_SPEED * sin(radian_angle + M_PI / 2.0));
-	update_player_position(game, new_y, new_x);
-}
-
-void	go_right(t_game *game)
-{
-	float	radian_angle;
-	int		new_x;
-	int		new_y;
-
-	radian_angle = game->player->angle * M_PI / 180.0;
-	new_x = game->player->img_player->instances[0].x;
-	new_y = game->player->img_player->instances[0].y;
-	new_x += (int)round(PLAYER_SPEED * cos(radian_angle - M_PI / 2.0));
-	new_y -= (int)round(PLAYER_SPEED * sin(radian_angle - M_PI / 2.0));
-	update_player_position(game, new_y, new_x);
+	game = (t_game *)param;
+	game->player->moves = false;
+	if (mlx_is_key_down(game->mlx, MLX_KEY_LEFT))
+		rotate_left(game, false);
+	else if (mlx_is_key_down(game->mlx, MLX_KEY_RIGHT))
+		rotate_right(game, false);
+	calcul_deltas(&game);
+	if (mlx_is_key_down(game->mlx, MLX_KEY_W))
+		go_forward(game);
+	else if (mlx_is_key_down(game->mlx, MLX_KEY_S))
+		go_backward(game);
+	else if (mlx_is_key_down(game->mlx, MLX_KEY_A))
+		go_left(game);
+	else if (mlx_is_key_down(game->mlx, MLX_KEY_D))
+		go_right(game);
 }

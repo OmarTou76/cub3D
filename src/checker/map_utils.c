@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omar <omar@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: ymeziane <ymeziane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 20:20:01 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/05/12 17:20:50 by omar             ###   ########.fr       */
+/*   Updated: 2024/05/12 18:43:09 by ymeziane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,9 +65,9 @@ int	check_columns(char **m)
 			return (0);
 		while (m[y])
 		{
-			if ((!m[y + 1] || (int)ft_strlen(m[y + 1]) <= x || m[y
-					+ 1][x] == ' ') && ((int)ft_strlen(m[y]) > x
-					&& m[y][x] == '0'))
+			if ((!m[y + 1] || (int)ft_strlen(m[y + 1]) <= x
+					|| m[y + 1][x] == ' ')
+					&& ((int)ft_strlen(m[y]) > x && m[y][x] == '0'))
 				return (0);
 			y++;
 		}

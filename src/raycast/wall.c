@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   wall.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omar <omar@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: ymeziane <ymeziane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 15:44:36 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/05/12 17:44:03 by omar             ###   ########.fr       */
+/*   Updated: 2024/05/12 20:03:21 by ymeziane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,8 @@ void	compute_distance_and_select_wall(t_game *game, t_wall *wall)
 		wall->collision_x = (ray.end_x / (float)game->map.tile_size
 				- (float)game->map.padding_x / (float)game->map.tile_size);
 		if (game->map.map[(int)wall->collision_y][(int)wall->collision_x] == '1'
-			|| game->map.map[(int)wall->collision_y][(int)wall->collision_x] == 'D')
+			|| game->map.map[(int)wall->collision_y]
+			[(int)wall->collision_x] == 'D')
 			return (save_wall_properties(game, wall, &ray), get_wall_img(wall,
 					game));
 		if ((int)game->player->angle == (int)wall->column_angle)

@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   data.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omar <omar@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: ymeziane <ymeziane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 15:23:42 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/05/12 17:23:29 by omar             ###   ########.fr       */
+/*   Updated: 2024/05/12 20:05:07 by ymeziane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-void	init_fields(t_fields *f)
+static void	init_fields(t_fields *f)
 {
 	f->c = 0;
 	f->f = 0;

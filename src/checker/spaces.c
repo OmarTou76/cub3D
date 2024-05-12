@@ -6,7 +6,7 @@
 /*   By: ymeziane <ymeziane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 14:24:02 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/05/04 01:10:16 by ymeziane         ###   ########.fr       */
+/*   Updated: 2024/05/12 20:10:03 by ymeziane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ bool	has_vec(t_vec *vec, int y, int x)
 	return (false);
 }
 
-void	add_vec(t_vec **vecs, int y, int x)
+static void	add_vec(t_vec **vecs, int y, int x)
 {
 	t_vec	*new;
 	t_vec	*tmp;
@@ -43,14 +43,14 @@ void	add_vec(t_vec **vecs, int y, int x)
 	}
 }
 
-int	is_valid_direction(char **m, int dy, int dx)
+static int	is_valid_direction(char **m, int dy, int dx)
 {
 	if (m[dy] && m[dy][dx] && (m[dy][dx] == '1' || m[dy][dx] == 'D'))
 		return (0);
 	return (1);
 }
 
-void	fill_directions(int d[4][2])
+static void	fill_directions(int d[4][2])
 {
 	d[0][0] = -1;
 	d[0][1] = 0;

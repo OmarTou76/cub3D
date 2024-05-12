@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omar <omar@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: ymeziane <ymeziane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 16:11:28 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/05/12 18:06:45 by omar             ###   ########.fr       */
+/*   Updated: 2024/05/12 20:52:51 by ymeziane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 # define WINDOW_HEIGHT 800
 # define WINDOW_WIDTH 1000
 # define FOV 60.0
-# define PLAYER_SIZE (MAP_TILE_SIZE) / 3
+# define PLAYER_SIZE WINDOW_HEIGHT * 0.05
 # define PLAYER_SPEED 4
 # define ROTATE_SPEED 4
 
@@ -156,108 +156,111 @@ typedef struct s_wall
 ///////////////////////////////////////////
 //	CHECKER FOLDER
 
-//	CHECKER
-char				**node_to_map(t_lines **node);
+//	DATA
 int					check_input(char const *progname, char const *filename,
 						int argc);
 int					is_map_start(char *line);
 int					is_valid_data(t_lines *node);
 //	FIELDS
-void				init_fields(t_fields *f);
 int					trim_compare(char *base, char *to_compare, size_t size);
 int					check_fields(char *line, t_fields *fields);
-//	MAP
-int					is_valid_map(t_lines **node);
+//	MAP UTILS
 int					check_lines(char **m);
 int					check_columns(char **m);
 int					check_start_pos(char **map);
+//	MAP
+int					is_valid_map(t_lines **node);
 //	RGB DATA
 int					is_valid_rgb_data(char *line);
 //	SPACES
-int					is_spaces_outside(t_vec **vecs, char **m, int y, int x);
-///////////////////////////////////////////
-//	PARSING FOLDER
-
-//	MAP_PLAYER
-void				store_data(t_game **game, t_lines *node);
-//	TEXTURE_COLOR
-void				get_colors(t_game **game, char *line);
-void				get_textures_paths(t_game **game, char *line);
-///////////////////////////////////////////
-//	UTILS FOLDER
-
-//	LIST
-t_lines				*save_data(char const *filename);
-void				add_vec(t_vec **vecs, int y, int x);
 bool				has_vec(t_vec *vec, int y, int x);
-//	PRINT
-void				print_data(t_game *game);
-void				print_lines(t_lines *tmp);
-//	COLOR
-uint32_t			convert_rgba_to_argb(uint32_t rgba);
-int32_t				ft_pixel(int32_t r, int32_t g, int32_t b, int32_t a);
-void				color_img(mlx_image_t *img, uint32_t color, int width,
-						int height);
-///////////////////////////////////////////
-//	DRAW_MAP FOLDER
-
-//	INIT GAME
-void				fill_by_pixel(t_map map, int posY, int posX, int32_t color);
-// DRAW MAP 2D
-bool				init_and_draw_game(t_game *game);
-
-///////////////////////////////////////////
-//	FREE
-void				free_game(t_game *game);
-void				free_nodes(t_lines *node);
-void				free_vecs(t_vec *vecs);
-void				delete_images(t_game *game);
+int					is_spaces_outside(t_vec **vecs, char **m, int y, int x);
 ///////////////////////////////////////////
 //	HOOK FOLDER
 
-//	MAP
-void				init_and_draw_line(mlx_t *mlx, t_game *game);
-void				init_and_draw_map(t_game *game);
-void				display_map(t_game *game);
-void				refresh_pixels_line(mlx_image_t *img_line);
-// MLX HOOK
-void				key_hook(mlx_key_data_t key, void *param);
-void				loop_hook(void *param);
 //	DIRECTIONS
-void				hook_moves(void *param);
-void				calcul_deltas(t_game **g);
-void				shoot(t_game *game);
-void				shoot_animation(void *param);
-void				listen_mouse_event(t_game *game);
-// MOVES
 void				go_forward(t_game *game);
 void				go_backward(t_game *game);
 void				go_left(t_game *game);
 void				go_right(t_game *game);
+//	MAP
+void				refresh_pixels_line(mlx_image_t *img_line);
+void				display_map(t_game *game);
+// MLX HOOK
+void				key_hook(mlx_key_data_t key, void *param);
+void				loop_hook(void *param);
+// MOVES
+void				listen_mouse_event(t_game *game);
+void				update_player_position(t_game *game, int new_y, int new_x);
+void				hook_moves(void *param);
+// ROTATE
+void				rotate_right(t_game *game, bool is_mouse_event);
+void				rotate_left(t_game *game, bool is_mouse_event);
+// SHOOT ANIMATION
+void				shoot_animation(void *param);
+void				shoot(t_game *game);
+//	SHOOT BREAK WALL
+void				break_wall(t_game *game);
+///////////////////////////////////////////
+//	INIT AND DRAW FOLDER
+
+//	DRAW MAP
+void				fill_by_pixel(t_map map, int posY, int posX, int32_t color);
+void				init_and_draw_line(mlx_t *mlx, t_game *game);
+void				init_and_draw_map(t_game *game);
+// GAME
+bool				init_and_draw_game(t_game *game);
+char				**node_to_map(t_lines **node);
+///////////////////////////////////////////
+//	PARSING FOLDER
+
+//	DATA
+void				store_data(t_game **game, t_lines *node);
+//	MAP
+void				store_map_data(t_game **game);
+// PLAYER
+t_player			*get_info_player(char **map);
+//	TEXTURE_COLOR
+void				get_textures_paths(t_game **game, char *line);
+void				get_colors(t_game **game, char *line);
+///////////////////////////////////////////
 //	RAYCAST FOLDER
-//	RAYCAST
-uint32_t			convert_rgba_to_argb(uint32_t rgba);
-int32_t				ft_pixel(int32_t r, int32_t g, int32_t b, int32_t a);
-void				raycast(t_game *game);
 
 //	RAYCAST UTILS
-void				init_ray_properties(t_ray_direction *ray, t_game *game,
-						t_wall *wall);
 bool				is_cracked_wall(t_wall *wall, t_game *game,
 						int texture_index);
-
+void				init_ray_properties(t_ray_direction *ray, t_game *game,
+						t_wall *wall);
+//	RAYCAST
+void				raycast(t_game *game);
 //	TEXTURE
 bool				init_and_load_textures(t_game *game);
-//	WALL
+//	WALL UTILS
 int					get_border_wall_index(t_wall *wall, float player_y,
 						float player_x);
 int					has_texture_conflict(float fract_y, float fract_x);
 void				save_wall_properties(t_game *game, t_wall *wall,
 						t_ray_direction *ray);
+//	WALL
 void				compute_distance_and_select_wall(t_game *game,
 						t_wall *wall);
 void				get_wall(t_game *game, t_wall *wall, float left_angle,
 						int index);
+///////////////////////////////////////////
+//	UTILS FOLDER
+
+//	COLOR
+uint32_t			convert_rgba_to_argb(uint32_t rgba);
+int32_t				ft_pixel(int32_t r, int32_t g, int32_t b, int32_t a);
+void				color_img(mlx_image_t *img, uint32_t color, int width,
+						int height);
+//	FREE
+void				free_game(t_game *game);
+void				free_nodes(t_lines *node);
+void				free_vecs(t_vec *vecs);
+void				delete_images(t_game *game);
+//	LIST
+t_lines				*save_data(char const *filename);
 ///////////////////////////////////////////
 
 #endif
