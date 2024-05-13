@@ -6,28 +6,11 @@
 /*   By: ymeziane <ymeziane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 15:23:32 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/05/13 13:32:39 by ymeziane         ###   ########.fr       */
+/*   Updated: 2024/05/13 16:30:57 by ymeziane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
-
-void	listen_mouse_event(t_game *game)
-{
-	int	y;
-	int	x;
-
-	if (!game->mouse_event)
-		return ;
-	mlx_get_mouse_pos(game->mlx, &x, &y);
-	if (x < (WINDOW_WIDTH / 2) && x > 0 && y > 0 && y < WINDOW_HEIGHT)
-		rotate_left(game);
-	else if (x > (WINDOW_WIDTH / 2) && x < WINDOW_WIDTH && y > 0
-		&& y < WINDOW_HEIGHT)
-		rotate_right(game);
-	if (x < WINDOW_WIDTH / 2 || x > WINDOW_WIDTH / 2)
-		mlx_set_mouse_pos(game->mlx, WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2);
-}
 
 static void	move_instance(mlx_instance_t *instance, int x, int y)
 {
@@ -52,14 +35,14 @@ void	update_player_position(t_game *game, int new_y, int new_x)
 	end_x = (float)(((float)new_x + (float)game->map.player_size)
 			/ (float)game->map.tile_size - (float)game->map.padding_x
 			/ (float)game->map.tile_size);
-	if (!ft_strchr("1D", game->map.map[start_y][start_x]) && !ft_strchr("1D",
-			game->map.map[end_y][end_x]) && !ft_strchr("1D",
-			game->map.map[end_y][start_x]) && !ft_strchr("1D",
-			game->map.map[start_y][end_x]))
-	{
-		move_instance(game->player->img_player->instances, new_x, new_y);
-		game->player->moves = true;
-	}
+	if (start_y == 0 || (!game->map.map[end_y + 1]
+			|| end_x >= (int)ft_strlen(game->map.map[end_y + 1]))
+		|| start_x == 0 || end_x >= ((int)ft_strlen(game->map.map[end_y]) - 1)
+		|| game->map.map[start_y][start_x - 1] == ' ' || game->map.map[start_y
+		- 1][start_x] == ' ')
+		return ;
+	move_instance(game->player->img_player->instances, new_x, new_y);
+	game->player->moves = true;
 }
 
 static void	calcul_deltas(t_game **g)
@@ -69,8 +52,10 @@ static void	calcul_deltas(t_game **g)
 	float	dy;
 
 	angle_radians = (*g)->player->angle * (M_PI) / 180.0;
-	dx = cos(-angle_radians) * (PLAYER_SPEED);
-	dy = sin(-angle_radians) * (PLAYER_SPEED);
+	dx = cos(-angle_radians) * ceil((float)PLAYER_SPEED
+			* ((float)(*g)->map.player_size / 10));
+	dy = sin(-angle_radians) * ceil((float)PLAYER_SPEED
+			* ((float)(*g)->map.player_size / 10));
 	(*g)->player->delta_x = round(dx);
 	(*g)->player->delta_y = round(dy);
 }

@@ -6,24 +6,11 @@
 /*   By: ymeziane <ymeziane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 19:27:07 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/05/12 20:02:35 by ymeziane         ###   ########.fr       */
+/*   Updated: 2024/05/13 14:48:29 by ymeziane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
-
-bool	is_cracked_wall(t_wall *wall, t_game *game, int texture_index)
-{
-	if ((texture_index == 1 || texture_index == 3)
-		&& game->map.map[(int)(wall->collision_y)]
-		[(int)floor(wall->collision_x)] == 'D')
-		return (true);
-	else if ((texture_index == 0 || texture_index == 2)
-		&& game->map.map[(int)floor(wall->collision_y)]
-		[(int)(wall->collision_x)] == 'D')
-		return (true);
-	return (false);
-}
 
 void	init_ray_properties(t_ray_direction *ray, t_game *game, t_wall *wall)
 {

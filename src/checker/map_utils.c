@@ -6,7 +6,7 @@
 /*   By: ymeziane <ymeziane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 20:20:01 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/05/13 12:38:08 by ymeziane         ###   ########.fr       */
+/*   Updated: 2024/05/13 14:51:32 by ymeziane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ int	check_start_pos(char **map)
 			c = map[y][x];
 			if (ft_strchr("NSWE", c))
 				count++;
-			if (count > 1 || !ft_strchr("NSWE10D ", c))
+			if (count > 1 || !ft_strchr("NSWE10 ", c))
 				return (0);
 			x++;
 		}

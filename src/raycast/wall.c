@@ -6,7 +6,7 @@
 /*   By: ymeziane <ymeziane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 15:44:36 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/05/13 12:56:02 by ymeziane         ###   ########.fr       */
+/*   Updated: 2024/05/13 14:48:59 by ymeziane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,6 @@ static void	get_wall_img(t_wall *wall, t_game *game)
 		wall->img = game->textures.east;
 	else if (texture_index == -1 && !wall->img)
 		wall->img = game->textures.north;
-	wall->crack = is_cracked_wall(wall, game, texture_index);
 	wall->last_collision_x = wall->collision_x;
 	wall->last_collision_y = wall->collision_y;
 }
@@ -90,16 +89,9 @@ void	compute_distance_and_select_wall(t_game *game, t_wall *wall)
 		wall->collision_x = (ray.end_x / (float)game->map.tile_size
 				- (float)game->map.padding_x / (float)game->map.tile_size);
 		if (!game->map.map[(int)wall->collision_y][(int)wall->collision_x]
-		|| game->map.map[(int)wall->collision_y][(int)wall->collision_x] == '1'
-		|| game->map.map[(int)wall->collision_y][(int)wall->collision_x] == 'D')
+		|| game->map.map[(int)wall->collision_y][(int)wall->collision_x] == '1')
 			return (save_wall_properties(game, wall, &ray), get_wall_img(wall,
 					game));
-		if ((int)game->player->angle == (int)wall->column_angle)
-			mlx_put_pixel(game->map.rays.img_line, ray.end_x, ray.end_y,
-				ft_pixel(250, 50, 50, 0xFF));
-		else
-			mlx_put_pixel(game->map.rays.img_line, ray.end_x, ray.end_y,
-				ft_pixel(50, 150, 150, 0xFF));
 		ray.end_x += ray.step_x;
 		ray.end_y += ray.step_y;
 	}

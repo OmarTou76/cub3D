@@ -6,7 +6,7 @@
 /*   By: ymeziane <ymeziane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 15:22:57 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/05/13 13:28:57 by ymeziane         ###   ########.fr       */
+/*   Updated: 2024/05/13 14:30:15 by ymeziane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,6 @@ int	main(int argc, char const *argv[])
 		return (0);
 	if (init_and_draw_game(game))
 	{
-		mlx_set_cursor_mode(game->mlx, MLX_MOUSE_HIDDEN);
-		mlx_key_hook(game->mlx, key_hook, game);
 		mlx_loop_hook(game->mlx, &loop_hook, game);
 		mlx_loop(game->mlx);
 	}

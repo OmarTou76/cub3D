@@ -1,7 +1,7 @@
-NO textures/test/forbidden.xpm
-SO textures/test/south.xpm
-WE textures/test/west.xpm
-EA textures/test/east.xpm
+NO textures/test/forbidden.png
+NO textures/bricks/bricks.png
+SO textures/bricks/bricks0.png
+WE textures/bricks/bricks2.png
 
 F 20,20,20
 C 200,200,200
