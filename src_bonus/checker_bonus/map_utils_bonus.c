@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   map_utils.c                                        :+:      :+:    :+:   */
+/*   map_utils_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ymeziane <ymeziane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 20:20:01 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/05/13 12:38:08 by ymeziane         ###   ########.fr       */
+/*   Updated: 2024/05/13 18:21:35 by ymeziane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ static bool	check_neighbors(char **m, int y, int x, t_vec **vecs)
 		return (false);
 	else if (m[y][x] == ' ' && !has_vec(*vecs, y, x) && !is_spaces_outside(vecs,
 			m, y, x))
+		return (false);
+	else if (x == (int)ft_strlen(m[y]) - 1 && m[y][x] != '1')
 		return (false);
 	return (true);
 }
@@ -67,9 +69,9 @@ int	check_columns(char **m)
 			return (0);
 		while (m[y])
 		{
-			if ((!m[y + 1] || (int)ft_strlen(m[y + 1]) <= x || m[y
-						+ 1][x] == ' ') && ((int)ft_strlen(m[y]) > x
-						&& m[y][x] == '0'))
+			if (((!m[y + 1] || (int)ft_strlen(m[y + 1]) <= x || m[y
+							+ 1][x] == ' ') && ((int)ft_strlen(m[y]) > x
+					&& m[y][x] == '0')) || (!m[y + 1] && m[y][x] == 'D'))
 				return (0);
 			y++;
 		}

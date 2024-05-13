@@ -1,5 +1,5 @@
 for file in maps/good/*; do 
     if [ -f "$file" ]; then 
-        echo "$file" && ./cub3D_bonus "$file"
+        echo "$file" && ./cub3D "$file"
     fi 
 done

@@ -6,7 +6,7 @@
 /*   By: ymeziane <ymeziane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 14:24:02 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/05/12 20:10:03 by ymeziane         ###   ########.fr       */
+/*   Updated: 2024/05/13 18:22:06 by ymeziane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ static void	add_vec(t_vec **vecs, int y, int x)
 
 static int	is_valid_direction(char **m, int dy, int dx)
 {
+	if (dy < 0 || dx < 0)
+		return (1);
 	if (m[dy] && m[dy][dx] && (m[dy][dx] == '1' || m[dy][dx] == 'D'))
 		return (0);
 	return (1);
@@ -69,7 +71,7 @@ int	is_spaces_outside(t_vec **vecs, char **m, int y, int x)
 	int	dx;
 	int	directions[4][2];
 
-	if (!m[y] || !m[y][x])
+	if (y < 0 || x < 0 || !m[y] || !m[y][x])
 		return (1);
 	if (m[y][x] == '0')
 		return (0);
@@ -84,5 +86,5 @@ int	is_spaces_outside(t_vec **vecs, char **m, int y, int x)
 			return (is_spaces_outside(vecs, m, dy, dx));
 		i++;
 	}
-	return (0);
+	return (1);
 }

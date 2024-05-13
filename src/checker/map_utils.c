@@ -6,7 +6,7 @@
 /*   By: ymeziane <ymeziane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 20:20:01 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/05/13 14:51:32 by ymeziane         ###   ########.fr       */
+/*   Updated: 2024/05/13 18:22:02 by ymeziane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ static bool	check_neighbors(char **m, int y, int x, t_vec **vecs)
 		return (false);
 	else if (m[y][x] == ' ' && !has_vec(*vecs, y, x) && !is_spaces_outside(vecs,
 			m, y, x))
+		return (false);
+	else if (x == (int)ft_strlen(m[y]) - 1 && m[y][x] != '1')
 		return (false);
 	return (true);
 }
