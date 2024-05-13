@@ -6,7 +6,7 @@
 /*   By: omar <omar@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 15:44:36 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/05/13 00:26:29 by omar             ###   ########.fr       */
+/*   Updated: 2024/05/13 02:03:56 by omar             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,8 @@ void	compute_distance_and_select_wall(t_game *game, t_wall *wall)
 				- (float)game->map.padding_y / (float)game->map.tile_size);
 		wall->collision_x = (ray.end_x / (float)game->map.tile_size
 				- (float)game->map.padding_x / (float)game->map.tile_size);
-		if (game->map.map[(int)wall->collision_y][(int)wall->collision_x] == '1'
+		if (!game->map.map[(int)wall->collision_y][(int)wall->collision_x]
+			|| game->map.map[(int)wall->collision_y][(int)wall->collision_x] == '1'
 			|| game->map.map[(int)wall->collision_y][(int)wall->collision_x] == 'D')
 			return (save_wall_properties(game, wall, &ray), get_wall_img(wall,
 					game));

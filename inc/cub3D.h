@@ -6,7 +6,7 @@
 /*   By: omar <omar@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 16:11:28 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/05/13 00:31:08 by omar             ###   ########.fr       */
+/*   Updated: 2024/05/13 01:55:10 by omar             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -216,6 +216,7 @@ char				**node_to_map(t_lines **node);
 //	DATA
 void				store_data(t_game **game, t_lines *node);
 //	MAP
+int					get_max_width(char **map);
 void				store_map_data(t_game **game);
 // PLAYER
 t_player			*get_info_player(char **map);

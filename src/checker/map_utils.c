@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ymeziane <ymeziane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: omar <omar@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 20:20:01 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/05/12 18:43:09 by ymeziane         ###   ########.fr       */
+/*   Updated: 2024/05/13 01:58:46 by omar             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,20 +54,22 @@ int	check_columns(char **m)
 {
 	int	x;
 	int	y;
+	int	max;
 
 	x = 0;
-	while (m[0][x])
+	max = get_max_width(m);
+	while (x < max)
 	{
 		y = 0;
 		while (m[y][x] && m[y][x] == ' ')
 			y++;
-		if (m[y][x] != '1')
+		if (m[y][x] && m[y][x] != '1')
 			return (0);
 		while (m[y])
 		{
-			if ((!m[y + 1] || (int)ft_strlen(m[y + 1]) <= x
-					|| m[y + 1][x] == ' ')
-					&& ((int)ft_strlen(m[y]) > x && m[y][x] == '0'))
+			if ((!m[y + 1] || (int)ft_strlen(m[y + 1]) <= x || m[y
+					+ 1][x] == ' ') && ((int)ft_strlen(m[y]) > x
+					&& m[y][x] == '0'))
 				return (0);
 			y++;
 		}

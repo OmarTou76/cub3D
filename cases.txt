@@ -14,7 +14,3 @@
 
 OK pour les maps du dessus, probleme régle en mettant WINDOW_HEIGHT et WNDOW_WIDTH a la meme valeur (900, a voir si il faut ajuster).
 
-AUTRE PROBLEM
-
-
-- ./cub3D maps/good/works.cub => Ne doit pas passer.
