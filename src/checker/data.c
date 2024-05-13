@@ -6,7 +6,7 @@
 /*   By: ymeziane <ymeziane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 15:23:42 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/05/12 20:05:07 by ymeziane         ###   ########.fr       */
+/*   Updated: 2024/05/13 13:43:29 by ymeziane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ static void	init_fields(t_fields *f)
 int	check_input(char const *progname, char const *filename, int argc)
 {
 	char	*ext;
+	int		fd;
 
 	if (argc != 2)
 	{
@@ -34,13 +35,14 @@ int	check_input(char const *progname, char const *filename, int argc)
 		return (ft_putstr_fd(" <FILENAME>.cub .\n", 2), 0);
 	}
 	ext = ft_strnstr(filename, ".cub", ft_strlen(filename));
-	if (open(filename, O_RDONLY) == -1)
+	fd = open(filename, O_RDONLY);
+	if (fd == -1)
 	{
 		ft_putstr_fd("Error\n", 2);
 		return (perror(filename), 0);
 	}
 	else
-		close(open(filename, O_RDONLY));
+		close(fd);
 	if (!ext || ft_strncmp(ext, ".cub", ft_strlen(ext)) != 0)
 	{
 		ft_putstr_fd("Error\n[USAGE]: ", 2);

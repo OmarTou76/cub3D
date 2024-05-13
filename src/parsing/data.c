@@ -6,7 +6,7 @@
 /*   By: ymeziane <ymeziane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 19:58:39 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/05/12 19:58:50 by ymeziane         ###   ########.fr       */
+/*   Updated: 2024/05/13 13:35:12 by ymeziane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,5 +32,7 @@ void	store_data(t_game **game, t_lines *node)
 		tmp = tmp->next;
 	}
 	(*game)->player = get_info_player((*game)->map.map);
+	(*game)->animation.start = false;
+	(*game)->mouse_event = true;
 	store_map_data(game);
 }

@@ -6,7 +6,7 @@
 /*   By: ymeziane <ymeziane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 19:17:10 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/05/12 19:25:14 by ymeziane         ###   ########.fr       */
+/*   Updated: 2024/05/13 13:32:23 by ymeziane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,22 @@ void	key_hook(mlx_key_data_t key, void *param)
 	t_game	*game;
 
 	game = (t_game *)param;
-	if ((key.action == MLX_PRESS || key.action == MLX_REPEAT)
-		&& key.key == MLX_KEY_H)
+	if ((key.action == MLX_PRESS) && key.key == MLX_KEY_H)
 		display_map(game);
+	if ((key.action == MLX_PRESS) && (key.key == MLX_KEY_LEFT_CONTROL
+			|| key.key == MLX_KEY_RIGHT_CONTROL))
+	{
+		if (game->mouse_event == true)
+		{
+			game->mouse_event = false;
+			mlx_set_cursor_mode(game->mlx, MLX_MOUSE_NORMAL);
+		}
+		else
+		{
+			game->mouse_event = true;
+			mlx_set_cursor_mode(game->mlx, MLX_MOUSE_HIDDEN);
+		}
+	}
 }
 
 void	loop_hook(void *param)

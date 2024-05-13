@@ -6,11 +6,21 @@
 /*   By: ymeziane <ymeziane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 15:23:08 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/05/12 20:06:26 by ymeziane         ###   ########.fr       */
+/*   Updated: 2024/05/13 13:51:26 by ymeziane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
+
+static int	check_extension(char *path)
+{
+	char	*ext;
+
+	ext = path + ft_strlen(path) - 4;
+	if (!ext || ft_strncmp(ext, ".png", ft_strlen(ext)) != 0)
+		return (0);
+	return (1);
+}
 
 static bool	valid_texture_path(char *line)
 {
@@ -32,6 +42,8 @@ static bool	valid_texture_path(char *line)
 	if (fd == -1)
 		return (0);
 	close(fd);
+	if (!check_extension(line))
+		return (0);
 	return (1);
 }
 

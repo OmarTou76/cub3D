@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   moves.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omar <omar@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: ymeziane <ymeziane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 15:23:32 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/05/13 01:10:09 by omar             ###   ########.fr       */
+/*   Updated: 2024/05/13 13:32:39 by ymeziane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,14 @@ void	listen_mouse_event(t_game *game)
 	int	y;
 	int	x;
 
+	if (!game->mouse_event)
+		return ;
 	mlx_get_mouse_pos(game->mlx, &x, &y);
 	if (x < (WINDOW_WIDTH / 2) && x > 0 && y > 0 && y < WINDOW_HEIGHT)
-		rotate_left(game, true);
+		rotate_left(game);
 	else if (x > (WINDOW_WIDTH / 2) && x < WINDOW_WIDTH && y > 0
 		&& y < WINDOW_HEIGHT)
-		rotate_right(game, true);
+		rotate_right(game);
 	if (x < WINDOW_WIDTH / 2 || x > WINDOW_WIDTH / 2)
 		mlx_set_mouse_pos(game->mlx, WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2);
 }
@@ -80,9 +82,9 @@ void	hook_moves(void *param)
 	game = (t_game *)param;
 	game->player->moves = false;
 	if (mlx_is_key_down(game->mlx, MLX_KEY_LEFT))
-		rotate_left(game, false);
+		rotate_left(game);
 	else if (mlx_is_key_down(game->mlx, MLX_KEY_RIGHT))
-		rotate_right(game, false);
+		rotate_right(game);
 	calcul_deltas(&game);
 	if (mlx_is_key_down(game->mlx, MLX_KEY_W))
 		go_forward(game);

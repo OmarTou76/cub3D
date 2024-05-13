@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omar <omar@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: ymeziane <ymeziane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 16:11:28 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/05/13 01:55:10 by omar             ###   ########.fr       */
+/*   Updated: 2024/05/13 13:22:10 by ymeziane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,6 +131,7 @@ typedef struct s_game
 	mlx_image_t		*img_view_3d;
 	t_textures		textures;
 	t_animation		animation;
+	bool			mouse_event;
 }					t_game;
 
 typedef struct s_lines
@@ -193,8 +194,8 @@ void				listen_mouse_event(t_game *game);
 void				update_player_position(t_game *game, int new_y, int new_x);
 void				hook_moves(void *param);
 // ROTATE
-void				rotate_right(t_game *game, bool is_mouse_event);
-void				rotate_left(t_game *game, bool is_mouse_event);
+void				rotate_right(t_game *game);
+void				rotate_left(t_game *game);
 // SHOOT ANIMATION
 void				shoot_animation(void *param);
 void				shoot(t_game *game);

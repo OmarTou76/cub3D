@@ -6,7 +6,7 @@
 /*   By: ymeziane <ymeziane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 13:11:17 by ymeziane          #+#    #+#             */
-/*   Updated: 2024/05/12 20:31:03 by ymeziane         ###   ########.fr       */
+/*   Updated: 2024/05/13 12:37:24 by ymeziane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,9 @@ static void	execute_gun_animation(t_game *game, unsigned int delay)
 static int	calculate_delay(t_game *game)
 {
 	if (game->player->moves)
-		return (1);
+		return (2);
 	else
-		return (10);
+		return (4);
 }
 
 void	shoot_animation(void *param)
